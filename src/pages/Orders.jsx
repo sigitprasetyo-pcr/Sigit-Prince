@@ -1,85 +1,101 @@
-import { useState } from "react";
 import PageHeader from "../components/PageHeader";
-import { orders as initialData } from "../data/orders";
+import orders from "../data/Orders";
 
-export default function Orders() {
-  const [data, setData] = useState(initialData);
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({});
+export default function Orders({ mode = "orders" }) {
+  const isInventory = mode === "inventory";
 
-  const handleSubmit = () => {
-    setData([...data, form]);
-    setShowForm(false);
+  const statusClass = {
+    "Siap Kirim": "bg-amber-50 text-amber-700",
+    Terkirim: "bg-green-50 text-green-700",
+    Diproses: "bg-neutral-100 text-neutral-600",
   };
 
   return (
-    <div>
-      <PageHeader title="Orders" breadcrumb={["Dashboard", "Order List"]}>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="btn-primary"
-        >
-          + Add Order
+    <div className="p-6 md:p-12">
+      <PageHeader
+        breadcrumb={isInventory ? "Inventory" : "Curations"}
+        title={isInventory ? "Manajemen Inventaris" : "Arsip Pesanan"}
+        description={
+          isInventory
+            ? "Pantau stok, kategori, dan status koleksi VelvetNova."
+            : "Kelola pesanan boutique dan transaksi pelanggan private atelier."
+        }
+      >
+        <button className="btn-black px-6 py-3 text-[10px]">
+          {isInventory ? "Tambah Produk" : "Buat Pesanan"}
         </button>
       </PageHeader>
 
-      {/* ✅ FORM */}
-      {showForm && (
-        <div className="card mb-4 grid grid-cols-2 gap-4">
-          <input 
-            className="input" 
-            placeholder="Order ID"
-            onChange={(e) => setForm({ ...form, id: e.target.value })} 
-          />
+      <div className="bg-white luxury-shadow overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[760px] text-left">
+            <thead>
+              <tr className="border-b border-neutral-100">
+                <th className="py-6 px-8 label-caps text-[10px] text-neutral-400">
+                  ID
+                </th>
 
-          <input 
-            className="input" 
-            placeholder="Customer Name"
-            onChange={(e) => setForm({ ...form, name: e.target.value })} 
-          />
+                <th className="py-6 px-8 label-caps text-[10px] text-neutral-400">
+                  Produk
+                </th>
 
-          <select 
-            className="input"
-            onChange={(e) => setForm({ ...form, status: e.target.value })}
-          >
-            <option>Pending</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-          </select>
+                <th className="py-6 px-8 label-caps text-[10px] text-neutral-400">
+                  Pelanggan
+                </th>
 
-          <input 
-            className="input" 
-            placeholder="Total Price"
-            onChange={(e) => setForm({ ...form, price: e.target.value })} 
-          />
+                <th className="py-6 px-8 label-caps text-[10px] text-neutral-400">
+                  Harga
+                </th>
 
-          <input 
-            type="date" 
-            className="input"
-            onChange={(e) => setForm({ ...form, date: e.target.value })} 
-          />
-
-          <button className="btn-primary col-span-2" onClick={handleSubmit}>
-            Save Order
-          </button>
-        </div>
-      )}
-
-      {/* ✅ TABLE */}
-      <div className="card hover:shadow-md transition-all overflow-x-auto">
-        <table className="w-full text-sm">
-          <tbody>
-            {data.map((o, i) => (
-              <tr key={i} className="border-b">
-                <td className="p-3">{o.id}</td>
-                <td>{o.name}</td>
-                <td>{o.status}</td>
-                <td>{o.price}</td>
-                <td>{o.date}</td>
+                <th className="py-6 px-8 label-caps text-[10px] text-neutral-400 text-right">
+                  Status
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody className="divide-y divide-neutral-50">
+              {orders.map((order) => (
+                <tr
+                  key={order.id}
+                  className="hover:bg-background/60 transition"
+                >
+                  <td className="py-6 px-8 font-mono text-sm text-neutral-500">
+                    {order.id}
+                  </td>
+
+                  <td className="py-6 px-8">
+                    <p className="font-medium italic text-on-surface">
+                      {order.product}
+                    </p>
+
+                    <p className="text-[10px] text-neutral-400 uppercase mt-1 tracking-widest">
+                      {order.category}
+                    </p>
+                  </td>
+
+                  <td className="py-6 px-8 text-sm text-neutral-600">
+                    {order.customer}
+                  </td>
+
+                  <td className="py-6 px-8 text-sm font-medium text-on-surface">
+                    {order.price}
+                  </td>
+
+                  <td className="py-6 px-8 text-right">
+                    <span
+                      className={`text-[10px] label-caps px-3 py-1 ${
+                        statusClass[order.status] ||
+                        "bg-neutral-100 text-neutral-600"
+                      }`}
+                    >
+                      {order.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

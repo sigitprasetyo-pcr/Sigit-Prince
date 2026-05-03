@@ -1,101 +1,74 @@
 import { NavLink } from "react-router-dom";
-import { FaThLarge, FaList, FaHeadphones } from "react-icons/fa";
+import {
+  MdAutoAwesome,
+  MdCampaign,
+  MdDashboard,
+  MdGroups,
+  MdHelpOutline,
+  MdInventory2,
+  MdSettings,
+} from "react-icons/md";
+
+const menus = [
+  { label: "Overview", path: "/", icon: <MdDashboard /> },
+  { label: "Inventory", path: "/inventory", icon: <MdInventory2 /> },
+  { label: "Curations", path: "/orders", icon: <MdAutoAwesome /> },
+  { label: "Patrons", path: "/customers", icon: <MdGroups /> },
+  { label: "Marketing", path: "/error/403", icon: <MdCampaign /> },
+];
 
 export default function Sidebar() {
-
-  const menuClass = ({ isActive }) =>
-    `flex items-center p-4 rounded-xl font-medium transition-all ${
+  const navClass = ({ isActive }) =>
+    `group py-4 flex items-center pl-4 transition-all duration-300 ease-out ${
       isActive
-        ? "bg-green-200 text-green-600 font-extrabold"
-        : "text-gray-600 hover:bg-green-200 hover:text-green-600 hover:font-extrabold"
+        ? "text-[#121212] font-bold border-l border-[#121212]"
+        : "text-neutral-400 hover:text-[#121212] hover:translate-x-1"
     }`;
 
   return (
-    <div className="w-64 min-h-screen bg-[#F8F9FB] flex flex-col justify-between px-6 py-6">
-
-      <div>
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold text-gray-800">
-            Sedap<span className="text-green-500">.</span>
-          </h1>
-          <p className="text-sm text-gray-400">Modern Admin Dashboard</p>
-        </div>
-
-        <ul className="space-y-3 text-gray-600">
-
-          {/* Dashboard */}
-          <li>
-            <NavLink to="/" end className={menuClass}>
-              <FaThLarge className="mr-4 text-xl" />
-              Dashboard
-            </NavLink>
-          </li>
-
-          {/* Orders */}
-          <li>
-            <NavLink to="/orders" className={menuClass}>
-              <FaList className="mr-4 text-xl" />
-              Orders
-            </NavLink>
-          </li>
-
-          {/* Customers */}
-          <li>
-            <NavLink to="/customers" className={menuClass}>
-              <FaHeadphones className="mr-4 text-xl" />
-              Customers
-            </NavLink>
-          </li>
-
-          {/* 🔥 ERROR MENU */}
-          <div className="pt-6 pb-2 text-xs font-bold text-gray-400 uppercase">
-            Errors
-          </div>
-
-          <li>
-            <NavLink to="/error/400" className={menuClass}>
-              Error 400
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/error/401" className={menuClass}>
-              Error 401
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/error/403" className={menuClass}>
-              Error 403
-            </NavLink>
-          </li>
-
-        </ul>
-      </div>
-
-      <div>
-        <div className="bg-green-500 rounded-2xl p-4 text-white flex justify-between items-center">
-          <div>
-            <p className="text-sm leading-tight">
-              Please organize your menus through button below!
-            </p>
-            <button className="mt-3 bg-white text-green-600 text-sm px-3 py-1 rounded-lg">
-              + Add Menus
-            </button>
-          </div>
-
-          <img
-            src="https://i.pravatar.cc/60"
-            className="w-14 h-14 rounded-full"
-            alt="profile"
-          />
-        </div>
-
-        <p className="text-xs text-gray-400 mt-6">
-          Sedap Restaurant Admin Dashboard
+    <aside className="hidden lg:flex bg-[#FFFDF5] text-[#121212] h-screen w-72 border-r border-neutral-200/40 fixed left-0 top-0 flex-col py-10 px-8 z-50">
+      <div className="mb-12">
+        <h1 className="font-display italic text-xl tracking-tighter">
+          VelvetNova
+        </h1>
+        <p className="font-display uppercase tracking-[0.2em] text-[10px] opacity-60 mt-1">
+          Private Atelier
         </p>
-        <p className="text-xs text-gray-300">© 2025 All Right Reserved</p>
       </div>
-    </div>
+
+      <nav className="flex-1 space-y-2">
+        {menus.map((menu) => (
+          <NavLink
+            key={menu.label}
+            to={menu.path}
+            end={menu.path === "/"}
+            className={navClass}
+          >
+            <span className="mr-3 text-xl">{menu.icon}</span>
+            <span className="font-display uppercase tracking-[0.2em] text-[10px]">
+              {menu.label}
+            </span>
+          </NavLink>
+        ))}
+      </nav>
+
+      <div className="mt-auto space-y-4">
+        <button className="w-full bg-primary text-on-primary py-3 px-4 label-caps text-[10px] tracking-widest">
+          New Collection
+        </button>
+
+        <div className="flex flex-col space-y-2 pt-6 border-t border-neutral-100">
+          <div className="flex items-center text-neutral-400 text-[10px] uppercase tracking-widest cursor-pointer hover:text-primary">
+            <MdSettings className="mr-3 text-sm" />
+            Settings
+          </div>
+
+          <div className="flex items-center text-neutral-400 text-[10px] uppercase tracking-widest cursor-pointer hover:text-primary">
+            <MdHelpOutline className="mr-3 text-sm" />
+            Support
+          </div>
+        </div>
+      </div>
+    </aside>
   );
 }

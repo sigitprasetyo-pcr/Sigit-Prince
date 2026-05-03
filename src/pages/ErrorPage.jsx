@@ -1,25 +1,28 @@
 import { Link } from "react-router-dom";
 
-export default function ErrorPage({ code, message, image }) {
+export default function ErrorPage({ code, title, description }) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#F8F9FB] px-4">
-      <div className="bg-white rounded-2xl shadow-md p-10 text-center max-w-md w-full">
+    <div className="min-h-[calc(100vh-80px)] p-6 md:p-12 flex items-center justify-center">
+      <div className="max-w-xl text-center bg-white luxury-shadow p-12">
+        <span className="label-caps text-secondary">Protocol Error</span>
 
-        <img src={image} alt="error" className="w-40 mx-auto mb-6" />
-
-        <h1 className="text-5xl font-extrabold text-red-500 mb-2">
+        <h1 className="font-display text-8xl italic tracking-tighter mt-6">
           {code}
         </h1>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-2">
-          {message}
+        <h2 className="font-display text-headline-md mt-6">
+          {title}
         </h2>
+
+        <p className="text-on-surface-variant mt-4 leading-relaxed">
+          {description}
+        </p>
 
         <Link
           to="/"
-          className="inline-block mt-4 bg-green-500 text-white px-6 py-2 rounded-lg"
+          className="inline-flex mt-8 px-8 py-4 btn-black label-caps"
         >
-          Back to Dashboard
+          Kembali ke Dashboard
         </Link>
       </div>
     </div>

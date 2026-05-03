@@ -1,130 +1,216 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-// Import Ikon untuk Error dan Loading
-import { BsFillExclamationDiamondFill } from "react-icons/bs";
-import { ImSpinner2 } from "react-icons/im";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { MdHelpOutline, MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 export default function Login() {
-    /* navigate, state & handleChange */
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [dataForm, setDataForm] = useState({
-        email: "",
-        password: "",
-    });
+  const navigate = useNavigate();
 
-    const handleChange = (evt) => {
-        const { name, value } = evt.target;
-        setDataForm({
-            ...dataForm,
-            [name]: value,
-        });
-    };
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    remember: false,
+  });
 
-    /* process form */
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-        setLoading(true);
-        setError(""); // Reset error setiap kali submit ulang
+  const handleChange = (event) => {
+    const { name, value, checked, type } = event.target;
 
-        axios
-            .post("https://dummyjson.com/user/login", {
-                username: dataForm.email, // API DummyJSON pakai 'username'
-                password: dataForm.password,
-                expiresInMins: 30,
-            })
-            .then((response) => {
-                if (response.status !== 200) {
-                    setError(response.data.message);
-                    return;
-                }
-                // Redirect ke Dashboard jika berhasil login
-                navigate("/"); 
-            })
-            .catch((err) => {
-                if (err.response) {
-                    setError(err.response.data.message || "An error occurred");
-                } else {
-                    setError(err.message || "An unknown error occurred");
-                }
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
+    setForm((current) => ({
+      ...current,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
-    /* error & loading status */
-    const errorInfo = error ? (
-        <div className="bg-red-200 mb-5 p-5 text-sm font-light text-gray-600 rounded flex items-center">
-            <BsFillExclamationDiamondFill className="text-red-600 me-2 text-lg" />
-            {error}
-        </div>
-    ) : null;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setLoading(true);
 
-    const loadingInfo = loading ? (
-        <div className="bg-gray-200 mb-5 p-5 text-sm rounded flex items-center">
-            <ImSpinner2 className="me-2 animate-spin text-lg" />
-            Mohon Tunggu...
-        </div>
-    ) : null;
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/");
+    }, 700);
+  };
 
-    return (
-        <div>
-            <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
-                Welcome Back 👋
-            </h2>
+  return (
+    <main className="bg-background text-on-background min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-[1440px] flex flex-col md:flex-row h-screen items-stretch overflow-hidden">
+        <section className="hidden md:flex w-7/12 relative items-center justify-center bg-surface-container-lowest">
+          <div className="absolute inset-0 overflow-hidden">
+            <img
+              className="w-full h-full object-cover opacity-90"
+              src="/images/login-boutique.png"
+              alt="VelvetNova private atelier"
+            />
+          </div>
 
-            {/* Indikator Error dan Loading */}
-            {errorInfo}
-            {loadingInfo}
+          <div className="absolute inset-0 bg-black/5" />
+        </section>
 
-            {/* Form utama */}
-            <form onSubmit={handleSubmit}>
-                <div className="mb-5">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Email Address
-                    </label>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email" // Penting: disesuaikan dengan dataForm state
-                        value={dataForm.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm
-                            placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="you@example.com"
-                        required
-                    />
-                </div>
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password" // Penting: disesuaikan dengan dataForm state
-                        value={dataForm.password}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm
-                            placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="********"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    disabled={loading} // Mematikan tombol saat proses loading
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4
-                        rounded-lg transition duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+        <section className="flex-1 flex flex-col items-center justify-center px-8 md:px-margin-edge bg-background">
+          <div className="w-full max-w-sm flex flex-col items-center translate-y-8 md:translate-y-10">
+            <div className="mb-section-gap text-center md:hidden">
+              <h1 className="font-display text-display-lg text-on-surface italic tracking-tighter">
+                VelvetNova
+              </h1>
+
+              <p className="label-caps uppercase tracking-[0.2em] text-on-surface-variant mt-2">
+                Private Atelier
+              </p>
+            </div>
+
+            <div className="w-full mb-stack-md text-left">
+              <h2 className="font-display text-headline-md text-primary mb-2">
+                Selamat Datang
+              </h2>
+
+              <p className="text-body-sm text-on-surface-variant">
+                Silakan masuk ke akun kurator Anda.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="w-full space-y-stack-md">
+              <div className="space-y-2">
+                <label
+                  htmlFor="email"
+                  className="label-caps text-on-surface-variant"
                 >
-                    Login
-                </button>
+                  Email
+                </label>
+
+                <input
+                  className="boutique-input"
+                  id="email"
+                  name="email"
+                  placeholder="nama@velvetnova.com"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="password"
+                  className="label-caps text-on-surface-variant"
+                >
+                  Password
+                </label>
+
+                <div className="relative">
+                  <input
+                    className="boutique-input pr-10"
+                    id="password"
+                    name="password"
+                    placeholder="••••••••"
+                    type={showPassword ? "text" : "password"}
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  <button
+                    className="absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors"
+                    type="button"
+                    onClick={() => setShowPassword((value) => !value)}
+                  >
+                    {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <label className="flex items-center space-x-3 cursor-pointer group">
+                  <input
+                    className="w-4 h-4 rounded border-outline-variant text-primary focus:ring-0 cursor-pointer"
+                    type="checkbox"
+                    name="remember"
+                    checked={form.remember}
+                    onChange={handleChange}
+                  />
+
+                  <span className="text-body-sm text-on-surface-variant group-hover:text-on-surface transition">
+                    Ingat Saya
+                  </span>
+                </label>
+
+                <Link
+                  className="text-body-sm text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant transition"
+                  to="/forgot"
+                >
+                  Lupa Password?
+                </Link>
+              </div>
+
+              <button
+                className="w-full btn-black py-4 mt-stack-md luxury-shadow"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Memproses..." : "Masuk Dashboard"}
+              </button>
             </form>
-        </div>
-    );
+
+            <div className="mt-section-gap w-full flex flex-col items-center space-y-6">
+              <div className="w-full flex items-center space-x-4">
+                <div className="h-[1px] flex-1 bg-outline-variant/30" />
+
+                <span className="label-caps text-outline-variant text-[10px]">
+                  Atau
+                </span>
+
+                <div className="h-[1px] flex-1 bg-outline-variant/30" />
+              </div>
+
+              <button className="w-full border border-outline-variant/50 py-3 flex items-center justify-center space-x-3 hover:border-on-surface transition-colors duration-300">
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    fill="#4285F4"
+                  />
+                  <path
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    fill="#34A853"
+                  />
+                  <path
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                    fill="#FBBC05"
+                  />
+                  <path
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                    fill="#EA4335"
+                  />
+                </svg>
+
+                <span className="label-caps text-[11px] uppercase tracking-wider">
+                  Sign-In
+                </span>
+              </button>
+
+              <p className="text-body-sm text-on-surface-variant">
+                Belum punya akun?{" "}
+                <Link to="/register" className="text-secondary font-bold">
+                  Daftar
+                </Link>
+              </p>
+            </div>
+          </div>
+
+          <footer className="mt-auto py-stack-md">
+            <p className="text-[11px] text-outline-variant text-center tracking-widest uppercase">
+              © 2024 VelvetNova Private Atelier
+            </p>
+          </footer>
+        </section>
+      </div>
+
+      <div className="fixed bottom-margin-edge right-margin-edge hidden md:block">
+        <button className="w-12 h-12 bg-surface-container-lowest text-on-surface border border-outline-variant/30 flex items-center justify-center luxury-shadow hover:border-secondary transition-all group">
+          <MdHelpOutline className="text-xl group-hover:text-secondary" />
+        </button>
+      </div>
+    </main>
+  );
 }
