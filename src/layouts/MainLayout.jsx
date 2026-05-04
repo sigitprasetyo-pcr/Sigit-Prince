@@ -1,9 +1,17 @@
 import { Outlet } from "react-router-dom";
-import { MdAdd } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
 export default function MainLayout() {
+  const whatsappNumber = "6282284828136";
+  const whatsappMessage =
+    "Halo, saya ingin bertanya mengenai VelvetNova Private Atelier.";
+
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
+
   return (
     <div className="min-h-screen bg-background text-on-surface">
       <Sidebar />
@@ -29,9 +37,15 @@ export default function MainLayout() {
         </footer>
       </main>
 
-      <button className="fixed bottom-10 right-10 w-16 h-16 bg-primary text-on-primary shadow-2xl flex items-center justify-center hover:scale-105 transition-transform">
-        <MdAdd className="text-2xl" />
-      </button>
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-10 right-10 w-16 h-16 bg-green-500 text-white shadow-2xl flex items-center justify-center hover:scale-105 hover:bg-green-600 transition-all duration-300 rounded-full z-50"
+        aria-label="Chat WhatsApp"
+      >
+        <FaWhatsapp className="text-3xl" />
+      </a>
     </div>
   );
 }
