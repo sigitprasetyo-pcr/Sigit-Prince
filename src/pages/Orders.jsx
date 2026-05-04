@@ -13,8 +13,8 @@ export default function Orders({ mode = "orders" }) {
   return (
     <div className="p-6 md:p-12">
       <PageHeader
-        breadcrumb={isInventory ? "Inventory" : "Curations"}
-        title={isInventory ? "Manajemen Inventaris" : "Arsip Pesanan"}
+        breadcrumb={isInventory ? "Inventory" : "Orders"}
+        title={isInventory ? "Manajemen Inventaris" : "Orders"}
         description={
           isInventory
             ? "Pantau stok, kategori, dan status koleksi VelvetNova."

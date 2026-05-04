@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 import { MdHelpOutline, MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 export default function Login() {
@@ -29,7 +31,16 @@ export default function Login() {
 
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
+
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil!",
+        text: "Anda berhasil login.",
+        showConfirmButton: false,
+        timer: 1600,
+      }).then(() => {
+        navigate("/");
+      });
     }, 700);
   };
 

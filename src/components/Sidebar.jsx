@@ -1,4 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 import {
   MdAutoAwesome,
   MdCampaign,
@@ -6,18 +8,21 @@ import {
   MdGroups,
   MdHelpOutline,
   MdInventory2,
+  MdLogout,
   MdSettings,
 } from "react-icons/md";
 
 const menus = [
-  { label: "Overview", path: "/", icon: <MdDashboard /> },
+  { label: "Dashboard", path: "/", icon: <MdDashboard /> },
   { label: "Inventory", path: "/inventory", icon: <MdInventory2 /> },
-  { label: "Curations", path: "/orders", icon: <MdAutoAwesome /> },
-  { label: "Patrons", path: "/customers", icon: <MdGroups /> },
+  { label: "Orders", path: "/orders", icon: <MdAutoAwesome /> },
+  { label: "Customers", path: "/customers", icon: <MdGroups /> },
   { label: "Marketing", path: "/error/403", icon: <MdCampaign /> },
 ];
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
   const navClass = ({ isActive }) =>
     `group py-4 flex items-center pl-4 transition-all duration-300 ease-out ${
       isActive
@@ -25,12 +30,25 @@ export default function Sidebar() {
         : "text-neutral-400 hover:text-[#121212] hover:translate-x-1"
     }`;
 
+  const handleLogout = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Berhasil!",
+      text: "Anda berhasil logout.",
+      showConfirmButton: false,
+      timer: 1600,
+    }).then(() => {
+      navigate("/login");
+    });
+  };
+
   return (
     <aside className="hidden lg:flex bg-[#FFFDF5] text-[#121212] h-screen w-72 border-r border-neutral-200/40 fixed left-0 top-0 flex-col py-10 px-8 z-50">
       <div className="mb-12">
         <h1 className="font-display italic text-xl tracking-tighter">
           VelvetNova
         </h1>
+
         <p className="font-display uppercase tracking-[0.2em] text-[10px] opacity-60 mt-1">
           Private Atelier
         </p>
@@ -45,6 +63,7 @@ export default function Sidebar() {
             className={navClass}
           >
             <span className="mr-3 text-xl">{menu.icon}</span>
+
             <span className="font-display uppercase tracking-[0.2em] text-[10px]">
               {menu.label}
             </span>
@@ -67,6 +86,15 @@ export default function Sidebar() {
             <MdHelpOutline className="mr-3 text-sm" />
             Support
           </div>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex items-center text-neutral-400 text-[10px] uppercase tracking-widest cursor-pointer hover:text-red-600 transition-colors text-left"
+          >
+            <MdLogout className="mr-3 text-sm" />
+            Logout
+          </button>
         </div>
       </div>
     </aside>

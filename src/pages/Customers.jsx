@@ -19,8 +19,8 @@ export default function Customers() {
   return (
     <div className="p-6 md:p-12">
       <PageHeader
-        breadcrumb="Patrons"
-        title="Data Pelanggan"
+        breadcrumb="Customers"
+        title="Customers"
         description="Kelola profil pelanggan, loyalty tier, dan riwayat pembelian private atelier."
       >
         <div className="relative w-full md:w-72">
