@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
-import { MdHelpOutline, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { FiShoppingBag, FiEye, FiEyeOff } from "react-icons/fi";
+import { MdAutoAwesome } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -31,197 +32,249 @@ export default function Login() {
 
     setTimeout(() => {
       setLoading(false);
-
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil!",
-        text: "Anda berhasil login.",
-        showConfirmButton: false,
-        timer: 1600,
-      }).then(() => {
-        navigate("/");
-      });
+      navigate("/");
     }, 700);
   };
 
   return (
-    <main className="bg-background text-on-background min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-[1440px] flex flex-col md:flex-row h-screen items-stretch overflow-hidden">
-        <section className="hidden md:flex w-7/12 relative items-center justify-center bg-surface-container-lowest">
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              className="w-full h-full object-cover opacity-90"
-              src="/images/login-boutique.png"
-              alt="VelvetNova private atelier"
-            />
+    <main className="min-h-screen w-full bg-[#FAF9F7] font-body text-[#2D2723] lg:grid lg:grid-cols-[1fr_1.15fr]">
+      {/* LEFT SECTION */}
+      <section className="relative hidden min-h-screen overflow-hidden bg-[#FAF9F7] px-[78px] py-[98px] lg:flex lg:flex-col">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(192,155,125,0.10),transparent_32%),radial-gradient(circle_at_70%_75%,rgba(192,155,125,0.08),transparent_38%)]" />
+
+        <div className="relative z-10">
+          {/* Brand */}
+          <div className="flex items-center gap-4">
+            <div className="flex h-[66px] w-[66px] items-center justify-center rounded-[12px] bg-[#C09B7D] text-[34px] text-white shadow-[0_14px_30px_rgba(45,39,35,0.16)]">
+              <FiShoppingBag />
+            </div>
+
+            <div>
+              <h1 className="font-display text-[38px] font-medium leading-none text-[#2D2723]">
+                Boutique
+              </h1>
+              <p className="mt-2 text-[16px] font-normal text-[#7C7772]">
+                Elegant Collection
+              </p>
+            </div>
           </div>
 
-          <div className="absolute inset-0 bg-black/5" />
-        </section>
+          {/* Hero Text */}
+          <div className="mt-[90px] max-w-[650px]">
+            <h2 className="font-display text-[46px] font-medium leading-tight text-[#2D2723]">
+              Discover Timeless Elegance
+            </h2>
 
-        <section className="flex-1 flex flex-col items-center justify-center px-8 md:px-margin-edge bg-background">
-          <div className="w-full max-w-sm flex flex-col items-center translate-y-8 md:translate-y-10">
-            <div className="mb-section-gap text-center md:hidden">
-              <h1 className="font-display text-display-lg text-on-surface italic tracking-tighter">
-                VelvetNova
-              </h1>
+            <p className="mt-8 max-w-[580px] text-[24px] font-normal leading-[1.45] text-[#7C7772]">
+              Curated collections of luxury fashion and accessories that
+              celebrate your unique style.
+            </p>
+          </div>
 
-              <p className="label-caps uppercase tracking-[0.2em] text-on-surface-variant mt-2">
-                Private Atelier
-              </p>
+          {/* Benefit List */}
+          <div className="mt-12 space-y-7">
+            {[
+              "Exclusive designer collections",
+              "Personalized shopping experience",
+              "Premium quality guarantee",
+              "Worldwide shipping",
+            ].map((item) => (
+              <div key={item} className="flex items-center gap-5">
+                <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[#F3E7DF] text-[22px] text-[#C09B7D]">
+                  <MdAutoAwesome />
+                </div>
+
+                <p className="text-[20px] font-normal text-[#2D2723]">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Testimonial */}
+        <div className="relative z-10 mt-auto max-w-[560px] rounded-[18px] border border-[#E6DED6] bg-white/60 p-8 shadow-[0_12px_35px_rgba(80,50,30,0.05)] backdrop-blur-sm">
+          <p className="text-[20px] font-normal leading-relaxed text-[#514B45]">
+            "The most exquisite shopping experience. Every piece tells a story
+            of elegance and sophistication."
+          </p>
+
+          <div className="mt-7 flex items-center gap-4">
+            <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#EFE7DF] text-[16px] font-medium text-[#C09B7D]">
+              SJ
             </div>
 
-            <div className="w-full mb-stack-md text-left">
-              <h2 className="font-display text-headline-md text-primary mb-2">
-                Selamat Datang
-              </h2>
-
-              <p className="text-body-sm text-on-surface-variant">
-                Silakan masuk ke akun kurator Anda.
+            <div>
+              <p className="text-[17px] font-medium text-[#2D2723]">
+                Sarah Johnson
+              </p>
+              <p className="mt-1 text-[15px] font-normal text-[#7C7772]">
+                Fashion Enthusiast
               </p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <form onSubmit={handleSubmit} className="w-full space-y-stack-md">
-              <div className="space-y-2">
+      {/* RIGHT SECTION */}
+      <section className="flex min-h-screen flex-col items-center justify-center bg-white px-5 py-10">
+        <div className="w-full max-w-[610px]">
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-[38px] font-medium leading-tight text-[#2D2723]">
+              Welcome Back
+            </h2>
+
+            <p className="mt-3 text-[20px] font-normal text-[#7C7772]">
+              Sign in to continue to your boutique dashboard
+            </p>
+          </div>
+
+          <div className="rounded-[18px] border border-[#E6DED6] bg-white px-10 py-11 shadow-[0_10px_28px_rgba(45,39,35,0.08)]">
+            <form onSubmit={handleSubmit} className="space-y-7">
+              {/* Email */}
+              <div>
                 <label
                   htmlFor="email"
-                  className="label-caps text-on-surface-variant"
+                  className="mb-3 block text-[16px] font-medium text-[#2D2723]"
                 >
-                  Email
+                  Email Address
                 </label>
 
                 <input
-                  className="boutique-input"
                   id="email"
                   name="email"
-                  placeholder="nama@velvetnova.com"
                   type="email"
+                  placeholder="you@example.com"
                   value={form.email}
                   onChange={handleChange}
                   required
+                  className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="password"
-                  className="label-caps text-on-surface-variant"
-                >
-                  Password
-                </label>
+              {/* Password */}
+              <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="block text-[16px] font-medium text-[#2D2723]"
+                  >
+                    Password
+                  </label>
+
+                  <Link
+                    to="/forgot"
+                    className="text-[16px] font-medium text-[#C09B7D] transition hover:text-[#9C7354]"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
 
                 <div className="relative">
                   <input
-                    className="boutique-input pr-10"
                     id="password"
                     name="password"
-                    placeholder="••••••••"
                     type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
                     value={form.password}
                     onChange={handleChange}
                     required
+                    className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 pr-14 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
                   />
 
                   <button
-                    className="absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors"
                     type="button"
-                    onClick={() => setShowPassword((value) => !value)}
+                    onClick={() => setShowPassword((current) => !current)}
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[22px] text-[#8C8782] transition hover:text-[#2D2723]"
+                    aria-label="Show password"
                   >
-                    {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
                   </button>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2">
-                <label className="flex items-center space-x-3 cursor-pointer group">
-                  <input
-                    className="w-4 h-4 rounded border-outline-variant text-primary focus:ring-0 cursor-pointer"
-                    type="checkbox"
-                    name="remember"
-                    checked={form.remember}
-                    onChange={handleChange}
-                  />
+              {/* Remember */}
+              <label className="flex cursor-pointer items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  checked={form.remember}
+                  onChange={handleChange}
+                  className="h-[19px] w-[19px] rounded border-[#B8AEA5] accent-[#C09B7D]"
+                />
 
-                  <span className="text-body-sm text-on-surface-variant group-hover:text-on-surface transition">
-                    Ingat Saya
-                  </span>
-                </label>
+                <span className="text-[17px] font-normal text-[#2D2723]">
+                  Remember me for 30 days
+                </span>
+              </label>
 
-                <Link
-                  className="text-body-sm text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant transition"
-                  to="/forgot"
-                >
-                  Lupa Password?
-                </Link>
-              </div>
-
+              {/* Button */}
               <button
-                className="w-full btn-black py-4 mt-stack-md luxury-shadow"
                 type="submit"
                 disabled={loading}
+                className="h-[62px] w-full rounded-[8px] bg-[#C09B7D] text-[20px] font-medium text-white shadow-[0_8px_18px_rgba(192,155,125,0.22)] transition hover:bg-[#AA8569] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {loading ? "Memproses..." : "Masuk Dashboard"}
+                {loading ? "Signing In..." : "Sign In"}
               </button>
             </form>
 
-            <div className="mt-section-gap w-full flex flex-col items-center space-y-6">
-              <div className="w-full flex items-center space-x-4">
-                <div className="h-[1px] flex-1 bg-outline-variant/30" />
+            {/* Divider */}
+            <div className="my-9 flex items-center gap-5">
+              <div className="h-px flex-1 bg-[#E6DED6]" />
+              <p className="text-[16px] font-normal text-[#7C7772]">
+                or continue with
+              </p>
+              <div className="h-px flex-1 bg-[#E6DED6]" />
+            </div>
 
-                <span className="label-caps text-outline-variant text-[10px]">
-                  Atau
-                </span>
-
-                <div className="h-[1px] flex-1 bg-outline-variant/30" />
-              </div>
-
-              <button className="w-full border border-outline-variant/50 py-3 flex items-center justify-center space-x-3 hover:border-on-surface transition-colors duration-300">
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
-                  <path
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                    fill="#4285F4"
-                  />
-                  <path
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    fill="#34A853"
-                  />
-                  <path
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                    fill="#FBBC05"
-                  />
-                  <path
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                    fill="#EA4335"
-                  />
-                </svg>
-
-                <span className="label-caps text-[11px] uppercase tracking-wider">
-                  Sign-In
-                </span>
+            {/* Social Buttons */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <button
+                type="button"
+                className="flex h-[54px] items-center justify-center gap-3 rounded-[8px] border border-[#E6DED6] bg-white text-[17px] font-medium text-[#2D2723] transition hover:bg-[#FAF9F7]"
+              >
+                <FcGoogle className="text-[24px]" />
+                Google
               </button>
 
-              <p className="text-body-sm text-on-surface-variant">
-                Belum punya akun?{" "}
-                <Link to="/register" className="text-secondary font-bold">
-                  Daftar
+              <button
+                type="button"
+                className="flex h-[54px] items-center justify-center gap-3 rounded-[8px] border border-[#E6DED6] bg-white text-[17px] font-medium text-[#2D2723] transition hover:bg-[#FAF9F7]"
+              >
+                <FaGithub className="text-[22px]" />
+                GitHub
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="mt-8 space-y-6 text-center">
+              <p className="text-[16px] font-normal text-[#7C7772]">
+                Don't have an account?{" "}
+                <Link
+                  to="/register"
+                  className="font-medium text-[#C09B7D] transition hover:text-[#9C7354]"
+                >
+                  Sign up
                 </Link>
               </p>
+
+              <button
+                type="button"
+                onClick={() => navigate("/")}
+                className="text-[17px] font-normal text-[#7C7772] transition hover:text-[#C09B7D]"
+              >
+                View Main Dashboard Layout →
+              </button>
             </div>
           </div>
 
-          <footer className="mt-auto py-stack-md">
-            <p className="text-[11px] text-outline-variant text-center tracking-widest uppercase">
-              © 2024 VelvetNova Private Atelier
+          <footer className="mt-10 text-center">
+            <p className="text-[16px] font-normal text-[#7C7772]">
+              © 2026 Boutique. All rights reserved.
             </p>
           </footer>
-        </section>
-      </div>
-
-      <div className="fixed bottom-margin-edge right-margin-edge hidden md:block">
-        <button className="w-12 h-12 bg-surface-container-lowest text-on-surface border border-outline-variant/30 flex items-center justify-center luxury-shadow hover:border-secondary transition-all group">
-          <MdHelpOutline className="text-xl group-hover:text-secondary" />
-        </button>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }

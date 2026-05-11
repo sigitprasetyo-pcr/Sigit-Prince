@@ -1,34 +1,31 @@
-import { MdNotifications, MdSearch } from "react-icons/md";
+import { FiSearch, FiBell, FiHeart, FiShoppingBag } from "react-icons/fi";
 
 export default function Header() {
   return (
-    <header className="bg-[#FFFDF5] text-[#121212] border-b border-neutral-200/40 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] flex justify-between items-center h-20 w-full px-6 md:px-12 z-40 sticky top-0">
-      <h2 className="text-2xl font-display italic tracking-tighter">
-        VelvetNova
-      </h2>
+    <header className="sticky top-0 z-40 flex h-[90px] items-center justify-between border-b border-[#E6DED6] bg-white px-8">
+      <div className="relative w-full max-w-[560px]">
+        <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-[24px] text-[#8C8782]" />
 
-      <div className="hidden md:flex items-center space-x-8">
-        <div className="relative flex items-center border-b border-neutral-200 focus-within:border-primary transition-colors py-1">
-          <MdSearch className="text-neutral-400 text-xl" />
-          <input
-            className="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder:text-neutral-300 outline-none px-3"
-            placeholder="Cari koleksi atau pesanan..."
-            type="text"
-          />
-        </div>
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="h-[54px] w-full rounded-[8px] border-0 bg-[#F3F0EC] pl-14 pr-5 text-[22px] font-normal text-[#6F665F] outline-none placeholder:text-[#8C8782] focus:ring-2 focus:ring-[#C09B7D]/25"
+        />
+      </div>
 
-        <div className="flex items-center space-x-6">
-          <MdNotifications className="cursor-pointer hover:text-amber-700/80 transition-colors text-xl" />
+      <div className="flex items-center gap-7 text-[25px] text-[#2D2723]">
+        <button className="relative transition hover:text-[#C09B7D]">
+          <FiBell />
+          <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-[#8B2333]" />
+        </button>
 
-          <div className="flex items-center space-x-3 cursor-pointer">
-            <img
-              alt="Lead Curator"
-              className="w-8 h-8 rounded-full object-cover"
-              src="/images/image.png"
-            />
-            <span className="label-caps text-[10px]">Lead Curator</span>
-          </div>
-        </div>
+        <button className="transition hover:text-[#C09B7D]">
+          <FiHeart />
+        </button>
+
+        <button className="transition hover:text-[#C09B7D]">
+          <FiShoppingBag />
+        </button>
       </div>
     </header>
   );

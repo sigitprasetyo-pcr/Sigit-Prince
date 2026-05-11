@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { MdArrowBack, MdAutoAwesome, MdHelpOutline } from "react-icons/md";
+import { FiShoppingBag, FiMail, FiArrowLeft } from "react-icons/fi";
+import { MdAutoAwesome } from "react-icons/md";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");
@@ -12,136 +13,177 @@ export default function Forgot() {
   };
 
   return (
-    <div className="bg-background text-on-background min-h-screen relative overflow-hidden">
-      <main className="min-h-screen flex items-center justify-center px-6 md:px-margin-edge py-section-gap overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-surface-container-low opacity-40 -z-10 translate-x-1/4 skew-x-12" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 border border-outline-variant/20 rounded-full -translate-x-32 translate-y-32 -z-10" />
+    <main className="min-h-screen w-full bg-[#FAF9F7] font-body text-[#2D2723] lg:grid lg:grid-cols-[1fr_1.15fr]">
+      {/* LEFT SECTION */}
+      <section className="relative hidden min-h-screen overflow-hidden bg-[#FAF9F7] px-[78px] py-[64px] lg:flex lg:flex-col">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(192,155,125,0.10),transparent_32%),radial-gradient(circle_at_72%_76%,rgba(192,155,125,0.08),transparent_38%)]" />
 
-        <section className="max-w-[1100px] w-full grid grid-cols-1 md:grid-cols-12 items-center gap-gutter">
-          <div className="md:col-span-5 flex flex-col items-start space-y-stack-md">
-            <div className="mb-12">
-              <h1 className="font-display text-display-xl italic tracking-tighter text-primary">
-                VelvetNova
+        <div className="relative z-10">
+          {/* Brand */}
+          <div className="flex items-center gap-4">
+            <div className="flex h-[66px] w-[66px] items-center justify-center rounded-[12px] bg-[#C09B7D] text-[34px] text-white shadow-[0_14px_30px_rgba(45,39,35,0.16)]">
+              <FiShoppingBag />
+            </div>
+
+            <div>
+              <h1 className="font-display text-[38px] font-medium leading-none text-[#2D2723]">
+                Boutique
               </h1>
-
-              <p className="label-caps text-secondary mt-2">
-                Private Atelier Admin
+              <p className="mt-2 text-[16px] font-normal text-[#7C7772]">
+                Elegant Collection
               </p>
             </div>
+          </div>
 
-            <h2 className="font-display text-headline-md text-on-surface leading-tight max-w-sm">
-              Pulihkan Akses ke Portofolio Kurasi Anda.
+          {/* Hero Text */}
+          <div className="mt-[76px] max-w-[650px]">
+            <h2 className="font-display text-[46px] font-medium leading-tight text-[#2D2723]">
+              Discover Timeless Elegance
             </h2>
 
-            <p className="text-on-surface-variant text-body-md max-w-xs leading-relaxed">
-              Privasi dan keamanan adalah fondasi dari VelvetNova. Masukkan
-              email terdaftar Anda untuk memulai proses pemulihan kata sandi.
+            <p className="mt-8 max-w-[580px] text-[24px] font-normal leading-[1.45] text-[#7C7772]">
+              Curated collections of luxury fashion and accessories that
+              celebrate your unique style.
+            </p>
+          </div>
+
+          {/* Benefit List */}
+          <div className="mt-12 space-y-7">
+            {[
+              "Exclusive designer collections",
+              "Personalized shopping experience",
+              "Premium quality guarantee",
+              "Worldwide shipping",
+            ].map((item) => (
+              <div key={item} className="flex items-center gap-5">
+                <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[#F3E7DF] text-[22px] text-[#C09B7D]">
+                  <MdAutoAwesome />
+                </div>
+
+                <p className="text-[20px] font-normal text-[#2D2723]">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Testimonial */}
+        <div className="relative z-10 mt-auto max-w-[560px] rounded-[18px] border border-[#E6DED6] bg-white/60 p-8 shadow-[0_12px_35px_rgba(80,50,30,0.05)] backdrop-blur-sm">
+          <p className="text-[20px] font-normal leading-relaxed text-[#514B45]">
+            "The most exquisite shopping experience. Every piece tells a story
+            of elegance and sophistication."
+          </p>
+
+          <div className="mt-7 flex items-center gap-4">
+            <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#EFE7DF] text-[16px] font-medium text-[#C09B7D]">
+              SJ
+            </div>
+
+            <div>
+              <p className="text-[17px] font-medium text-[#2D2723]">
+                Sarah Johnson
+              </p>
+              <p className="mt-1 text-[15px] font-normal text-[#7C7772]">
+                Fashion Enthusiast
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RIGHT SECTION */}
+      <section className="flex min-h-screen flex-col items-center justify-center bg-white px-5 py-10">
+        <div className="w-full max-w-[560px]">
+          <div className="mb-11 text-center">
+            <h2 className="font-display text-[40px] font-medium leading-tight text-[#2D2723]">
+              Reset Password
+            </h2>
+
+            <p className="mt-4 text-[21px] font-normal text-[#7C7772]">
+              We'll help you get back into your account
+            </p>
+          </div>
+
+          <div className="rounded-[18px] border border-[#E6DED6] bg-white px-10 py-10 shadow-[0_10px_28px_rgba(45,39,35,0.08)]">
+            <div className="mb-8 flex justify-center">
+              <div className="flex h-[82px] w-[82px] items-center justify-center rounded-full bg-[#F3E7DF] text-[38px] text-[#C09B7D]">
+                <FiMail />
+              </div>
+            </div>
+
+            <p className="mx-auto mb-9 max-w-[390px] text-center text-[20px] font-normal leading-relaxed text-[#7C7772]">
+              Enter your email address and we'll send you instructions to reset
+              your password.
             </p>
 
-            <div className="pt-8 border-t border-outline-variant/30 w-32">
-              <Link
-                className="group flex items-center gap-2 label-caps text-on-surface hover:text-secondary transition-colors"
-                to="/login"
+            {sent && (
+              <div className="mb-6 rounded-[10px] border border-[#C9F0D8] bg-[#E7F8EF] px-5 py-4 text-[15px] font-normal text-[#00A85A]">
+                Reset instructions have been sent to{" "}
+                <span className="font-medium">{email}</span>.
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-7">
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-3 block text-[16px] font-medium text-[#2D2723]"
+                >
+                  Email Address
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                  className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="h-[64px] w-full rounded-[8px] bg-[#C09B7D] text-[20px] font-medium text-white shadow-[0_8px_18px_rgba(192,155,125,0.22)] transition hover:bg-[#AA8569]"
               >
-                <MdArrowBack className="text-lg" />
-                Kembali ke Login
+                Send Reset Instructions
+              </button>
+            </form>
+
+            <div className="mt-8 text-center">
+              <Link
+                to="/login"
+                className="inline-flex items-center gap-3 text-[18px] font-normal text-[#7C7772] transition hover:text-[#C09B7D]"
+              >
+                <FiArrowLeft />
+                Back to login
               </Link>
             </div>
+
+            <div className="my-8 h-px w-full bg-[#E6DED6]" />
+
+            <p className="text-center text-[15px] font-normal leading-relaxed text-[#8C8782]">
+              Having trouble? Contact our support team at
+              <br />
+              <a
+                href="mailto:support@boutique.com"
+                className="text-[#C09B7D] transition hover:text-[#9C7354]"
+              >
+                support@boutique.com
+              </a>
+            </p>
           </div>
 
-          <div className="md:col-start-7 md:col-span-6 bg-surface-container-lowest luxury-shadow p-8 md:p-16 border border-white/40">
-            <div className="space-y-10">
-              <div>
-                <span className="label-caps text-secondary block mb-4">
-                  Instruksi Pemulihan
-                </span>
-
-                <h3 className="font-display text-headline-sm text-on-surface">
-                  Lupa Kata Sandi?
-                </h3>
-              </div>
-
-              {sent && (
-                <div className="bg-green-50 text-green-700 text-sm p-4 border border-green-100">
-                  Tautan pemulihan sudah dikirim ke{" "}
-                  <strong>{email}</strong>.
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-12">
-                <div className="group relative">
-                  <label
-                    className="label-caps text-on-surface-variant mb-3 block transition-colors group-focus-within:text-primary"
-                    htmlFor="email"
-                  >
-                    Alamat Email Profesional
-                  </label>
-
-                  <input
-                    className="w-full bg-transparent border-0 border-b border-outline-variant py-4 px-0 focus:ring-0 focus:border-primary placeholder:text-neutral-300 text-body-md transition-all outline-none"
-                    id="email"
-                    name="email"
-                    placeholder="nama@velvetnova.com"
-                    required
-                    type="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-
-                  <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-primary transition-all duration-500 group-focus-within:w-full" />
-                </div>
-
-                <div className="pt-4 flex flex-col gap-6">
-                  <button
-                    className="w-full btn-black label-caps py-6 px-8 tracking-[0.2em] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    type="submit"
-                  >
-                    Kirim Tautan Pemulihan
-                  </button>
-
-                  <p className="text-center text-body-sm text-on-surface-variant italic">
-                    Kami akan mengirimkan instruksi ke email Anda dalam hitungan
-                    menit.
-                  </p>
-                </div>
-              </form>
-
-              <div className="flex justify-center items-center gap-4 pt-4">
-                <div className="h-[1px] flex-1 bg-outline-variant/30" />
-                <MdAutoAwesome className="text-outline-variant text-sm" />
-                <div className="h-[1px] flex-1 bg-outline-variant/30" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div className="hidden lg:block absolute -right-20 top-20 w-64 h-96 -rotate-6 luxury-shadow overflow-hidden opacity-80 pointer-events-none">
-          <img
-            className="w-full h-full object-cover"
-            src="/images/boutique-cowok.png"
-            alt="VelvetNova detail"
-          />
+          <footer className="mt-10 text-center">
+            <p className="text-[16px] font-normal text-[#7C7772]">
+              © 2026 Boutique. All rights reserved.
+            </p>
+          </footer>
         </div>
-      </main>
-
-      <footer className="fixed bottom-0 left-0 w-full px-6 md:px-margin-edge py-8 hidden md:flex justify-between items-center bg-transparent pointer-events-none">
-        <div className="flex items-center gap-6 pointer-events-auto">
-          <a className="label-caps text-[10px] text-on-surface-variant hover:text-primary transition-colors tracking-widest">
-            Syarat & Ketentuan
-          </a>
-
-          <a className="label-caps text-[10px] text-on-surface-variant hover:text-primary transition-colors tracking-widest">
-            Kebijakan Privasi
-          </a>
-        </div>
-
-        <div className="flex items-center gap-2 pointer-events-auto">
-          <MdHelpOutline className="text-secondary" />
-          <span className="label-caps text-[10px] text-on-surface-variant tracking-widest">
-            Butuh Bantuan? Hubungi Concierge
-          </span>
-        </div>
-      </footer>
-    </div>
+      </section>
+    </main>
   );
 }

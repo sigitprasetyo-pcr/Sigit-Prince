@@ -1,17 +1,25 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MdLanguage } from "react-icons/md";
+import { FiShoppingBag, FiEye, FiEyeOff } from "react-icons/fi";
+import { MdAutoAwesome } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export default function Register() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    fullname: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    role: "",
     password: "",
+    confirmPassword: "",
     terms: false,
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value, checked, type } = event.target;
@@ -24,207 +32,339 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/login");
+
+    if (form.password !== form.confirmPassword) {
+      alert("Password dan Confirm Password harus sama.");
+      return;
+    }
+
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/login");
+    }, 700);
   };
 
   return (
-    <div className="bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col">
-      <header className="h-20 w-full px-6 md:px-12 flex justify-between items-center z-40 bg-[#FFFDF5] border-b border-neutral-200/40">
-        <Link
-          to="/login"
-          className="text-2xl font-display italic tracking-tighter text-[#121212]"
-        >
-          VelvetNova
-        </Link>
+    <main className="min-h-screen w-full bg-[#FAF9F7] font-body text-[#2D2723] lg:grid lg:grid-cols-[1fr_1.15fr]">
+      {/* LEFT SECTION */}
+      <section className="relative hidden min-h-screen overflow-hidden bg-[#FAF9F7] px-[78px] py-[64px] lg:flex lg:flex-col">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(192,155,125,0.10),transparent_32%),radial-gradient(circle_at_72%_76%,rgba(192,155,125,0.08),transparent_38%)]" />
 
-        <div className="hidden md:flex gap-gutter">
-          <span className="label-caps text-on-surface-variant cursor-pointer hover:text-primary transition">
-            Bantuan
-          </span>
+        <div className="relative z-10">
+          {/* Brand */}
+          <div className="flex items-center gap-4">
+            <div className="flex h-[66px] w-[66px] items-center justify-center rounded-[12px] bg-[#C09B7D] text-[34px] text-white shadow-[0_14px_30px_rgba(45,39,35,0.16)]">
+              <FiShoppingBag />
+            </div>
 
-          <Link
-            to="/login"
-            className="label-caps text-on-surface-variant cursor-pointer hover:text-primary transition"
-          >
-            Login
-          </Link>
-        </div>
-      </header>
+            <div>
+              <h1 className="font-display text-[38px] font-medium leading-none text-[#2D2723]">
+                Boutique
+              </h1>
 
-      <main className="flex-grow flex items-center justify-center py-section-gap px-6 md:px-margin-edge">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter max-w-[1440px] mx-auto items-center">
-          <div className="hidden lg:flex lg:col-span-5 flex-col space-y-stack-md pr-12">
-            <span className="label-caps text-secondary tracking-[0.2em]">
-              Akses Eksklusif
-            </span>
-
-            <h1 className="font-display text-headline-sm text-primary">
-              Bergabunglah dengan Atelier Kami.
-            </h1>
-
-            <p className="text-body-lg text-on-surface-variant max-w-md">
-              Mulailah perjalanan kurasi Anda dalam ekosistem VelvetNova.
-              Kelola inventaris berharga dan bangun hubungan personal dengan
-              pelanggan setia Anda dalam satu antarmuka yang tenang.
-            </p>
-
-            <div className="pt-stack-md">
-              <img
-                className="w-full h-80 object-cover rounded-lg luxury-shadow"
-                src="/images/register-boutique.png"
-                alt="Luxury boutique interior"
-              />
+              <p className="mt-2 text-[16px] font-normal text-[#7C7772]">
+                Elegant Collection
+              </p>
             </div>
           </div>
 
-          <div className="lg:col-span-7 flex justify-center">
-            <div className="bg-surface-container-lowest p-8 md:p-16 w-full max-w-2xl luxury-shadow rounded-lg">
-              <div className="mb-stack-md text-center lg:text-left">
-                <h2 className="font-display text-headline-md text-primary mb-2">
-                  Registrasi Admin
-                </h2>
+          {/* Hero Text */}
+          <div className="mt-[76px] max-w-[650px]">
+            <h2 className="font-display text-[46px] font-medium leading-tight text-[#2D2723]">
+              Discover Timeless Elegance
+            </h2>
 
-                <p className="text-on-surface-variant text-body-sm">
-                  Lengkapi detail untuk mendaftarkan profil butik Anda.
+            <p className="mt-8 max-w-[580px] text-[24px] font-normal leading-[1.45] text-[#7C7772]">
+              Curated collections of luxury fashion and accessories that
+              celebrate your unique style.
+            </p>
+          </div>
+
+          {/* Benefit List */}
+          <div className="mt-12 space-y-7">
+            {[
+              "Exclusive designer collections",
+              "Personalized shopping experience",
+              "Premium quality guarantee",
+              "Worldwide shipping",
+            ].map((item) => (
+              <div key={item} className="flex items-center gap-5">
+                <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[#F3E7DF] text-[22px] text-[#C09B7D]">
+                  <MdAutoAwesome />
+                </div>
+
+                <p className="text-[20px] font-normal text-[#2D2723]">
+                  {item}
                 </p>
               </div>
+            ))}
+          </div>
+        </div>
 
-              <form onSubmit={handleSubmit} className="space-y-stack-md">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
-                  <div className="space-y-2">
-                    <label className="label-caps text-on-surface-variant">
-                      Nama Lengkap
-                    </label>
+        {/* Testimonial */}
+        <div className="relative z-10 mt-auto max-w-[560px] rounded-[18px] border border-[#E6DED6] bg-white/60 p-8 shadow-[0_12px_35px_rgba(80,50,30,0.05)] backdrop-blur-sm">
+          <p className="text-[20px] font-normal leading-relaxed text-[#514B45]">
+            "The most exquisite shopping experience. Every piece tells a story
+            of elegance and sophistication."
+          </p>
 
-                    <input
-                      className="boutique-input"
-                      placeholder="Masukkan nama"
-                      type="text"
-                      name="fullname"
-                      value={form.fullname}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+          <div className="mt-7 flex items-center gap-4">
+            <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#EFE7DF] text-[16px] font-medium text-[#C09B7D]">
+              SJ
+            </div>
 
-                  <div className="space-y-2">
-                    <label className="label-caps text-on-surface-variant">
-                      Alamat Email
-                    </label>
+            <div>
+              <p className="text-[17px] font-medium text-[#2D2723]">
+                Sarah Johnson
+              </p>
 
-                    <input
-                      className="boutique-input"
-                      placeholder="email@velvetnova.com"
-                      type="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </div>
+              <p className="mt-1 text-[15px] font-normal text-[#7C7772]">
+                Fashion Enthusiast
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                <div className="space-y-2">
-                  <label className="label-caps text-on-surface-variant">
-                    Peran di Butik
-                  </label>
+      {/* RIGHT SECTION */}
+      <section className="flex min-h-screen flex-col items-center justify-center bg-white px-5 py-10">
+        <div className="w-full max-w-[560px]">
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-[40px] font-medium leading-tight text-[#2D2723]">
+              Create Account
+            </h2>
 
-                  <select
-                    className="boutique-input appearance-none"
-                    name="role"
-                    value={form.role}
-                    onChange={handleChange}
-                    required
+            <p className="mt-4 text-[21px] font-normal text-[#7C7772]">
+              Join our boutique community and discover elegance
+            </p>
+          </div>
+
+          <div className="rounded-[18px] border border-[#E6DED6] bg-white px-10 py-10 shadow-[0_10px_28px_rgba(45,39,35,0.08)]">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name Row */}
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="firstName"
+                    className="mb-3 block text-[16px] font-medium text-[#2D2723]"
                   >
-                    <option value="" disabled>
-                      Pilih peran Anda
-                    </option>
-                    <option value="curator">Lead Curator</option>
-                    <option value="manager">Boutique Manager</option>
-                    <option value="director">Creative Director</option>
-                    <option value="inventory">Inventory Specialist</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="label-caps text-on-surface-variant">
-                    Kata Sandi
+                    First Name
                   </label>
 
                   <input
-                    className="boutique-input"
-                    placeholder="••••••••"
-                    type="password"
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    placeholder="John"
+                    value={form.firstName}
+                    onChange={handleChange}
+                    required
+                    className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="lastName"
+                    className="mb-3 block text-[16px] font-medium text-[#2D2723]"
+                  >
+                    Last Name
+                  </label>
+
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    placeholder="Doe"
+                    value={form.lastName}
+                    onChange={handleChange}
+                    required
+                    className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
+                  />
+                </div>
+              </div>
+
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-3 block text-[16px] font-medium text-[#2D2723]"
+                >
+                  Email Address
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-3 block text-[16px] font-medium text-[#2D2723]"
+                >
+                  Password
+                </label>
+
+                <div className="relative">
+                  <input
+                    id="password"
                     name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Create a strong password"
                     value={form.password}
                     onChange={handleChange}
                     required
+                    minLength={8}
+                    className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 pr-14 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
                   />
 
-                  <p className="text-[10px] text-on-surface-variant mt-1">
-                    Minimal 8 karakter dengan kombinasi angka dan simbol.
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((current) => !current)}
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[22px] text-[#8C8782] transition hover:text-[#2D2723]"
+                    aria-label="Show password"
+                  >
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
                 </div>
 
-                <div className="flex items-center space-x-3 pt-4">
+                <p className="mt-3 text-[14px] font-normal text-[#8C8782]">
+                  Must be at least 8 characters with numbers and symbols
+                </p>
+              </div>
+
+              {/* Confirm Password */}
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="mb-3 block text-[16px] font-medium text-[#2D2723]"
+                >
+                  Confirm Password
+                </label>
+
+                <div className="relative">
                   <input
-                    className="h-4 w-4 rounded border-outline-variant text-primary focus:ring-0"
-                    id="terms"
-                    type="checkbox"
-                    name="terms"
-                    checked={form.terms}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Re-enter your password"
+                    value={form.confirmPassword}
                     onChange={handleChange}
                     required
+                    minLength={8}
+                    className="h-[60px] w-full rounded-[8px] border border-[#E6DED6] bg-white px-5 pr-14 text-[19px] font-normal text-[#2D2723] outline-none placeholder:text-[#8C8782] focus:border-[#C09B7D] focus:ring-4 focus:ring-[#C09B7D]/15"
                   />
 
-                  <label className="text-body-sm text-on-surface-variant" htmlFor="terms">
-                    Saya setuju dengan{" "}
-                    <a className="text-primary underline underline-offset-4">
-                      Ketentuan Layanan
-                    </a>{" "}
-                    dan{" "}
-                    <a className="text-primary underline underline-offset-4">
-                      Kebijakan Privasi
-                    </a>
-                    .
-                  </label>
-                </div>
-
-                <div className="pt-stack-md flex flex-col md:flex-row items-center gap-stack-md">
                   <button
-                    className="w-full md:w-auto px-10 py-4 btn-black label-caps tracking-widest"
-                    type="submit"
+                    type="button"
+                    onClick={() =>
+                      setShowConfirmPassword((current) => !current)
+                    }
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[22px] text-[#8C8782] transition hover:text-[#2D2723]"
+                    aria-label="Show confirm password"
                   >
-                    Daftar Akun
+                    {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
                   </button>
-
-                  <p className="text-body-sm text-on-surface-variant">
-                    Sudah punya akun?{" "}
-                    <Link className="text-secondary font-bold" to="/login">
-                      Masuk
-                    </Link>
-                  </p>
                 </div>
-              </form>
+              </div>
+
+              {/* Terms */}
+              <label className="flex cursor-pointer items-start gap-4">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  checked={form.terms}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 h-[19px] w-[19px] rounded border-[#B8AEA5] accent-[#C09B7D]"
+                />
+
+                <span className="text-[17px] font-normal leading-relaxed text-[#2D2723]">
+                  I agree to the{" "}
+                  <a
+                    href="#terms"
+                    className="font-normal text-[#C09B7D] underline underline-offset-2 transition hover:text-[#9C7354]"
+                  >
+                    Terms of Service
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="#privacy"
+                    className="font-normal text-[#C09B7D] underline underline-offset-2 transition hover:text-[#9C7354]"
+                  >
+                    Privacy Policy
+                  </a>
+                </span>
+              </label>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="h-[64px] w-full rounded-[8px] bg-[#C09B7D] text-[20px] font-medium text-white shadow-[0_8px_18px_rgba(192,155,125,0.22)] transition hover:bg-[#AA8569] disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {loading ? "Creating Account..." : "Create Account"}
+              </button>
+            </form>
+
+            {/* Divider */}
+            <div className="my-8 flex items-center gap-5">
+              <div className="h-px flex-1 bg-[#E6DED6]" />
+              <p className="text-[16px] font-normal text-[#7C7772]">
+                or sign up with
+              </p>
+              <div className="h-px flex-1 bg-[#E6DED6]" />
             </div>
-          </div>
-        </div>
-      </main>
 
-      <footer className="py-stack-md border-t border-neutral-200/40 px-6 md:px-margin-edge">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center text-on-surface-variant">
-          <p className="text-label-md">
-            © 2024 VelvetNova Private Atelier. Seluruh Hak Cipta Dilindungi.
-          </p>
+            {/* Social Buttons */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <button
+                type="button"
+                className="flex h-[54px] items-center justify-center gap-3 rounded-[8px] border border-[#E6DED6] bg-white text-[17px] font-medium text-[#2D2723] transition hover:bg-[#FAF9F7]"
+              >
+                <FcGoogle className="text-[24px]" />
+                Google
+              </button>
 
-          <div className="flex gap-stack-md mt-4 md:mt-0 items-center">
-            <MdLanguage />
-            <span className="text-label-md cursor-pointer hover:text-primary">
-              INDONESIA
-            </span>
+              <button
+                type="button"
+                className="flex h-[54px] items-center justify-center gap-3 rounded-[8px] border border-[#E6DED6] bg-white text-[17px] font-medium text-[#2D2723] transition hover:bg-[#FAF9F7]"
+              >
+                <FaGithub className="text-[22px]" />
+                GitHub
+              </button>
+            </div>
+
+            {/* Login Link */}
+            <p className="mt-8 text-center text-[16px] font-normal text-[#7C7772]">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-[#C09B7D] transition hover:text-[#9C7354]"
+              >
+                Sign in
+              </Link>
+            </p>
           </div>
+
+          <footer className="mt-10 text-center">
+            <p className="text-[16px] font-normal text-[#7C7772]">
+              © 2026 Boutique. All rights reserved.
+            </p>
+          </footer>
         </div>
-      </footer>
-    </div>
+      </section>
+    </main>
   );
 }

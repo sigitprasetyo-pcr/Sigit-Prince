@@ -1,60 +1,61 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
 import {
-  MdAutoAwesome,
-  MdCampaign,
-  MdDashboard,
-  MdGroups,
-  MdHelpOutline,
-  MdInventory2,
-  MdLogout,
-  MdSettings,
-} from "react-icons/md";
+  FiHome,
+  FiShoppingBag,
+  FiBox,
+  FiHeart,
+  FiSettings,
+  FiUser,
+  FiLogOut,
+} from "react-icons/fi";
 
 const menus = [
-  { label: "Dashboard", path: "/", icon: <MdDashboard /> },
-  { label: "Inventory", path: "/inventory", icon: <MdInventory2 /> },
-  { label: "Orders", path: "/orders", icon: <MdAutoAwesome /> },
-  { label: "Customers", path: "/customers", icon: <MdGroups /> },
-  { label: "Marketing", path: "/error/403", icon: <MdCampaign /> },
+  { label: "Dashboard", path: "/", icon: <FiHome /> },
+  { label: "Products", path: "/products", icon: <FiShoppingBag /> },
+  { label: "Orders", path: "/orders", icon: <FiBox /> },
+  { label: "Favorites", path: "/favorites", icon: <FiHeart /> },
+  { label: "Settings", path: "/settings", icon: <FiSettings /> },
 ];
 
 export default function Sidebar() {
   const navigate = useNavigate();
 
-  const navClass = ({ isActive }) =>
-    `group py-4 flex items-center pl-4 transition-all duration-300 ease-out ${
-      isActive
-        ? "text-[#121212] font-bold border-l border-[#121212]"
-        : "text-neutral-400 hover:text-[#121212] hover:translate-x-1"
-    }`;
-
   const handleLogout = () => {
-    Swal.fire({
-      icon: "success",
-      title: "Berhasil!",
-      text: "Anda berhasil logout.",
-      showConfirmButton: false,
-      timer: 1600,
-    }).then(() => {
-      navigate("/login");
-    });
+    // Hapus data login kalau nanti kamu pakai auth/token
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.clear();
+
+    // Arahkan ke halaman login
+    navigate("/login");
   };
 
-  return (
-    <aside className="hidden lg:flex bg-[#FFFDF5] text-[#121212] h-screen w-72 border-r border-neutral-200/40 fixed left-0 top-0 flex-col py-10 px-8 z-50">
-      <div className="mb-12">
-        <h1 className="font-display italic text-xl tracking-tighter">
-          VelvetNova
-        </h1>
+  const navClass = ({ isActive }) =>
+    `flex items-center gap-4 rounded-[8px] px-5 py-4 text-[20px] transition-all ${
+      isActive
+        ? "bg-[#C09B7D] text-white font-medium"
+        : "text-white/90 font-normal hover:bg-white/10 hover:text-white"
+    }`;
 
-        <p className="font-display uppercase tracking-[0.2em] text-[10px] opacity-60 mt-1">
-          Private Atelier
-        </p>
+  return (
+    <aside className="fixed left-0 top-0 z-50 flex h-screen w-[320px] flex-col bg-[#2D2723] text-white">
+      <div className="flex h-[112px] items-center gap-4 border-b border-white/10 px-7">
+        <div className="flex h-[50px] w-[50px] items-center justify-center rounded-[10px] bg-[#C09B7D] text-[27px] text-white">
+          <FiShoppingBag />
+        </div>
+
+        <div>
+          <h1 className="font-display text-[34px] font-medium leading-none text-white">
+            Boutique
+          </h1>
+
+          <p className="mt-2 text-[15px] font-normal text-white/75">
+            Elegant Collection
+          </p>
+        </div>
       </div>
 
-      <nav className="flex-1 space-y-2">
+      <nav className="flex-1 space-y-3 px-6 py-5">
         {menus.map((menu) => (
           <NavLink
             key={menu.label}
@@ -62,40 +63,37 @@ export default function Sidebar() {
             end={menu.path === "/"}
             className={navClass}
           >
-            <span className="mr-3 text-xl">{menu.icon}</span>
-
-            <span className="font-display uppercase tracking-[0.2em] text-[10px]">
-              {menu.label}
-            </span>
+            <span className="text-[24px]">{menu.icon}</span>
+            <span>{menu.label}</span>
           </NavLink>
         ))}
       </nav>
 
-      <div className="mt-auto space-y-4">
-        <button className="w-full bg-primary text-on-primary py-3 px-4 label-caps text-[10px] tracking-widest">
-          New Collection
+      {/* BAGIAN ADMIN USER JADI BISA DIKLIK UNTUK LOGOUT */}
+      <div className="border-t border-white/10 p-7">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex w-full items-center justify-between rounded-[12px] p-2 text-left transition hover:bg-white/10"
+        >
+          <div className="flex items-center gap-4">
+            <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#C09B7D] text-[25px] text-white">
+              <FiUser />
+            </div>
+
+            <div>
+              <p className="text-[17px] font-medium leading-tight text-white">
+                Admin User
+              </p>
+
+              <p className="mt-1 text-[14px] font-normal text-white/75">
+                admin@boutique.com
+              </p>
+            </div>
+          </div>
+
+          <FiLogOut className="text-[22px] text-white/65 transition group-hover:text-white" />
         </button>
-
-        <div className="flex flex-col space-y-2 pt-6 border-t border-neutral-100">
-          <div className="flex items-center text-neutral-400 text-[10px] uppercase tracking-widest cursor-pointer hover:text-primary">
-            <MdSettings className="mr-3 text-sm" />
-            Settings
-          </div>
-
-          <div className="flex items-center text-neutral-400 text-[10px] uppercase tracking-widest cursor-pointer hover:text-primary">
-            <MdHelpOutline className="mr-3 text-sm" />
-            Support
-          </div>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex items-center text-neutral-400 text-[10px] uppercase tracking-widest cursor-pointer hover:text-red-600 transition-colors text-left"
-          >
-            <MdLogout className="mr-3 text-sm" />
-            Logout
-          </button>
-        </div>
       </div>
     </aside>
   );
