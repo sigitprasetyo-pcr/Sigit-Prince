@@ -1,17 +1,19 @@
 export default function PageHeader({ title, breadcrumb, description, children }) {
   return (
-    <section className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <section className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <span className="label-caps text-secondary tracking-[0.2em] block mb-3 underline decoration-secondary-container underline-offset-4">
-          {breadcrumb}
-        </span>
+        {breadcrumb && (
+          <span className="mb-2 block text-[9px] uppercase tracking-[0.18em] text-[#8B735D]">
+            {breadcrumb}
+          </span>
+        )}
 
-        <h1 className="font-display text-display-lg text-primary">
+        <h1 className="text-[22px] font-medium leading-tight text-[#2D2723]">
           {title}
         </h1>
 
         {description && (
-          <p className="mt-3 text-on-surface-variant max-w-2xl leading-relaxed">
+          <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-[#7C7772]">
             {description}
           </p>
         )}

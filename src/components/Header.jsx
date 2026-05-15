@@ -1,30 +1,45 @@
-import { FiSearch, FiBell, FiHeart, FiShoppingBag } from "react-icons/fi";
+import { FiSearch, FiBell, FiChevronDown } from "react-icons/fi";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 flex h-[90px] items-center justify-between border-b border-[#E6DED6] bg-white px-8">
-      <div className="relative w-full max-w-[560px]">
-        <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-[24px] text-[#8C8782]" />
+    <header className="sticky top-0 z-40 flex h-[54px] items-center justify-between border-b border-[#E7E0D8] bg-white px-6">
+      {/* SEARCH */}
+      <div className="relative w-[280px]">
+        <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-[#A58E7B]" />
 
         <input
           type="text"
-          placeholder="Search products..."
-          className="h-[54px] w-full rounded-[8px] border-0 bg-[#F3F0EC] pl-14 pr-5 text-[22px] font-normal text-[#6F665F] outline-none placeholder:text-[#8C8782] focus:ring-2 focus:ring-[#C09B7D]/25"
+          placeholder="Cari pesanan, stok, atau pelanggan..."
+          className="h-[28px] w-full rounded-[9px] border border-transparent bg-[#F9F5F1] pl-9 pr-4 text-[11px] text-[#4F4740] outline-none placeholder:text-[#A58E7B] focus:border-[#C7A765]"
         />
       </div>
 
-      <div className="flex items-center gap-7 text-[25px] text-[#2D2723]">
-        <button className="relative transition hover:text-[#C09B7D]">
+      {/* RIGHT */}
+      <div className="flex items-center gap-5">
+        <button
+          type="button"
+          className="relative flex h-[28px] w-[28px] items-center justify-center rounded-full bg-white text-[14px] text-[#3A2619] transition hover:text-[#C7A765]"
+        >
           <FiBell />
-          <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-[#8B2333]" />
+          <span className="absolute right-[4px] top-[4px] h-[6px] w-[6px] rounded-full bg-red-500" />
         </button>
 
-        <button className="transition hover:text-[#C09B7D]">
-          <FiHeart />
-        </button>
+        <div className="h-5 w-px bg-[#EEE7DF]" />
 
-        <button className="transition hover:text-[#C09B7D]">
-          <FiShoppingBag />
+        <button
+          type="button"
+          className="flex items-center gap-3 rounded-[10px] bg-white px-2 py-1 text-left transition hover:bg-[#FAF9F7]"
+        >
+          <div className="text-right leading-tight">
+            <p className="text-[11px] text-[#2D2723]">Admin User</p>
+            <p className="text-[8px] text-[#8B735D]">Admin</p>
+          </div>
+
+          <div className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[#3A2619] text-[10px] text-white">
+            AR
+          </div>
+
+          <FiChevronDown className="text-[12px] text-[#8B735D]" />
         </button>
       </div>
     </header>
