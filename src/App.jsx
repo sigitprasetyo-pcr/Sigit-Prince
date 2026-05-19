@@ -16,6 +16,8 @@ const OrderDetail = React.lazy(() => import("./pages/OrderDetail"));
 const Customers = React.lazy(() => import("./pages/Customers"));
 const CustomerDetail = React.lazy(() => import("./pages/CustomerDetail"));
 
+const CrmBreakdown = React.lazy(() => import("./pages/CrmBreakdown"));
+
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
@@ -31,7 +33,9 @@ function ComingSoon({ title }) {
           Hejmana Boutique
         </p>
 
-        <h1 className="text-[22px] font-medium text-black">{title}</h1>
+        <h1 className="text-[22px] font-medium text-black">
+          {title}
+        </h1>
 
         <p className="mt-2 text-[12px] text-[#34485C]">
           Halaman ini belum dibuat. Nanti bisa disesuaikan dengan desain Figma.
@@ -45,14 +49,12 @@ export default function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        {/* AUTH ROUTES */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<Forgot />} />
         </Route>
 
-        {/* MAIN ADMIN ROUTES */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
@@ -66,6 +68,8 @@ export default function App() {
 
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/:id" element={<CustomerDetail />} />
+
+          <Route path="/crm-breakdown" element={<CrmBreakdown />} />
 
           <Route path="/analytics" element={<ComingSoon title="Analytics" />} />
           <Route path="/settings" element={<ComingSoon title="Settings" />} />

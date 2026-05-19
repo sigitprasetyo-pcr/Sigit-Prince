@@ -1,4 +1,9 @@
-export default function PageHeader({ title, breadcrumb, description, children }) {
+export default function PageHeader({
+  title,
+  breadcrumb,
+  description,
+  children,
+}) {
   return (
     <section className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
