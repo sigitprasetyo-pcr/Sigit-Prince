@@ -1,4 +1,20 @@
-import { FiSearch, FiBell, FiChevronDown } from "react-icons/fi";
+import {
+  FiSearch,
+  FiBell,
+  FiChevronDown,
+  FiUser,
+  FiSettings,
+  FiLogOut,
+} from "react-icons/fi";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export default function Header() {
   return (
@@ -26,21 +42,58 @@ export default function Header() {
 
         <div className="h-5 w-px bg-[#EEE7DF]" />
 
-        <button
-          type="button"
-          className="flex items-center gap-3 rounded-[10px] bg-white px-2 py-1 text-left transition hover:bg-[#FAF9F7]"
-        >
-          <div className="text-right leading-tight">
-            <p className="text-[11px] text-[#2D2723]">Admin User</p>
-            <p className="text-[8px] text-[#8B735D]">Admin</p>
-          </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className="flex items-center gap-3 rounded-[10px] bg-white px-2 py-1 text-left transition hover:bg-[#FAF9F7]"
+            >
+              <div className="text-right leading-tight">
+                <p className="text-[11px] text-[#2D2723]">Admin User</p>
+                <p className="text-[8px] text-[#8B735D]">Admin</p>
+              </div>
 
-          <div className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[#3A2619] text-[10px] text-white">
-            AR
-          </div>
+              <div className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[#3A2619] text-[10px] text-white">
+                AR
+              </div>
 
-          <FiChevronDown className="text-[12px] text-[#8B735D]" />
-        </button>
+              <FiChevronDown className="text-[12px] text-[#8B735D]" />
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent
+            align="end"
+            className="w-[190px] rounded-[14px] border-[#E7E0D8] bg-white p-2 shadow-md"
+          >
+            <DropdownMenuLabel className="px-3 py-2">
+              <p className="text-[12px] font-normal text-[#2D2723]">
+                Admin User
+              </p>
+              <p className="text-[10px] font-normal text-[#8B735D]">
+                Boutique Admin
+              </p>
+            </DropdownMenuLabel>
+
+            <DropdownMenuSeparator className="bg-[#EEE7DF]" />
+
+            <DropdownMenuItem className="cursor-pointer gap-2 rounded-[9px] text-[12px] text-[#4F4740]">
+              <FiUser className="text-[13px]" />
+              Profile
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className="cursor-pointer gap-2 rounded-[9px] text-[12px] text-[#4F4740]">
+              <FiSettings className="text-[13px]" />
+              Settings
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator className="bg-[#EEE7DF]" />
+
+            <DropdownMenuItem className="cursor-pointer gap-2 rounded-[9px] text-[12px] text-red-600">
+              <FiLogOut className="text-[13px]" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
