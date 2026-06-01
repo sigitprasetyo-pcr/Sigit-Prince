@@ -16,6 +16,11 @@ const OrderDetail = React.lazy(() => import("./pages/OrderDetail"));
 const Customers = React.lazy(() => import("./pages/Customers"));
 const CustomerDetail = React.lazy(() => import("./pages/CustomerDetail"));
 
+const Membership = React.lazy(() => import("./pages/Membership"));
+const Promo = React.lazy(() => import("./pages/Promo"));
+const Reports = React.lazy(() => import("./pages/Reports"));
+const Settings = React.lazy(() => import("./pages/Settings"));
+
 const CrmBreakdown = React.lazy(() => import("./pages/CrmBreakdown"));
 
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
@@ -24,26 +29,6 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 const Login = React.lazy(() => import("./pages/auth/Login"));
 const Register = React.lazy(() => import("./pages/auth/Register"));
 const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
-
-function ComingSoon({ title }) {
-  return (
-    <section className="min-h-[calc(100vh-54px)] bg-[#F7F5F2] px-8 py-6">
-      <div className="rounded-[14px] border border-[#E7E0D8] bg-white p-6 shadow-[0_6px_16px_rgba(45,39,35,0.05)]">
-        <p className="mb-2 text-[9px] uppercase tracking-[0.2em] text-[#C7A765]">
-          Hejmana Boutique
-        </p>
-
-        <h1 className="text-[22px] font-medium text-black">
-          {title}
-        </h1>
-
-        <p className="mt-2 text-[12px] text-[#34485C]">
-          Halaman ini belum dibuat. Nanti bisa disesuaikan dengan desain Figma.
-        </p>
-      </div>
-    </section>
-  );
-}
 
 export default function App() {
   return (
@@ -69,10 +54,12 @@ export default function App() {
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/:id" element={<CustomerDetail />} />
 
-          <Route path="/crm-breakdown" element={<CrmBreakdown />} />
+          <Route path="/membership" element={<Membership />} />
+          <Route path="/promo" element={<Promo />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/settings" element={<Settings />} />
 
-          <Route path="/analytics" element={<ComingSoon title="Analytics" />} />
-          <Route path="/settings" element={<ComingSoon title="Settings" />} />
+          <Route path="/crm-breakdown" element={<CrmBreakdown />} />
 
           <Route
             path="/error/400"

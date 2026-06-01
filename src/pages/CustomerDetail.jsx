@@ -15,7 +15,9 @@ export default function CustomerDetail() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const foundCustomer = customers.find((item) => String(item.id) === String(id));
+    const foundCustomer = customers.find(
+      (item) => String(item.id) === String(id)
+    );
 
     if (!foundCustomer) {
       setError("Customer tidak ditemukan");
@@ -57,8 +59,8 @@ export default function CustomerDetail() {
         </h1>
       </div>
 
-      <div className="max-w-[620px] overflow-hidden rounded-[18px] border border-[#E7E0D8] bg-white shadow-[0_8px_22px_rgba(45,39,35,0.06)]">
-        <div className="flex items-center gap-5 border-b border-[#E7E0D8] bg-[#FFFDFC] p-7">
+      <div className="overflow-hidden rounded-[18px] border border-[#E7E0D8] bg-white shadow-[0_8px_22px_rgba(45,39,35,0.06)]">
+        <div className="flex flex-col gap-5 border-b border-[#E7E0D8] bg-[#FFFDFC] p-7 md:flex-row md:items-center">
           <img
             src={customer.image}
             alt={customer.name}
@@ -79,28 +81,105 @@ export default function CustomerDetail() {
             </h2>
 
             <p className="text-[12px] text-[#856F4E]">
-              Customer ID: #{customer.id}
+              Customer ID: {customer.idCustomer}
             </p>
           </div>
         </div>
 
-        <div className="grid gap-5 p-7 md:grid-cols-2">
-          <InfoItem label={`Email: ${customer.email}`} />
-          <InfoItem label={`No HP: ${customer.phone}`} />
-          <InfoItem label={`Total Pesanan: ${customer.totalOrders}`} />
-          <InfoItem label={`Produk Favorit: ${customer.favorite}`} />
-          <InfoItem label={`Order Terakhir: ${customer.lastOrder}`} />
-          <InfoItem label={`Alamat: ${customer.address}`} />
+        <div className="grid gap-5 p-7 lg:grid-cols-2">
+          <SectionCard title="Data Identitas Customer">
+            <InfoItem label="ID Customer" value={customer.idCustomer} />
+            <InfoItem label="Nama Lengkap" value={customer.namaLengkap} />
+            <InfoItem label="Username / Nickname" value={customer.username} />
+            <InfoItem label="Jenis Kelamin" value={customer.jenisKelamin} />
+            <InfoItem label="Tanggal Lahir" value={customer.tanggalLahir} />
+          </SectionCard>
 
-          <div className="rounded-[14px] border border-[#E7E0D8] bg-[#FAF9F7] p-5 md:col-span-2">
-            <p className="text-[12px] text-[#7C7772]">Total Belanja</p>
+          <SectionCard title="Kontak">
+            <InfoItem label="Nomor HP" value={customer.nomorHp} />
+            <InfoItem label="Email" value={customer.email} />
+            <InfoItem label="Alamat" value={customer.alamat} />
+            <InfoItem label="Kota / Provinsi" value={customer.kotaProvinsi} />
+            <InfoItem label="Media Sosial" value={customer.mediaSosial} />
+          </SectionCard>
 
-            <p className="mt-1 text-[18px] font-medium text-[#2D2723]">
-              {customer.spend}
-            </p>
-          </div>
+          <SectionCard title="Data Akun / Membership">
+            <InfoItem label="Tanggal Daftar" value={customer.tanggalDaftar} />
+            <InfoItem label="Status Member" value={customer.statusMember} />
+            <InfoItem
+              label="Level Membership"
+              value={customer.levelMembership}
+            />
+            <InfoItem label="Referral Code" value={customer.referralCode} />
+            <InfoItem label="Status Aktif" value={customer.statusAktif} />
+          </SectionCard>
 
-          <div className="md:col-span-2">
+          <SectionCard title="Riwayat Interaksi">
+            <InfoItem
+              label="Chat / Customer Service"
+              value={customer.chatCustomerService}
+            />
+            <InfoItem
+              label="Riwayat Komplain"
+              value={customer.riwayatKomplain}
+            />
+            <InfoItem
+              label="Feedback / Review"
+              value={customer.feedbackReview}
+            />
+            <InfoItem label="Catatan Admin" value={customer.catatanAdmin} />
+          </SectionCard>
+
+          <SectionCard title="Data Transaksi">
+            <InfoItem
+              label="Riwayat Pembelian"
+              value={customer.riwayatPembelian}
+            />
+            <InfoItem
+              label="Total Transaksi"
+              value={`${customer.totalTransaksi} transaksi`}
+            />
+            <InfoItem
+              label="Metode Pembayaran"
+              value={customer.metodePembayaran}
+            />
+            <InfoItem
+              label="Produk / Item yang Dibeli"
+              value={customer.produkItemDibeli}
+            />
+            <InfoItem
+              label="Tanggal Transaksi Terakhir"
+              value={customer.tanggalTransaksiTerakhir}
+            />
+            <InfoItem label="Total Belanja" value={customer.spend} />
+          </SectionCard>
+
+          <SectionCard title="Aktivitas User">
+            <InfoItem label="Login Terakhir" value={customer.loginTerakhir} />
+            <InfoItem
+              label="Device yang Digunakan"
+              value={customer.deviceDigunakan}
+            />
+            <InfoItem
+              label="Aktivitas dalam Aplikasi"
+              value={customer.aktivitasDalamAplikasi}
+            />
+          </SectionCard>
+
+          <SectionCard title="Marketing & Engagement">
+            <InfoItem label="Sumber User" value={customer.sumberUser} />
+            <InfoItem
+              label="Campaign yang Diikuti"
+              value={customer.campaignDiikuti}
+            />
+            <InfoItem
+              label="Email/SMS Subscription"
+              value={customer.emailSmsSubscription}
+            />
+            <InfoItem label="Status Promo" value={customer.statusPromo} />
+          </SectionCard>
+
+          <div className="lg:col-span-2">
             <button
               type="button"
               onClick={() => window.history.back()}
@@ -115,11 +194,25 @@ export default function CustomerDetail() {
   );
 }
 
-function InfoItem({ label }) {
+function SectionCard({ title, children }) {
   return (
-    <div className="flex items-center gap-3 text-[12px] text-[#4F4740]">
-      <span className="text-[#C47A24]">•</span>
-      <span>{label}</span>
+    <div className="rounded-[14px] border border-[#E7E0D8] bg-[#FAF9F7] p-5">
+      <h3 className="mb-4 text-[14px] font-medium text-[#2D2723]">
+        {title}
+      </h3>
+
+      <div className="space-y-3">{children}</div>
+    </div>
+  );
+}
+
+function InfoItem({ label, value }) {
+  return (
+    <div className="flex flex-col gap-1 text-[12px] text-[#4F4740]">
+      <span className="text-[10px] uppercase tracking-[0.14em] text-[#C47A24]">
+        {label}
+      </span>
+      <span>{value}</span>
     </div>
   );
 }
