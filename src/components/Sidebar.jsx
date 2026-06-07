@@ -3,14 +3,11 @@ import {
   FiHome,
   FiShoppingBag,
   FiUsers,
-  FiMessageCircle,
   FiBox,
-  FiActivity,
   FiTag,
   FiFileText,
   FiSettings,
   FiLogOut,
-  FiGrid,
   FiLayers,
 } from "react-icons/fi";
 
@@ -21,13 +18,11 @@ const menus = [
   { label: "Dashboard", path: "/dashboard", icon: <FiHome /> },
   { label: "Katalog Produk", path: "/products", icon: <FiShoppingBag /> },
   { label: "Pelanggan", path: "/customers", icon: <FiUsers /> },
-  { label: "Membership", path: "/membership", icon: <FiGrid /> },
-  { label: "Interaksi", path: "/interactions", icon: <FiMessageCircle /> },
   { label: "Pesanan", path: "/orders", icon: <FiBox /> },
-  { label: "Aktivitas", path: "/activity", icon: <FiActivity /> },
   { label: "Promo", path: "/promo", icon: <FiTag /> },
   { label: "Laporan", path: "/reports", icon: <FiFileText /> },
   { label: "Komponen CRM", path: "/crm-breakdown", icon: <FiLayers /> },
+  { label: "React Hooks", path: "/react-hooks-boutique", icon: <FiLayers /> },
   { label: "Pengaturan", path: "/settings", icon: <FiSettings /> },
 ];
 

@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import customers from "../data/Customers";
 
 const tierClass = {
-  "Platinum Member": "bg-[#EEE8FF] text-[#6D3FD1]",
-  "Gold Member": "bg-[#FFF3DE] text-[#C47A24]",
-  "Silver Member": "bg-[#EEF2F6] text-[#667085]",
-  "Regular Member": "bg-[#F3F0EC] text-[#7C7772]",
+  "Platinum Member":
+    "bg-[#EEE8FF] text-[#6D3FD1] border border-[#D9CCFF]",
+  "Gold Member":
+    "bg-[#FFF3DE] text-[#C47A24] border border-[#F2D4A7]",
+  "Silver Member":
+    "bg-[#EEF2F6] text-[#667085] border border-[#D7DEE8]",
+  "Regular Member":
+    "bg-[#F3F0EC] text-[#7C5F46] border border-[#E7E0D8]",
 };
 
 export default function CustomerDetail() {
@@ -70,7 +74,8 @@ export default function CustomerDetail() {
           <div>
             <span
               className={`rounded-full px-3 py-1 text-[9px] uppercase tracking-[0.12em] ${
-                tierClass[customer.tier] || "bg-[#F3F0EC] text-[#7C7772]"
+                tierClass[customer.tier] ||
+                "bg-[#F3F0EC] text-[#7C7772] border border-[#E7E0D8]"
               }`}
             >
               {customer.tier}
@@ -103,7 +108,7 @@ export default function CustomerDetail() {
             <InfoItem label="Media Sosial" value={customer.mediaSosial} />
           </SectionCard>
 
-          <SectionCard title="Data Akun / Membership">
+          <SectionCard title="Membership Customer">
             <InfoItem label="Tanggal Daftar" value={customer.tanggalDaftar} />
             <InfoItem label="Status Member" value={customer.statusMember} />
             <InfoItem

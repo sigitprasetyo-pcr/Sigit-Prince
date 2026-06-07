@@ -22,6 +22,9 @@ const Reports = React.lazy(() => import("./pages/Reports"));
 const Settings = React.lazy(() => import("./pages/Settings"));
 
 const CrmBreakdown = React.lazy(() => import("./pages/CrmBreakdown"));
+const ReactHooksBoutique = React.lazy(() =>
+  import("./pages/ReactHooksBoutique")
+);
 
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -60,6 +63,7 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
 
           <Route path="/crm-breakdown" element={<CrmBreakdown />} />
+          <Route path="/react-hooks-boutique" element={<ReactHooksBoutique />} />
 
           <Route
             path="/error/400"

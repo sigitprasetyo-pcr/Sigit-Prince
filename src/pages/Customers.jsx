@@ -12,6 +12,13 @@ import {
   SelectValue,
 } from "../components/ui/select";
 
+const tierStyles = {
+  "Regular Member": "bg-[#F3F0EC] text-[#7C5F46] border-[#E7E0D8]",
+  "Silver Member": "bg-[#EEF2F6] text-[#667085] border-[#D7DEE8]",
+  "Gold Member": "bg-[#FFF3DE] text-[#C47A24] border-[#F2D4A7]",
+  "Platinum Member": "bg-[#EEE8FF] text-[#6D3FD1] border-[#D9CCFF]",
+};
+
 export default function Customers() {
   const [search, setSearch] = useState("");
   const [tierFilter, setTierFilter] = useState("all");
@@ -37,24 +44,12 @@ export default function Customers() {
     return matchSearch && matchTier;
   });
 
-  const totalMember = customers.filter(
-    (customer) => customer.statusMember === "Member"
-  ).length;
-
-  const totalAktif = customers.filter(
-    (customer) => customer.statusAktif === "Aktif"
-  ).length;
-
-  const totalPromoKlaim = customers.filter(
-    (customer) => customer.statusPromo === "Sudah Klaim"
-  ).length;
-
   return (
     <section className="min-h-[calc(100vh-54px)] bg-[#F7F5F2] px-8 py-6">
       <PageHeader
         breadcrumb="Hejmana / Customers"
         title="Customers"
-        description="Kelola data pelanggan boutique, membership, transaksi, interaksi, dan promosi customer."
+        description="Kelola data pelanggan boutique, detail kontak, transaksi, dan status membership customer."
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <SearchBar
@@ -64,13 +59,13 @@ export default function Customers() {
           />
 
           <Select value={tierFilter} onValueChange={setTierFilter}>
-            <SelectTrigger className="h-[34px] w-[170px] rounded-[10px] border-[#E7E0D8] bg-white text-[11px] text-[#4F4740]">
-              <SelectValue placeholder="Filter tier" />
+            <SelectTrigger className="h-[34px] w-[180px] rounded-[10px] border-[#E7E0D8] bg-white text-[11px] text-[#4F4740]">
+              <SelectValue placeholder="Filter membership" />
             </SelectTrigger>
 
             <SelectContent className="rounded-[12px] border-[#E7E0D8] bg-white">
               <SelectItem value="all" className="text-[12px]">
-                Semua Tier
+                Semua Membership
               </SelectItem>
 
               {customerTiers.map((tier) => (
@@ -83,36 +78,49 @@ export default function Customers() {
         </div>
       </PageHeader>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
-        <div className="rounded-[14px] border border-[#E7E0D8] bg-white p-5 shadow-[0_6px_16px_rgba(45,39,35,0.05)]">
-          <p className="text-[11px] text-[#7C7772]">Total Customer</p>
-          <h2 className="mt-2 text-[24px] font-medium text-[#2D2723]">
-            {customers.length}
+      <div className="mb-6 rounded-[18px] border border-[#E7E0D8] bg-white p-5 shadow-[0_8px_20px_rgba(45,39,35,0.05)]">
+        <div className="mb-4">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">
+            Membership Color Guide
+          </p>
+          <h2 className="mt-1 text-[18px] font-medium text-[#2D2723]">
+            Warna Level Member
           </h2>
+          <p className="mt-1 text-[12px] text-[#7C7772]">
+            Warna ini digunakan untuk membedakan level customer pada CRM
+            Boutique.
+          </p>
         </div>
 
-        <div className="rounded-[14px] border border-[#E7E0D8] bg-white p-5 shadow-[0_6px_16px_rgba(45,39,35,0.05)]">
-          <p className="text-[11px] text-[#7C7772]">Total Member</p>
-          <h2 className="mt-2 text-[24px] font-medium text-[#2D2723]">
-            {totalMember}
-          </h2>
-        </div>
-
-        <div className="rounded-[14px] border border-[#E7E0D8] bg-white p-5 shadow-[0_6px_16px_rgba(45,39,35,0.05)]">
-          <p className="text-[11px] text-[#7C7772]">Customer Aktif</p>
-          <h2 className="mt-2 text-[24px] font-medium text-[#2D2723]">
-            {totalAktif}
-          </h2>
-        </div>
-
-        <div className="rounded-[14px] border border-[#E7E0D8] bg-white p-5 shadow-[0_6px_16px_rgba(45,39,35,0.05)]">
-          <p className="text-[11px] text-[#7C7772]">Promo Diklaim</p>
-          <h2 className="mt-2 text-[24px] font-medium text-[#2D2723]">
-            {totalPromoKlaim}
-          </h2>
+        <div className="flex flex-wrap gap-3">
+          {["Regular Member", "Silver Member", "Gold Member", "Platinum Member"].map(
+            (tier) => (
+              <span
+                key={tier}
+                className={`rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.12em] ${
+                  tierStyles[tier] || "bg-[#F3F0EC] text-[#7C7772]"
+                }`}
+              >
+                {tier}
+              </span>
+            )
+          )}
         </div>
       </div>
 
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-[12px] text-[#7C7772]">
+          Menampilkan{" "}
+          <span className="font-medium text-[#2D2723]">
+            {filteredCustomers.length}
+          </span>{" "}
+          data pelanggan
+        </p>
+
+        <p className="text-[11px] text-[#A98467]">
+          Tema: Hejmana Boutique CRM
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {filteredCustomers.map((customer) => (
