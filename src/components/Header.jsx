@@ -7,6 +7,8 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 
+import { useNavigate } from "react-router-dom";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +19,25 @@ import {
 } from "./ui/dropdown-menu";
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const admin = JSON.parse(localStorage.getItem("adminUser"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminUser");
+    navigate("/login");
+  };
+
+  const adminName = admin?.name || "Admin User";
+  const adminRole = admin?.role || "Administrator";
+
+  const avatar = adminName
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .substring(0, 2)
+    .toUpperCase();
+
   return (
     <header className="sticky top-0 z-40 flex h-[54px] items-center justify-between border-b border-[#E7E0D8] bg-white px-6">
       {/* SEARCH */}
@@ -32,16 +53,19 @@ export default function Header() {
 
       {/* RIGHT */}
       <div className="flex items-center gap-5">
+        {/* NOTIFICATION */}
         <button
           type="button"
           className="relative flex h-[28px] w-[28px] items-center justify-center rounded-full bg-white text-[14px] text-[#3A2619] transition hover:text-[#C7A765]"
         >
           <FiBell />
+
           <span className="absolute right-[4px] top-[4px] h-[6px] w-[6px] rounded-full bg-red-500" />
         </button>
 
         <div className="h-5 w-px bg-[#EEE7DF]" />
 
+        {/* PROFILE */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
@@ -49,12 +73,17 @@ export default function Header() {
               className="flex items-center gap-3 rounded-[10px] bg-white px-2 py-1 text-left transition hover:bg-[#FAF9F7]"
             >
               <div className="text-right leading-tight">
-                <p className="text-[11px] text-[#2D2723]">Admin User</p>
-                <p className="text-[8px] text-[#8B735D]">Admin</p>
+                <p className="text-[11px] text-[#2D2723]">
+                  {adminName}
+                </p>
+
+                <p className="text-[8px] text-[#8B735D]">
+                  {adminRole}
+                </p>
               </div>
 
               <div className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[#3A2619] text-[10px] text-white">
-                AR
+                {avatar}
               </div>
 
               <FiChevronDown className="text-[12px] text-[#8B735D]" />
@@ -67,10 +96,11 @@ export default function Header() {
           >
             <DropdownMenuLabel className="px-3 py-2">
               <p className="text-[12px] font-normal text-[#2D2723]">
-                Admin User
+                {adminName}
               </p>
+
               <p className="text-[10px] font-normal text-[#8B735D]">
-                Boutique Admin
+                {adminRole}
               </p>
             </DropdownMenuLabel>
 
@@ -88,7 +118,10 @@ export default function Header() {
 
             <DropdownMenuSeparator className="bg-[#EEE7DF]" />
 
-            <DropdownMenuItem className="cursor-pointer gap-2 rounded-[9px] text-[12px] text-red-600">
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer gap-2 rounded-[9px] text-[12px] text-red-600"
+            >
               <FiLogOut className="text-[13px]" />
               Logout
             </DropdownMenuItem>

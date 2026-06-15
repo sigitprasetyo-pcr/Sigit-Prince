@@ -3,35 +3,62 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { supabase } from "../../lib/supabase";
 
 export default function Login() {
   const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
-    email: "admin@hejmana.com",
-    password: "password",
+    email: "",
+    password: "",
     remember: false,
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value, checked, type } = event.target;
 
-    setForm((current) => ({
-      ...current,
+    setForm((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/dashboard");
+
+    try {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("email", form.email)
+        .eq("password", form.password)
+        .single();
+
+      if (error || !data) {
+        alert("Email atau password salah.");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(data));
+
+      navigate("/dashboard");
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-[30px] font-medium leading-tight text-[#050505]">
+        <h1 className="text-[30px] font-medium">
           Sign In
         </h1>
 
@@ -42,98 +69,77 @@ export default function Login() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="mb-3 block text-[13px] text-[#142333]">
-            Email
-          </label>
+          <label>Email</label>
 
           <input
             type="email"
             name="email"
+            required
             value={form.email}
             onChange={handleChange}
-            className="h-[48px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 text-[15px] text-[#6F7B86] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
+            className="h-[48px] w-full rounded-[12px] border px-4"
           />
         </div>
 
         <div>
-          <label className="mb-3 block text-[13px] text-[#142333]">
-            Password
-          </label>
+          <label>Password</label>
 
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
+              required
               value={form.password}
               onChange={handleChange}
-              className="h-[48px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 pr-12 text-[15px] text-[#6F7B86] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
+              className="h-[48px] w-full rounded-[12px] border px-4 pr-12"
             />
 
             <button
               type="button"
-              onClick={() => setShowPassword((current) => !current)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[18px] text-[#6F7B86]"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2"
             >
               {showPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-2 text-[13px] text-[#34485C]">
-            <input
-              type="checkbox"
-              name="remember"
-              checked={form.remember}
-              onChange={handleChange}
-              className="h-[15px] w-[15px] rounded border-[#9BA5AF] accent-[#C7A765]"
-            />
-            Remember me
-          </label>
-
-          <Link
-            to="/forgot"
-            className="text-[13px] text-[#C7A765] hover:text-[#9C7A3F]"
-          >
-            Forgot password?
-          </Link>
-        </div>
-
         <button
           type="submit"
-          className="h-[48px] w-full rounded-[12px] bg-gradient-to-r from-[#C7A765] to-[#8F7650] text-[15px] font-medium text-white shadow-[0_12px_24px_rgba(180,148,85,0.24)] transition hover:opacity-90"
+          disabled={loading}
+          className="h-[48px] w-full rounded-[12px] bg-[#C7A765] text-white"
         >
-          Sign In
+          {loading ? "Loading..." : "Sign In"}
         </button>
       </form>
 
       <div className="my-8 flex items-center gap-4">
-        <div className="h-px flex-1 bg-[#DDE1E6]" />
-        <p className="text-[13px] text-[#6F7B86]">or continue with</p>
-        <div className="h-px flex-1 bg-[#DDE1E6]" />
+        <div className="h-px flex-1 bg-gray-300" />
+        <p>or continue with</p>
+        <div className="h-px flex-1 bg-gray-300" />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <button
           type="button"
-          className="flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#DDE1E6] bg-white text-[14px] text-[#111827] transition hover:bg-[#FAF9F7]"
+          className="flex h-[44px] items-center justify-center gap-2 rounded-[12px] border"
         >
-          <FcGoogle className="text-[20px]" />
+          <FcGoogle />
           Google
         </button>
 
         <button
           type="button"
-          className="flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#DDE1E6] bg-white text-[14px] text-[#111827] transition hover:bg-[#FAF9F7]"
+          className="flex h-[44px] items-center justify-center gap-2 rounded-[12px] border"
         >
-          <FaGithub className="text-[19px]" />
+          <FaGithub />
           GitHub
         </button>
       </div>
 
-      <p className="mt-8 text-center text-[13px] text-[#34485C]">
-        Don&apos;t have an account?{" "}
-        <Link to="/register" className="text-[#C7A765] hover:text-[#9C7A3F]">
+      <p className="mt-8 text-center">
+        Don't have an account?{" "}
+        <Link to="/register">
           Sign up
         </Link>
       </p>

@@ -1,69 +1,233 @@
 import React, { Suspense } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 import Loading from "./components/Loading";
+
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
+import GuestLayout from "./layouts/GuestLayout";
 
-const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+import ProtectedRoute from "./components/ProtectedRoute";
 
-const Products = React.lazy(() => import("./pages/Products"));
-const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
+/* ===========================
+   GUEST
+=========================== */
+const LandingPage = React.lazy(() =>
+  import("./pages/LandingPage")
+);
 
-const Orders = React.lazy(() => import("./pages/Orders"));
-const OrderDetail = React.lazy(() => import("./pages/OrderDetail"));
+/* ===========================
+   ADMIN
+=========================== */
+const Dashboard = React.lazy(() =>
+  import("./pages/Dashboard")
+);
 
-const Customers = React.lazy(() => import("./pages/Customers"));
-const CustomerDetail = React.lazy(() => import("./pages/CustomerDetail"));
+const Users = React.lazy(() =>
+  import("./pages/Users")
+);
 
-const Membership = React.lazy(() => import("./pages/Membership"));
-const Promo = React.lazy(() => import("./pages/Promo"));
-const Reports = React.lazy(() => import("./pages/Reports"));
-const Settings = React.lazy(() => import("./pages/Settings"));
+const Products = React.lazy(() =>
+  import("./pages/Products")
+);
 
-const CrmBreakdown = React.lazy(() => import("./pages/CrmBreakdown"));
+const ProductDetail = React.lazy(() =>
+  import("./pages/ProductDetail")
+);
+
+const Orders = React.lazy(() =>
+  import("./pages/Orders")
+);
+
+const OrderDetail = React.lazy(() =>
+  import("./pages/OrderDetail")
+);
+
+const Customers = React.lazy(() =>
+  import("./pages/Customers")
+);
+
+const CustomerDetail = React.lazy(() =>
+  import("./pages/CustomerDetail")
+);
+
+const Membership = React.lazy(() =>
+  import("./pages/Membership")
+);
+
+const Member = React.lazy(() =>
+  import("./pages/Member")
+);
+
+const Promo = React.lazy(() =>
+  import("./pages/Promo")
+);
+
+const Reports = React.lazy(() =>
+  import("./pages/Reports")
+);
+
+const Settings = React.lazy(() =>
+  import("./pages/Settings")
+);
+
+const CrmBreakdown = React.lazy(() =>
+  import("./pages/CrmBreakdown")
+);
+
 const ReactHooksBoutique = React.lazy(() =>
   import("./pages/ReactHooksBoutique")
 );
 
-const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
-const NotFound = React.lazy(() => import("./pages/NotFound"));
+/* ===========================
+   AUTH ADMIN
+=========================== */
+const Login = React.lazy(() =>
+  import("./pages/auth/Login")
+);
 
-const Login = React.lazy(() => import("./pages/auth/Login"));
-const Register = React.lazy(() => import("./pages/auth/Register"));
-const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
+const Register = React.lazy(() =>
+  import("./pages/auth/Register")
+);
+
+const Forgot = React.lazy(() =>
+  import("./pages/auth/Forgot")
+);
+
+/* ===========================
+   ERROR
+=========================== */
+const ErrorPage = React.lazy(() =>
+  import("./pages/ErrorPage")
+);
+
+const NotFound = React.lazy(() =>
+  import("./pages/NotFound")
+);
 
 export default function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot" element={<Forgot />} />
+
+        {/* ======================
+            GUEST LANDING PAGE
+        ====================== */}
+        <Route element={<GuestLayout />}>
+          <Route
+            path="/"
+            element={<LandingPage />}
+          />
         </Route>
 
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        {/* ======================
+            AUTH ADMIN
+        ====================== */}
+        <Route element={<AuthLayout />}>
+          <Route
+            path="/login"
+            element={<Login />}
+          />
 
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/register"
+            element={<Register />}
+          />
 
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route
+            path="/forgot"
+            element={<Forgot />}
+          />
+        </Route>
 
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/:id" element={<OrderDetail />} />
+        {/* ======================
+            ADMIN AREA
+        ====================== */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
 
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/customers/:id" element={<CustomerDetail />} />
+          <Route
+            path="/users"
+            element={<Users />}
+          />
 
-          <Route path="/membership" element={<Membership />} />
-          <Route path="/promo" element={<Promo />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route
+            path="/products"
+            element={<Products />}
+          />
 
-          <Route path="/crm-breakdown" element={<CrmBreakdown />} />
-          <Route path="/react-hooks-boutique" element={<ReactHooksBoutique />} />
+          <Route
+            path="/products/:id"
+            element={<ProductDetail />}
+          />
+
+          <Route
+            path="/orders"
+            element={<Orders />}
+          />
+
+          <Route
+            path="/orders/:id"
+            element={<OrderDetail />}
+          />
+
+          <Route
+            path="/customers"
+            element={<Customers />}
+          />
+
+          <Route
+            path="/customers/:id"
+            element={<CustomerDetail />}
+          />
+
+          <Route
+            path="/membership"
+            element={<Membership />}
+          />
+
+          <Route
+            path="/member"
+            element={<Member />}
+          />
+
+          <Route
+            path="/promo"
+            element={<Promo />}
+          />
+
+          <Route
+            path="/reports"
+            element={<Reports />}
+          />
+
+          <Route
+            path="/settings"
+            element={<Settings />}
+          />
+
+          <Route
+            path="/crm-breakdown"
+            element={<CrmBreakdown />}
+          />
+
+          <Route
+            path="/react-hooks-boutique"
+            element={<ReactHooksBoutique />}
+          />
 
           <Route
             path="/error/400"
@@ -75,9 +239,23 @@ export default function App() {
               />
             }
           />
-
-          <Route path="*" element={<NotFound />} />
         </Route>
+
+        {/* ======================
+            REDIRECT
+        ====================== */}
+        <Route
+          path="/home"
+          element={<Navigate to="/" replace />}
+        />
+
+        {/* ======================
+            404
+        ====================== */}
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
       </Routes>
     </Suspense>
   );
