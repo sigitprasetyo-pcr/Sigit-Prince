@@ -254,13 +254,6 @@ export default function LandingPage() {
                 Lihat Koleksi
                 <FiArrowRight />
               </button>
-
-              <button
-                onClick={() => navigate("/login")}
-                className="flex items-center gap-2 rounded-[14px] border border-white/20 bg-white/10 px-8 py-4 text-[14px] font-semibold text-white backdrop-blur transition-all duration-300 hover:bg-white/15"
-              >
-                Admin Login
-              </button>
             </div>
 
             {/* Trust badges */}
@@ -403,10 +396,10 @@ export default function LandingPage() {
               Untuk melihat seluruh katalog, silakan login sebagai admin
             </p>
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/register")}
               className="inline-flex items-center gap-2 rounded-[14px] border-2 border-[#2D2723] bg-[#2D2723] px-8 py-3.5 text-[13px] font-semibold text-white transition-all hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(45,39,35,0.25)]"
             >
-              Login Admin
+              Register
               <FiArrowRight />
             </button>
           </div>
@@ -544,10 +537,10 @@ export default function LandingPage() {
               Halaman ini hanya dapat diakses oleh administrator Hejmana Boutique. Guest tidak dapat mendaftar atau login.
             </p>
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/register")}
               className="mt-2 inline-flex items-center gap-2 rounded-[14px] bg-[#2D2723] px-8 py-3.5 text-[13px] font-semibold text-white transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(45,39,35,0.3)]"
             >
-              Login sebagai Admin
+              Register
               <FiArrowRight />
             </button>
           </div>
@@ -603,13 +596,13 @@ export default function LandingPage() {
 
             {/* Admin */}
             <div>
-              <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-white/40">Admin Area</h3>
-              <p className="mb-4 text-[13px] text-white/40">Akses dashboard khusus administrator boutique.</p>
+              <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-white/40">Member Area</h3>
+              <p className="mb-4 text-[13px] text-white/40">Daftarkan diri Anda untuk menjadi bagian dari member boutique.</p>
               <button
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/register")}
                 className="inline-flex items-center gap-2 rounded-[12px] bg-[#C7A765]/20 px-5 py-2.5 text-[12px] font-medium text-[#C7A765] transition hover:bg-[#C7A765]/30"
               >
-                🔐 Admin Login
+                📝 Register
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiX, FiLogIn } from "react-icons/fi";
+import { FiMenu, FiX, FiLogIn, FiUserPlus } from "react-icons/fi";
 
 const menus = [
   { label: "Home",       href: "#home" },
@@ -79,8 +79,16 @@ export default function GuestNavbar() {
           ))}
         </nav>
 
-        {/* CTA — Admin Login Only */}
+        {/* CTA — Login */}
         <div className="hidden items-center gap-3 lg:flex">
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className="flex h-[40px] items-center gap-2 rounded-[12px] border border-white/20 bg-white/10 px-5 text-[13px] font-semibold text-white backdrop-blur transition hover:bg-white/15"
+          >
+            <FiUserPlus />
+            Register
+          </button>
           <button
             type="button"
             onClick={() => navigate("/login")}
@@ -88,7 +96,7 @@ export default function GuestNavbar() {
             style={{ background: "linear-gradient(135deg, #C7A765 0%, #A8834D 100%)" }}
           >
             <FiLogIn />
-            Admin Login
+            Login
           </button>
         </div>
 
@@ -119,15 +127,25 @@ export default function GuestNavbar() {
 
             <div className="mt-3 h-px bg-white/[0.07]" />
 
-            <button
-              type="button"
-              onClick={() => { setOpen(false); navigate("/login"); }}
-              className="mt-3 flex h-[46px] items-center justify-center gap-2 rounded-[12px] text-[14px] font-semibold text-white"
-              style={{ background: "linear-gradient(135deg, #C7A765 0%, #A8834D 100%)" }}
-            >
-              <FiLogIn />
-              Admin Login
-            </button>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => { setOpen(false); navigate("/register"); }}
+                className="flex h-[46px] items-center justify-center gap-2 rounded-[12px] border border-white/20 bg-white/5 text-[14px] font-semibold text-white transition hover:bg-white/10"
+              >
+                <FiUserPlus />
+                Register
+              </button>
+              <button
+                type="button"
+                onClick={() => { setOpen(false); navigate("/login"); }}
+                className="flex h-[46px] items-center justify-center gap-2 rounded-[12px] text-[14px] font-semibold text-white"
+                style={{ background: "linear-gradient(135deg, #C7A765 0%, #A8834D 100%)" }}
+              >
+                <FiLogIn />
+                Login
+              </button>
+            </div>
           </div>
         </div>
       )}

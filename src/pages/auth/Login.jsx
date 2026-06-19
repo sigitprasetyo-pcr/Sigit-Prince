@@ -54,9 +54,12 @@ export default function Login() {
       }
 
       localStorage.setItem("user", JSON.stringify(data));
-      localStorage.setItem("adminUser", JSON.stringify(data));
-
-      navigate("/dashboard");
+      if (data.role === "admin") {
+        localStorage.setItem("adminUser", JSON.stringify(data));
+        navigate("/dashboard");
+      } else {
+        navigate("/member");
+      }
     } catch (err) {
       setError(err.message);
     } finally {

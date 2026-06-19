@@ -109,6 +109,17 @@ const NotFound = React.lazy(() =>
   import("./pages/NotFound")
 );
 
+/* ===========================
+   MEMBER AREA
+=========================== */
+const MemberLayout = React.lazy(() =>
+  import("./layouts/MemberLayout")
+);
+
+const MemberDashboard = React.lazy(() =>
+  import("./pages/member/MemberDashboard")
+);
+
 export default function App() {
   return (
     <Suspense fallback={<Loading />}>
@@ -149,7 +160,7 @@ export default function App() {
         ====================== */}
         <Route
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <MainLayout />
             </ProtectedRoute>
           }
@@ -200,7 +211,7 @@ export default function App() {
           />
 
           <Route
-            path="/member"
+            path="/members"
             element={<Member />}
           />
 
@@ -238,6 +249,22 @@ export default function App() {
                 description="Permintaan tidak dapat diproses oleh sistem Hejmana Boutique."
               />
             }
+          />
+        </Route>
+
+        {/* ======================
+            MEMBER AREA
+        ====================== */}
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={["user", "member"]}>
+              <MemberLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            path="/member"
+            element={<MemberDashboard />}
           />
         </Route>
 

@@ -30,7 +30,7 @@ const menuGroups = [
       { label: "Manajemen User", path: "/users", icon: <FiUsers />, badge: null },
       { label: "Katalog Produk", path: "/products", icon: <FiShoppingBag />, badge: null },
       { label: "Pelanggan", path: "/customers", icon: <FiUsers />, badge: null },
-      { label: "Member", path: "/member", icon: <FiUserCheck />, badge: "600" },
+      { label: "Member", path: "/members", icon: <FiUserCheck />, badge: "600" },
       { label: "Pesanan", path: "/orders", icon: <FiBox />, badge: "30" },
     ],
   },
