@@ -42,6 +42,13 @@
     color: #2d2723;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* ── DARK MODE BODY ── */
+  html.dark body {
+    background: #110e0b;
+    color: #e8e0d5;
   }
 
   h1,
@@ -132,4 +139,20 @@
   100% {
     transform: translateX(320%);
   }
+}
+
+/* ── DARK MODE SCROLLBAR ── */
+html.dark ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #1A1410;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #4A3828;
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #C7A765;
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FiShoppingBag,
   FiUsers,
@@ -10,8 +11,11 @@ import {
   FiAlertCircle,
   FiStar,
   FiZap,
+  FiTrendingUp,
+  FiAward,
+  FiGift,
 } from "react-icons/fi";
-
+import { useTheme } from "../context/ThemeContext";
 
 import orders from "../data/Orders";
 import products from "../data/Products";
@@ -83,6 +87,35 @@ const weeklyData = [
 ];
 
 /* ============================================================
+   LIVE CLOCK WIB
+============================================================ */
+function useLiveClockWIB() {
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // WIB = UTC+7
+  const wibOffset = 7 * 60;
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const wib = new Date(utc + wibOffset * 60000);
+
+  const HARI = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
+
+  const hari = HARI[wib.getDay()];
+  const tgl = wib.getDate();
+  const bulan = BULAN[wib.getMonth()];
+  const tahun = wib.getFullYear();
+  const jam = String(wib.getHours()).padStart(2, "0");
+  const menit = String(wib.getMinutes()).padStart(2, "0");
+  const detik = String(wib.getSeconds()).padStart(2, "0");
+
+  return { dateStr: `${hari}, ${tgl} ${bulan} ${tahun}`, timeStr: `${jam}:${menit}:${detik}` };
+}
+
+/* ============================================================
    AREA CHART SVG
 ============================================================ */
 function AreaChart({ data, color = "#C7A765" }) {
@@ -114,15 +147,14 @@ function AreaChart({ data, color = "#C7A765" }) {
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: H }}>
       <defs>
         <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.25" />
+          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
           <stop offset="100%" stopColor={color} stopOpacity="0.02" />
         </linearGradient>
         <filter id="ls">
-          <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor={color} floodOpacity="0.3" />
+          <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor={color} floodOpacity="0.35" />
         </filter>
       </defs>
 
-      {/* grid lines */}
       {[0, 1, 2, 3, 4].map((i) => {
         const y = PT + (i / 4) * cH;
         const val = maxY * (1 - i / 4);
@@ -136,10 +168,7 @@ function AreaChart({ data, color = "#C7A765" }) {
         );
       })}
 
-      {/* area fill */}
       <path d={areaPath} fill={`url(#${gradId})`} />
-
-      {/* line */}
       <polyline
         points={linePts}
         fill="none"
@@ -149,13 +178,9 @@ function AreaChart({ data, color = "#C7A765" }) {
         strokeLinejoin="round"
         filter="url(#ls)"
       />
-
-      {/* dots */}
       {data.map((d, i) => (
-        <circle key={i} cx={getX(i)} cy={getY(d.revenue)} r="4" fill="white" stroke={color} strokeWidth="2.2" />
+        <circle key={i} cx={getX(i)} cy={getY(d.revenue)} r="4.5" fill="white" stroke={color} strokeWidth="2.5" />
       ))}
-
-      {/* x labels */}
       {data.map((d, i) => (
         <text key={i} x={getX(i)} y={H - 8} textAnchor="middle" fill="#A99B8E" fontSize="9.5" fontFamily="Manrope,sans-serif">
           {d.month}
@@ -192,27 +217,14 @@ function BarChart({ data }) {
           </linearGradient>
         ))}
       </defs>
-
-      {/* grid */}
       {[0, 1, 2, 3].map((i) => (
-        <line
-          key={i}
-          x1={PL}
-          y1={PT + (i / 3) * cH}
-          x2={W - PR}
-          y2={PT + (i / 3) * cH}
-          stroke="#EAE3DA"
-          strokeWidth="1"
-          strokeDasharray="3 3"
-        />
+        <line key={i} x1={PL} y1={PT + (i / 3) * cH} x2={W - PR} y2={PT + (i / 3) * cH} stroke="#EAE3DA" strokeWidth="1" strokeDasharray="3 3" />
       ))}
-
       {data.map(([cat, val], i) => {
         const bH = (val / maxVal) * cH;
         const x = PL + (i / data.length) * cW + (cW / data.length - barW) / 2;
         const y = PT + cH - bH;
         const label = cat.length > 8 ? cat.slice(0, 7) + "…" : cat;
-
         return (
           <g key={cat}>
             <rect x={x} y={y} width={barW} height={bH} rx="7" fill={`url(#bg${i})`} />
@@ -320,9 +332,9 @@ function Sparkline({ data, color }) {
 ============================================================ */
 function StatCard({ icon, label, value, sub, trend, trendUp, color }) {
   return (
-    <div className="group relative overflow-hidden rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_6px_20px_rgba(45,39,35,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(45,39,35,0.12)]">
+    <div className="group relative overflow-hidden rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_6px_20px_rgba(45,39,35,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(45,39,35,0.14)]">
       <div
-        className="absolute -right-6 -top-6 h-[90px] w-[90px] rounded-full opacity-[0.08] transition-all duration-300 group-hover:opacity-[0.16]"
+        className="absolute -right-6 -top-6 h-[90px] w-[90px] rounded-full opacity-[0.08] transition-all duration-300 group-hover:opacity-[0.18]"
         style={{ backgroundColor: color }}
       />
       <div className="relative flex items-start justify-between">
@@ -369,29 +381,46 @@ function StatusBadge({ status }) {
 }
 
 /* ============================================================
+   MEMBER TIER CARD (Dashboard)
+============================================================ */
+const TIER_STYLE = {
+  Regular: {
+    gradient: "linear-gradient(135deg, #6B6057 0%, #9A8C80 100%)",
+    icon: "👤",
+    glow: "rgba(184,169,157,0.5)",
+    badge: "Regular",
+  },
+  Silver: {
+    gradient: "linear-gradient(135deg, #4A6FA5 0%, #94A3B8 100%)",
+    icon: "⭐",
+    glow: "rgba(148,163,184,0.5)",
+    badge: "Silver",
+  },
+  Gold: {
+    gradient: "linear-gradient(135deg, #B8700A 0%, #E8B96A 100%)",
+    icon: "🏅",
+    glow: "rgba(199,167,101,0.6)",
+    badge: "Gold",
+  },
+  Platinum: {
+    gradient: "linear-gradient(135deg, #5B21B6 0%, #A78BFA 100%)",
+    icon: "💎",
+    glow: "rgba(109,93,246,0.6)",
+    badge: "Platinum",
+  },
+};
+
+/* ============================================================
    MAIN DASHBOARD
 ============================================================ */
-/* ── Live Clock ── */
-function useLiveClock() {
-  const [now, setNow] = useState(new Date());
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  const BULAN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-  const tgl   = now.getDate();
-  const bulan = BULAN[now.getMonth()];
-  const tahun = now.getFullYear();
-  const jam   = String(now.getHours()).padStart(2, "0");
-  const menit = String(now.getMinutes()).padStart(2, "0");
-  const detik = String(now.getSeconds()).padStart(2, "0");
-  return `${tgl} ${bulan} ${tahun} · ${jam}:${menit}:${detik} WIB`;
-}
-
 export default function Dashboard() {
   const [period, setPeriod] = useState("monthly");
   const chartData = period === "monthly" ? monthlyData : weeklyData;
-  const clockStr  = useLiveClock();
+  const { dateStr, timeStr } = useLiveClockWIB();
+  const navigate = useNavigate();
+  const { dark } = useTheme();
+
+  const bg = dark ? "bg-[#110E0B]" : "bg-[#F7F5F2]";
 
   const memberCount = customers.filter((c) => c.statusMember === "Member").length;
   const activeMember = customers.filter(
@@ -412,24 +441,42 @@ export default function Dashboard() {
     QRIS: "#E05252",
   };
 
+  // Tier counts for dashboard member summary
+  const tierSummary = [
+    { tier: "Regular", full: "Regular Member", color: "#9A8C80", bg: "#F3F0EC", icon: "👤" },
+    { tier: "Silver", full: "Silver Member", color: "#94A3B8", bg: "#EEF2F6", icon: "⭐" },
+    { tier: "Gold", full: "Gold Member", color: "#D99A42", bg: "#FFF3DE", icon: "🏅" },
+    { tier: "Platinum", full: "Platinum Member", color: "#6D5DF6", bg: "#EEE8FF", icon: "💎" },
+  ];
+
   return (
-    <section className="min-h-[calc(100vh-54px)] bg-[#F7F5F2] px-8 py-6">
+    <section className={`min-h-[calc(100vh-54px)] px-8 py-6 transition-colors duration-300 ${bg}`}>
       <div className="mx-auto w-full max-w-[1320px]">
 
         {/* ─── HEADER ─── */}
-        <div className="mb-7 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Overview</p>
-            <h1 className="mt-1 text-[26px] font-bold leading-tight text-[#2D2723]">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Overview · Hejmana Boutique</p>
+            <h1 className="mt-1 text-[28px] font-bold leading-tight text-[#2D2723]">
               Dashboard Boutique
             </h1>
             <p className="mt-1 text-[13px] text-[#8B7E76]">
-              Selamat datang! Berikut ringkasan performa toko Hejmana Boutique hari ini.
+              Selamat datang! Berikut ringkasan performa toko Hejmana Boutique.
             </p>
           </div>
-          <div className="flex items-center gap-2 rounded-[14px] border border-[#E7E0D8] bg-white px-4 py-2.5 text-[11px] font-medium tabular-nums text-[#7C7772] shadow-sm">
-            <FiClock className="text-[#C7A765]" />
-            {clockStr}
+
+          {/* Live Clock WIB */}
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-2 rounded-[16px] border border-[#E7E0D8] bg-white px-5 py-3 shadow-[0_4px_14px_rgba(45,39,35,0.08)]">
+              <FiClock className="text-[#C7A765] text-[16px]" />
+              <div className="text-right">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-[#A99B8E]">{dateStr} · WIB</p>
+                <p className="mt-0.5 text-[22px] font-bold tabular-nums leading-none text-[#2D2723]">
+                  {timeStr}
+                </p>
+              </div>
+            </div>
+            <span className="text-[10px] text-[#B0A89C]">Waktu Indonesia Barat (UTC+7)</span>
           </div>
         </div>
 
@@ -505,7 +552,7 @@ export default function Dashboard() {
             <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Revenue Trend</p>
-                <h2 className="mt-1 text-[18px] font-semibold text-[#2D2723]">Tren Pendapatan</h2>
+                <h2 className="mt-1 text-[18px] font-semibold text-[#2D2723]">Tren Pendapatan Boutique</h2>
               </div>
               <div className="flex rounded-[12px] border border-[#E7E0D8] p-1">
                 {[
@@ -622,9 +669,12 @@ export default function Dashboard() {
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Transaksi</p>
                 <h2 className="mt-1 text-[17px] font-semibold text-[#2D2723]">Pesanan Terbaru</h2>
               </div>
-              <a href="/orders" className="flex items-center gap-1 text-[11px] font-medium text-[#C7A765] hover:underline">
+              <button
+                onClick={() => navigate("/orders")}
+                className="flex items-center gap-1 text-[11px] font-medium text-[#C7A765] hover:underline"
+              >
                 Lihat Semua <FiArrowUpRight />
-              </a>
+              </button>
             </div>
 
             <div className="overflow-x-auto">
@@ -657,20 +707,6 @@ export default function Dashboard() {
               </table>
             </div>
 
-            {/* Footer summary bar */}
-            <div className="grid grid-cols-4 divide-x divide-[#EEE7DF] border-t border-[#EEE7DF] bg-[#FAF9F7]">
-              {[
-                { label: "Total Pesanan", value: orders.length },
-                { label: "Terkirim", value: statusCount["Terkirim"] || 0 },
-                { label: "Diproses", value: statusCount["Diproses"] || 0 },
-                { label: "Siap Kirim", value: statusCount["Siap Kirim"] || 0 },
-              ].map((s) => (
-                <div key={s.label} className="px-5 py-4 text-center">
-                  <p className="text-[20px] font-bold text-[#2D2723]">{s.value}</p>
-                  <p className="mt-0.5 text-[10px] text-[#A99B8E]">{s.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Kolom kanan */}
@@ -775,42 +811,81 @@ export default function Dashboard() {
           </div>
         </div>
 
-
-        {/* ─── MEMBER TIER SUMMARY ─── */}
-        <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-          <div className="mb-5 flex items-center justify-between">
+        {/* ─── MEMBER TIER SUMMARY (VIVID CARDS) ─── */}
+        <div className="mb-6 rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
+          <div className="mb-6 flex items-center justify-between">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">CRM</p>
-              <h2 className="mt-1 text-[18px] font-semibold text-[#2D2723]">Distribusi Tier Member</h2>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">CRM · Membership</p>
+              <h2 className="mt-1 text-[18px] font-semibold text-[#2D2723]">Distribusi Tier Member Boutique</h2>
             </div>
-            <a href="/member" className="flex items-center gap-1 text-[11px] font-medium text-[#C7A765] hover:underline">
+            <button
+              onClick={() => navigate("/member")}
+              className="flex items-center gap-1 text-[11px] font-medium text-[#C7A765] hover:underline"
+            >
               Detail Member <FiArrowUpRight />
-            </a>
+            </button>
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {[
-              { tier: "Regular", full: "Regular Member", color: "#B8A99D", bg: "#F3F0EC", icon: "👤" },
-              { tier: "Silver", full: "Silver Member", color: "#94A3B8", bg: "#EEF2F6", icon: "⭐" },
-              { tier: "Gold", full: "Gold Member", color: "#D99A42", bg: "#FFF3DE", icon: "🏅" },
-              { tier: "Platinum", full: "Platinum Member", color: "#6D5DF6", bg: "#EEE8FF", icon: "💎" },
-            ].map(({ tier, full, color, bg, icon }) => {
+            {tierSummary.map(({ tier, full, color, bg, icon }) => {
               const count = customers.filter((c) => c.tier === full).length;
               const pct = Math.round((count / customers.length) * 100);
+              const style = TIER_STYLE[tier];
               return (
-                <div key={tier} className="rounded-[18px] p-4 transition hover:-translate-y-1" style={{ backgroundColor: bg }}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[22px]">{icon}</span>
-                    <span className="text-[11px] font-bold" style={{ color }}>{pct}%</span>
-                  </div>
-                  <p className="mt-3 text-[13px] font-semibold text-[#2D2723]">{tier}</p>
-                  <p className="text-[24px] font-bold text-[#2D2723]">{count.toLocaleString("id-ID")}</p>
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/70">
-                    <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: color }} />
+                <div
+                  key={tier}
+                  className="group relative overflow-hidden rounded-[20px] p-5 text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.28)]"
+                  style={{ background: style.gradient }}
+                >
+                  {/* glow bg */}
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{ background: `radial-gradient(circle at top right, ${style.glow} 0%, transparent 60%)` }}
+                  />
+                  {/* shimmer dots */}
+                  <div className="absolute right-3 top-3 text-[28px] opacity-20">{icon}</div>
+
+                  <div className="relative">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/70">{tier}</p>
+                    <p className="mt-3 text-[40px] font-black leading-none">{count.toLocaleString("id-ID")}</p>
+                    <p className="mt-1 text-[11px] text-white/80">member terdaftar</p>
+
+                    <div className="mt-4">
+                      <div className="mb-1 flex items-center justify-between">
+                        <span className="text-[10px] text-white/70">Share</span>
+                        <span className="text-[13px] font-bold">{pct}%</span>
+                      </div>
+                      <div className="h-1.5 overflow-hidden rounded-full bg-white/20">
+                        <div
+                          className="h-full rounded-full bg-white/80 transition-all duration-700"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+
+          {/* Loyalty journey strip */}
+          <div className="mt-6 flex items-center justify-between rounded-[16px] bg-[#FAF9F7] px-6 py-4">
+            {tierSummary.map((t, i) => (
+              <div key={t.tier} className="flex flex-1 items-center">
+                <div className="flex flex-col items-center text-center">
+                  <div
+                    className="flex h-[40px] w-[40px] items-center justify-center rounded-full text-[18px] text-white shadow-md"
+                    style={{ backgroundColor: t.color }}
+                  >
+                    {t.icon}
+                  </div>
+                  <p className="mt-2 text-[11px] font-semibold text-[#2D2723]">{t.tier}</p>
+                </div>
+                {i < tierSummary.length - 1 && (
+                  <div className="mx-2 h-[2px] flex-1 rounded-full bg-gradient-to-r" style={{ background: `linear-gradient(to right, ${t.color}, ${tierSummary[i+1].color})`, opacity: 0.4 }} />
+                )}
+              </div>
+            ))}
           </div>
         </div>
 

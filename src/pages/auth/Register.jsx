@@ -1,18 +1,70 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+import {
+  FiEye,
+  FiEyeOff,
+  FiUser,
+  FiMail,
+  FiPhone,
+  FiLock,
+  FiCheck,
+  FiArrowRight,
+  FiShoppingBag,
+} from "react-icons/fi";
 import { supabase } from "../../lib/supabase";
+
+/* Password strength indicator */
+function PasswordStrength({ password }) {
+  const checks = [
+    { label: "Min. 8 karakter", ok: password.length >= 8 },
+    { label: "Huruf besar", ok: /[A-Z]/.test(password) },
+    { label: "Angka", ok: /[0-9]/.test(password) },
+  ];
+  const score = checks.filter((c) => c.ok).length;
+  const colors = ["#E7DDD2", "#E05252", "#E0A52A", "#2E9B5F"];
+  const labels = ["", "Lemah", "Sedang", "Kuat"];
+
+  return (
+    <div className="mt-2.5">
+      <div className="flex gap-1.5">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="h-1.5 flex-1 rounded-full transition-all duration-400"
+            style={{ backgroundColor: i < score ? colors[score] : "#E7DDD2" }}
+          />
+        ))}
+      </div>
+      {password && (
+        <p className="mt-1 text-[11px]" style={{ color: colors[score] }}>
+          {labels[score]}
+        </p>
+      )}
+      {password.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+          {checks.map((c) => (
+            <div key={c.label} className="flex items-center gap-1 text-[10px]">
+              <span className={c.ok ? "text-[#2E9B5F]" : "text-[#C0B4A6]"}>
+                {c.ok ? "✓" : "○"}
+              </span>
+              <span className={c.ok ? "text-[#2E9B5F]" : "text-[#C0B4A6]"}>{c.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Register() {
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [focused, setFocused] = useState("");
+  const [step, setStep] = useState(1); // 2-step form
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -25,283 +77,395 @@ export default function Register() {
 
   const handleChange = (event) => {
     const { name, value, checked, type } = event.target;
-
     setForm((current) => ({
       ...current,
       [name]: type === "checkbox" ? checked : value,
     }));
+    setErrorMsg("");
+  };
+
+  const handleNextStep = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.phone) {
+      setErrorMsg("Mohon lengkapi semua kolom.");
+      return;
+    }
+    setStep(2);
+    setErrorMsg("");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (loading) return;
 
     if (form.password !== form.confirmPassword) {
-      alert("Password dan Confirm Password harus sama.");
+      setErrorMsg("Password dan Konfirmasi Password harus sama.");
+      return;
+    }
+    if (form.password.length < 6) {
+      setErrorMsg("Password minimal 6 karakter.");
       return;
     }
 
     try {
       setLoading(true);
 
-      /* cek email */
-      const { data: existingUser, error: checkError } =
-        await supabase
-          .from("users")
-          .select("*")
-          .eq("email", form.email)
-          .maybeSingle();
+      const { data: existingUser, error: checkError } = await supabase
+        .from("users")
+        .select("*")
+        .eq("email", form.email)
+        .maybeSingle();
 
-      if (checkError) {
-        throw checkError;
-      }
+      if (checkError) throw checkError;
 
       if (existingUser) {
-        alert("Email sudah terdaftar.");
+        setErrorMsg("Email sudah terdaftar. Gunakan email lain.");
         return;
       }
 
-      /* simpan user */
-      const { error } = await supabase
-        .from("users")
-        .insert([
-          {
-            name: form.name,
-            email: form.email,
-            password: form.password,
-            role: "user",
-          },
-        ]);
+      const { error } = await supabase.from("users").insert([
+        {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          role: "user",
+        },
+      ]);
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
-      alert("Registrasi berhasil. Silakan login.");
-
-      navigate("/login");
+      setSuccessMsg("Akun berhasil dibuat! Mengarahkan ke halaman login...");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
       console.error(error);
-
-      alert(
-        error.message || "Terjadi kesalahan saat registrasi."
-      );
+      setErrorMsg(error.message || "Terjadi kesalahan saat registrasi.");
     } finally {
       setLoading(false);
     }
   };
 
+  const inputStyle = (name) => ({
+    background: focused === name ? "#FFFDF8" : "#FAF8F5",
+    border: focused === name ? "1.5px solid #C7A765" : "1.5px solid #E7DDD2",
+    boxShadow: focused === name ? "0 0 0 4px rgba(199,167,101,0.12)" : "none",
+  });
+
   return (
-    <div className="py-3">
+    <div className="py-2">
+      {/* Header */}
       <div className="mb-7">
-        <h1 className="text-[30px] font-medium leading-tight text-[#050505]">
-          Create Account
-        </h1>
-
-        <p className="mt-2 text-[15px] text-[#34485C]">
-          Join us and start your premium fashion journey.
-        </p>
-      </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-5"
-      >
-        {/* NAME */}
-        <div>
-          <label className="mb-2.5 block text-[13px] text-[#142333]">
-            Full Name
-          </label>
-
-          <input
-            type="text"
-            name="name"
-            placeholder="John Doe"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="h-[46px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 text-[14px] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
-          />
-        </div>
-
-        {/* EMAIL */}
-        <div>
-          <label className="mb-2.5 block text-[13px] text-[#142333]">
-            Email Address
-          </label>
-
-          <input
-            type="email"
-            name="email"
-            placeholder="john@example.com"
-            value={form.email}
-            onChange={handleChange}
-            required
-            className="h-[46px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 text-[14px] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
-          />
-        </div>
-
-        {/* PHONE */}
-        <div>
-          <label className="mb-2.5 block text-[13px] text-[#142333]">
-            Phone Number
-          </label>
-
-          <input
-            type="text"
-            name="phone"
-            placeholder="+62 812 3456 7890"
-            value={form.phone}
-            onChange={handleChange}
-            required
-            className="h-[46px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 text-[14px] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
-          />
-        </div>
-
-        {/* PASSWORD */}
-        <div>
-          <label className="mb-2.5 block text-[13px] text-[#142333]">
-            Password
-          </label>
-
-          <div className="relative">
-            <input
-              type={
-                showPassword ? "text" : "password"
-              }
-              name="password"
-              placeholder="Create password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="h-[46px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 pr-11 text-[14px] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
-            />
-
-            <button
-              type="button"
-              onClick={() =>
-                setShowPassword((current) => !current)
-              }
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[18px] text-[#6F7B86]"
-            >
-              {showPassword ? (
-                <FiEyeOff />
-              ) : (
-                <FiEye />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* CONFIRM PASSWORD */}
-        <div>
-          <label className="mb-2.5 block text-[13px] text-[#142333]">
-            Confirm Password
-          </label>
-
-          <div className="relative">
-            <input
-              type={
-                showConfirmPassword
-                  ? "text"
-                  : "password"
-              }
-              name="confirmPassword"
-              placeholder="Confirm password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              required
-              className="h-[46px] w-full rounded-[12px] border border-[#DDE1E6] bg-[#FAFBFC] px-4 pr-11 text-[14px] outline-none focus:border-[#C7A765] focus:ring-4 focus:ring-[#C7A765]/15"
-            />
-
-            <button
-              type="button"
-              onClick={() =>
-                setShowConfirmPassword(
-                  (current) => !current
-                )
-              }
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[18px] text-[#6F7B86]"
-            >
-              {showConfirmPassword ? (
-                <FiEyeOff />
-              ) : (
-                <FiEye />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* TERMS */}
-        <label className="flex items-start gap-3 text-[13px] leading-relaxed text-[#34485C]">
-          <input
-            type="checkbox"
-            name="terms"
-            checked={form.terms}
-            onChange={handleChange}
-            required
-            className="mt-0.5 h-[15px] w-[15px] accent-[#C7A765]"
-          />
-
-          <span>
-            I agree to the{" "}
-            <span className="text-[#C7A765]">
-              Terms & Conditions
-            </span>{" "}
-            and{" "}
-            <span className="text-[#C7A765]">
-              Privacy Policy
-            </span>
+        <div
+          className="mb-4 inline-flex items-center gap-2.5 rounded-full px-4 py-2"
+          style={{
+            background: "linear-gradient(135deg, rgba(199,167,101,0.15), rgba(199,167,101,0.05))",
+            border: "1px solid rgba(199,167,101,0.3)",
+          }}
+        >
+          <FiShoppingBag className="text-[#C7A765] text-[13px]" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C7A765]">
+            Bergabung Sekarang
           </span>
-        </label>
+        </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="h-[48px] w-full rounded-[12px] bg-gradient-to-r from-[#C7A765] to-[#8F7650] text-[15px] font-medium text-white shadow-[0_12px_24px_rgba(180,148,85,0.24)] transition hover:opacity-90 disabled:opacity-50"
-        >
-          {loading
-            ? "Creating Account..."
-            : "Create Account"}
-        </button>
-      </form>
-
-      <div className="my-7 flex items-center gap-4">
-        <div className="h-px flex-1 bg-[#DDE1E6]" />
-
-        <p className="text-[13px] text-[#6F7B86]">
-          or sign up with
+        <h1 className="text-[34px] font-black leading-[1.1] text-[#1C1410]">
+          Buat Akun
+          <br />
+          <span
+            className="bg-clip-text text-transparent"
+            style={{ backgroundImage: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+          >
+            Boutique ✨
+          </span>
+        </h1>
+        <p className="mt-3 text-[13px] leading-relaxed text-[#7C6B5B]">
+          Daftar dan nikmati pengalaman kelola fashion premium.
         </p>
-
-        <div className="h-px flex-1 bg-[#DDE1E6]" />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <button
-          type="button"
-          className="flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#DDE1E6] bg-white text-[14px] text-[#111827] transition hover:bg-[#FAF9F7]"
-        >
-          <FcGoogle className="text-[20px]" />
-          Google
-        </button>
-
-        <button
-          type="button"
-          className="flex h-[44px] items-center justify-center gap-2 rounded-[12px] border border-[#DDE1E6] bg-white text-[14px] text-[#111827] transition hover:bg-[#FAF9F7]"
-        >
-          <FaGithub className="text-[19px]" />
-          GitHub
-        </button>
+      {/* Step indicator */}
+      <div className="mb-7 flex items-center gap-3">
+        {[1, 2].map((s) => (
+          <div key={s} className="flex items-center gap-3">
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[12px] font-bold transition-all duration-300"
+              style={{
+                background:
+                  step > s
+                    ? "linear-gradient(135deg, #2E9B5F, #1E7B49)"
+                    : step === s
+                    ? "linear-gradient(135deg, #C7A765, #8A6530)"
+                    : "#F0EBE3",
+                color: step >= s ? "white" : "#B0A898",
+              }}
+            >
+              {step > s ? <FiCheck className="text-[13px]" /> : s}
+            </div>
+            <span className="text-[11px] font-medium text-[#7C6B5B]">
+              {s === 1 ? "Data Diri" : "Keamanan"}
+            </span>
+            {s < 2 && (
+              <div
+                className="h-px w-10 transition-all duration-500"
+                style={{ background: step > 1 ? "#C7A765" : "#E7DDD2" }}
+              />
+            )}
+          </div>
+        ))}
       </div>
 
-      <p className="mt-7 text-center text-[13px] text-[#34485C]">
-        Already have an account?{" "}
+      {/* Success */}
+      {successMsg && (
+        <div
+          className="mb-5 flex items-center gap-3 rounded-[16px] px-4 py-3.5 text-[13px]"
+          style={{
+            background: "linear-gradient(135deg, rgba(46,155,95,0.1), rgba(46,155,95,0.05))",
+            border: "1px solid rgba(46,155,95,0.3)",
+          }}
+        >
+          <FiCheck className="text-[#2E9B5F] text-[16px] shrink-0" />
+          <span className="text-[#2E9B5F]">{successMsg}</span>
+        </div>
+      )}
+
+      {/* Error */}
+      {errorMsg && (
+        <div
+          className="mb-5 flex items-center gap-3 rounded-[16px] px-4 py-3.5 text-[13px]"
+          style={{
+            background: "linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.04))",
+            border: "1px solid rgba(239,68,68,0.25)",
+          }}
+        >
+          <span className="text-[18px]">⚠️</span>
+          <span className="text-red-600">{errorMsg}</span>
+        </div>
+      )}
+
+      {/* STEP 1 */}
+      {step === 1 && (
+        <form onSubmit={handleNextStep} className="space-y-4">
+          {/* Name */}
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.16em] text-[#4F4740]">
+              Nama Lengkap
+            </label>
+            <div className="relative">
+              <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "name" ? "#C7A765" : "#B0956B" }} />
+              <input
+                type="text"
+                name="name"
+                placeholder="Masukkan nama lengkap"
+                value={form.name}
+                onChange={handleChange}
+                onFocus={() => setFocused("name")}
+                onBlur={() => setFocused("")}
+                required
+                className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+                style={inputStyle("name")}
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.16em] text-[#4F4740]">
+              Email
+            </label>
+            <div className="relative">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "email" ? "#C7A765" : "#B0956B" }} />
+              <input
+                type="email"
+                name="email"
+                placeholder="email@example.com"
+                value={form.email}
+                onChange={handleChange}
+                onFocus={() => setFocused("email")}
+                onBlur={() => setFocused("")}
+                required
+                className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+                style={inputStyle("email")}
+              />
+            </div>
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.16em] text-[#4F4740]">
+              Nomor Telepon
+            </label>
+            <div className="relative">
+              <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "phone" ? "#C7A765" : "#B0956B" }} />
+              <input
+                type="text"
+                name="phone"
+                placeholder="+62 812-xxxx-xxxx"
+                value={form.phone}
+                onChange={handleChange}
+                onFocus={() => setFocused("phone")}
+                onBlur={() => setFocused("")}
+                required
+                className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+                style={inputStyle("phone")}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-bold text-white shadow-[0_16px_40px_rgba(199,167,101,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(199,167,101,0.5)]"
+            style={{ background: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+          >
+            <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
+            <span className="relative flex items-center gap-2 text-[14px]">
+              Lanjut ke Langkah 2
+              <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </button>
+        </form>
+      )}
+
+      {/* STEP 2 */}
+      {step === 2 && (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Password */}
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.16em] text-[#4F4740]">
+              Password
+            </label>
+            <div className="relative">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "password" ? "#C7A765" : "#B0956B" }} />
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Buat password kuat"
+                value={form.password}
+                onChange={handleChange}
+                onFocus={() => setFocused("password")}
+                onBlur={() => setFocused("")}
+                required
+                className="h-[52px] w-full rounded-[16px] pl-12 pr-12 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+                style={inputStyle("password")}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] hover:text-[#C7A765] transition"
+              >
+                {showPassword ? <FiEyeOff className="text-[16px]" /> : <FiEye className="text-[16px]" />}
+              </button>
+            </div>
+            {form.password && <PasswordStrength password={form.password} />}
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.16em] text-[#4F4740]">
+              Konfirmasi Password
+            </label>
+            <div className="relative">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "confirm" ? "#C7A765" : "#B0956B" }} />
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Ulangi password"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                onFocus={() => setFocused("confirm")}
+                onBlur={() => setFocused("")}
+                required
+                className="h-[52px] w-full rounded-[16px] pl-12 pr-12 text-[13px] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+                style={{
+                  ...inputStyle("confirm"),
+                  color:
+                    form.confirmPassword &&
+                    form.confirmPassword !== form.password
+                      ? "#E05252"
+                      : "#2D2723",
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((v) => !v)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] hover:text-[#C7A765] transition"
+              >
+                {showConfirmPassword ? <FiEyeOff className="text-[16px]" /> : <FiEye className="text-[16px]" />}
+              </button>
+              {/* Match indicator */}
+              {form.confirmPassword && form.password && (
+                <div className="absolute right-11 top-1/2 -translate-y-1/2">
+                  {form.confirmPassword === form.password ? (
+                    <FiCheck className="text-[#2E9B5F] text-[15px]" />
+                  ) : null}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Terms */}
+          <label className="flex cursor-pointer items-start gap-3 text-[12px] leading-relaxed text-[#7C6B5B]">
+            <input
+              type="checkbox"
+              name="terms"
+              checked={form.terms}
+              onChange={handleChange}
+              required
+              className="mt-0.5 h-[16px] w-[16px] accent-[#C7A765] rounded"
+            />
+            <span>
+              Saya menyetujui{" "}
+              <span className="font-semibold text-[#C7A765]">Syarat & Ketentuan</span>{" "}
+              serta{" "}
+              <span className="font-semibold text-[#C7A765]">Kebijakan Privasi</span>{" "}
+              Hejmana Boutique
+            </span>
+          </label>
+
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[16px] font-bold text-[#7C6B5B] transition hover:bg-[#F0EBE3]"
+              style={{ border: "1.5px solid #E7DDD2" }}
+            >
+              ←
+            </button>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative flex h-[54px] flex-1 items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-bold text-white shadow-[0_16px_40px_rgba(199,167,101,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(199,167,101,0.5)] disabled:opacity-70 disabled:translate-y-0"
+              style={{ background: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+            >
+              <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
+              <span className="relative flex items-center gap-2 text-[14px]">
+                {loading ? (
+                  <>
+                    <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Membuat Akun...
+                  </>
+                ) : (
+                  <>
+                    Buat Akun Sekarang
+                    <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
+              </span>
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* Already have account */}
+      <p className="mt-7 text-center text-[13px] text-[#7C6B5B]">
+        Sudah punya akun?{" "}
         <Link
           to="/login"
-          className="text-[#C7A765] hover:text-[#9C7A3F]"
+          className="font-bold text-[#C7A765] transition hover:text-[#9C7A3F]"
         >
-          Sign in
+          Masuk sekarang →
         </Link>
       </p>
     </div>
