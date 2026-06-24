@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   FiAward,
   FiCheckCircle,
@@ -15,7 +15,8 @@ import {
 } from "react-icons/fi";
 
 import PageHeader from "../components/PageHeader";
-import customers from "../data/Customers";
+import customersData from "../data/Customers";
+import { supabase } from "../../lib/supabase";
 
 /* ============================================================
    CONSTANTS
@@ -373,11 +374,39 @@ export default function Member() {
   const [filterStatus, setFilterStatus] = useState("Semua");
   const [page, setPage] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
+  const [supabaseUsers, setSupabaseUsers] = useState([]);
+
+  useEffect(() => {
+    async function fetchSupabaseUsers() {
+      const { data, error } = await supabase.from("users").select("*");
+      if (data && !error) {
+        const mapped = data
+          .filter((u) => u.role !== "admin")
+          .map((u) => ({
+            idCustomer: `SPB${String(u.id).padStart(3, "0")}`,
+            namaLengkap: u.name || "Member Baru",
+            email: u.email,
+            tier: "Regular Member",
+            tanggalDaftar: new Date(u.created_at || Date.now()).toLocaleDateString("id-ID"),
+            referralCode: "-",
+            metodePembayaran: "-",
+            totalTransaksi: 0,
+            statusAktif: "Aktif",
+            statusMember: "Non Member",
+            image: `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name || "M")}&background=C7A765&color=fff`,
+          }));
+        setSupabaseUsers(mapped);
+      }
+    }
+    fetchSupabaseUsers();
+  }, []);
+
+  const customers = useMemo(() => [...supabaseUsers, ...customersData], [supabaseUsers]);
 
   /* -------- derived stats -------- */
   const memberList = useMemo(
     () => customers.filter((c) => c.statusMember === "Member"),
-    []
+    [customers]
   );
 
   const totalMember = memberList.length;
@@ -390,7 +419,7 @@ export default function Member() {
       label: t,
       value: customers.filter((c) => c.tier === t).length,
     }));
-  }, []);
+  }, [customers]);
 
   const donutData = [
     { label: "Regular", value: tierCounts[0].value, color: "#B8A99D" },
@@ -415,7 +444,7 @@ export default function Member() {
         filterStatus === "Semua" || c.statusAktif === filterStatus;
       return matchSearch && matchTier && matchStatus;
     });
-  }, [search, filterTier, filterStatus]);
+  }, [search, filterTier, filterStatus, customers]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
