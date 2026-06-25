@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Heart, Star, ShoppingBag, Eye } from "lucide-react";
-import products from "../data/products";
+import products from "../data/Products";
 
 export default function ProductSection({ 
   onAddToCart, 

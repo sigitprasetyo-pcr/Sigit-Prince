@@ -19,7 +19,7 @@ import NewsletterSection from "../components/NewsletterSection";
 import Footer from "../components/Footer";
 
 // Import product data for search modal
-import products from "../data/products";
+import products from "../data/Products";
 
 export default function LandingPage() {
   const [cartCount, setCartCount] = useState(0);
