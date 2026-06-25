@@ -16,7 +16,7 @@ import {
 
 import PageHeader from "../components/PageHeader";
 import customersData from "../data/Customers";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../lib/supabase";
 
 /* ============================================================
    CONSTANTS
