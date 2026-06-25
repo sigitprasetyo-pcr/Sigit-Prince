@@ -32,7 +32,7 @@ export default function Products() {
   return (
     <section className="min-h-[calc(100vh-54px)] bg-[#F7F5F2] px-8 py-6">
       <PageHeader
-        breadcrumb="Hejmana / Product List"
+        breadcrumb="Aurelia / Product List"
         title="Products"
         description="Kelola koleksi produk boutique, stok, harga, dan kategori."
       >

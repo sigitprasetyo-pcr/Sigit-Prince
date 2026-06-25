@@ -145,9 +145,9 @@ export default function Register() {
   };
 
   const inputStyle = (name) => ({
-    background: focused === name ? "#FFFDF8" : "#FAF8F5",
-    border: focused === name ? "1.5px solid #C7A765" : "1.5px solid #E7DDD2",
-    boxShadow: focused === name ? "0 0 0 4px rgba(199,167,101,0.12)" : "none",
+    background: focused === name ? "#FFFDF9" : "#FAF8F5",
+    border: focused === name ? "1.5px solid #7A2E3A" : "1.5px solid #E7DDD2",
+    boxShadow: focused === name ? "0 0 0 4px rgba(122,46,58,0.1)" : "none",
   });
 
   return (
@@ -157,27 +157,27 @@ export default function Register() {
         <div
           className="mb-4 inline-flex items-center gap-2.5 rounded-full px-4 py-2"
           style={{
-            background: "linear-gradient(135deg, rgba(199,167,101,0.15), rgba(199,167,101,0.05))",
-            border: "1px solid rgba(199,167,101,0.3)",
+            background: "linear-gradient(135deg, rgba(122,46,58,0.1), rgba(122,46,58,0.03))",
+            border: "1px solid rgba(122,46,58,0.2)",
           }}
         >
-          <FiShoppingBag className="text-[#C7A765] text-[13px]" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C7A765]">
+          <FiShoppingBag className="text-[#7A2E3A] text-[13px]" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#7A2E3A]">
             Bergabung Sekarang
           </span>
         </div>
 
-        <h1 className="text-[34px] font-black leading-[1.1] text-[#1C1410]">
+        <h1 className="text-[34px] font-light font-serif leading-[1.1] text-[#1C1410]">
           Buat Akun
           <br />
           <span
-            className="bg-clip-text text-transparent"
-            style={{ backgroundImage: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+            className="bg-clip-text text-transparent font-normal"
+            style={{ backgroundImage: "linear-gradient(135deg, #7A2E3A 0%, #C5A46D 100%)" }}
           >
             Boutique ✨
           </span>
         </h1>
-        <p className="mt-3 text-[13px] leading-relaxed text-[#7C6B5B]">
+        <p className="mt-3 text-[13px] leading-relaxed text-[#7C6B5B] font-light">
           Daftar dan nikmati pengalaman kelola fashion premium.
         </p>
       </div>
@@ -187,26 +187,26 @@ export default function Register() {
         {[1, 2].map((s) => (
           <div key={s} className="flex items-center gap-3">
             <div
-              className="flex h-8 w-8 items-center justify-center rounded-full text-[12px] font-bold transition-all duration-300"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[12px] font-semibold transition-all duration-300"
               style={{
                 background:
                   step > s
                     ? "linear-gradient(135deg, #2E9B5F, #1E7B49)"
                     : step === s
-                    ? "linear-gradient(135deg, #C7A765, #8A6530)"
+                    ? "linear-gradient(135deg, #7A2E3A, #521E26)"
                     : "#F0EBE3",
                 color: step >= s ? "white" : "#B0A898",
               }}
             >
               {step > s ? <FiCheck className="text-[13px]" /> : s}
             </div>
-            <span className="text-[11px] font-medium text-[#7C6B5B]">
+            <span className="text-[11px] font-medium text-[#7C6B5B] font-light">
               {s === 1 ? "Data Diri" : "Keamanan"}
             </span>
             {s < 2 && (
               <div
                 className="h-px w-10 transition-all duration-500"
-                style={{ background: step > 1 ? "#C7A765" : "#E7DDD2" }}
+                style={{ background: step > 1 ? "#7A2E3A" : "#E7DDD2" }}
               />
             )}
           </div>
@@ -250,7 +250,7 @@ export default function Register() {
               Nama Lengkap
             </label>
             <div className="relative">
-              <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "name" ? "#C7A765" : "#B0956B" }} />
+              <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "name" ? "#7A2E3A" : "#B0956B" }} />
               <input
                 type="text"
                 name="name"
@@ -272,7 +272,7 @@ export default function Register() {
               Email
             </label>
             <div className="relative">
-              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "email" ? "#C7A765" : "#B0956B" }} />
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "email" ? "#7A2E3A" : "#B0956B" }} />
               <input
                 type="email"
                 name="email"
@@ -294,7 +294,7 @@ export default function Register() {
               Nomor Telepon
             </label>
             <div className="relative">
-              <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "phone" ? "#C7A765" : "#B0956B" }} />
+              <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "phone" ? "#7A2E3A" : "#B0956B" }} />
               <input
                 type="text"
                 name="phone"
@@ -312,8 +312,8 @@ export default function Register() {
 
           <button
             type="submit"
-            className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-bold text-white shadow-[0_16px_40px_rgba(199,167,101,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(199,167,101,0.5)]"
-            style={{ background: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+            className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-semibold text-white shadow-[0_16px_40px_rgba(122,46,58,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(122,46,58,0.3)]"
+            style={{ background: "linear-gradient(135deg, #7A2E3A 0%, #521E26 100%)" }}
           >
             <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
             <span className="relative flex items-center gap-2 text-[14px]">
@@ -333,7 +333,7 @@ export default function Register() {
               Password
             </label>
             <div className="relative">
-              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "password" ? "#C7A765" : "#B0956B" }} />
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "password" ? "#7A2E3A" : "#B0956B" }} />
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -349,7 +349,7 @@ export default function Register() {
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] hover:text-[#C7A765] transition"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] hover:text-[#7A2E3A] transition"
               >
                 {showPassword ? <FiEyeOff className="text-[16px]" /> : <FiEye className="text-[16px]" />}
               </button>
@@ -363,7 +363,7 @@ export default function Register() {
               Konfirmasi Password
             </label>
             <div className="relative">
-              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "confirm" ? "#C7A765" : "#B0956B" }} />
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px]" style={{ color: focused === "confirm" ? "#7A2E3A" : "#B0956B" }} />
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
@@ -386,7 +386,7 @@ export default function Register() {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword((v) => !v)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] hover:text-[#C7A765] transition"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] hover:text-[#7A2E3A] transition"
               >
                 {showConfirmPassword ? <FiEyeOff className="text-[16px]" /> : <FiEye className="text-[16px]" />}
               </button>
@@ -409,14 +409,14 @@ export default function Register() {
               checked={form.terms}
               onChange={handleChange}
               required
-              className="mt-0.5 h-[16px] w-[16px] accent-[#C7A765] rounded"
+              className="mt-0.5 h-[16px] w-[16px] accent-[#7A2E3A] rounded cursor-pointer"
             />
             <span>
               Saya menyetujui{" "}
-              <span className="font-semibold text-[#C7A765]">Syarat & Ketentuan</span>{" "}
+              <span className="font-semibold text-[#7A2E3A] hover:text-[#C5A46D] transition">Syarat & Ketentuan</span>{" "}
               serta{" "}
-              <span className="font-semibold text-[#C7A765]">Kebijakan Privasi</span>{" "}
-              Hejmana Boutique
+              <span className="font-semibold text-[#7A2E3A] hover:text-[#C5A46D] transition">Kebijakan Privasi</span>{" "}
+              Aurelia Boutique
             </span>
           </label>
 
@@ -424,7 +424,7 @@ export default function Register() {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[16px] font-bold text-[#7C6B5B] transition hover:bg-[#F0EBE3]"
+              className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[16px] font-semibold text-[#7C6B5B] transition hover:bg-[#F0EBE3] hover:text-[#7A2E3A]"
               style={{ border: "1.5px solid #E7DDD2" }}
             >
               ←
@@ -433,8 +433,8 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex h-[54px] flex-1 items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-bold text-white shadow-[0_16px_40px_rgba(199,167,101,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(199,167,101,0.5)] disabled:opacity-70 disabled:translate-y-0"
-              style={{ background: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+              className="group relative flex h-[54px] flex-1 items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-semibold text-white shadow-[0_16px_40px_rgba(122,46,58,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(122,46,58,0.3)] disabled:opacity-70 disabled:translate-y-0"
+              style={{ background: "linear-gradient(135deg, #7A2E3A 0%, #521E26 100%)" }}
             >
               <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
               <span className="relative flex items-center gap-2 text-[14px]">
@@ -463,7 +463,7 @@ export default function Register() {
         Sudah punya akun?{" "}
         <Link
           to="/login"
-          className="font-bold text-[#C7A765] transition hover:text-[#9C7A3F]"
+          className="font-semibold text-[#7A2E3A] transition hover:text-[#C5A46D]"
         >
           Masuk sekarang →
         </Link>

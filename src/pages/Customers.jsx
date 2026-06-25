@@ -75,7 +75,7 @@ export default function Customers() {
   return (
     <section className={`min-h-[calc(100vh-54px)] px-8 py-6 transition-colors duration-300 ${bg}`}>
       <PageHeader
-        breadcrumb="Hejmana / Customers"
+        breadcrumb="Aurelia / Customers"
         title="Customers"
         description="Kelola data pelanggan boutique, detail kontak, transaksi, dan status membership customer."
       >

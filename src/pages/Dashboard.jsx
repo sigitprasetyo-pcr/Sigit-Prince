@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiShoppingBag,
   FiUsers,
@@ -332,32 +332,35 @@ function Sparkline({ data, color }) {
 ============================================================ */
 function StatCard({ icon, label, value, sub, trend, trendUp, color }) {
   return (
-    <div className="group relative overflow-hidden rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_6px_20px_rgba(45,39,35,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(45,39,35,0.14)]">
+    <div className="group relative overflow-hidden rounded-[24px] border border-[#EAE3DA] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.04)] transition-all duration-350 hover:-translate-y-1.5 hover:border-[#C5A46D]/50 hover:shadow-[0_20px_45px_rgba(197,164,109,0.12)]">
+      {/* Decorative top-right circle glow */}
       <div
-        className="absolute -right-6 -top-6 h-[90px] w-[90px] rounded-full opacity-[0.08] transition-all duration-300 group-hover:opacity-[0.18]"
-        style={{ backgroundColor: color }}
+        className="absolute -right-8 -top-8 h-[100px] w-[100px] rounded-full opacity-[0.06] blur-[2px] transition-all duration-350 group-hover:scale-125 group-hover:opacity-[0.14]"
+        style={{ background: `radial-gradient(circle, ${color} 0%, transparent 70%)` }}
       />
+      
       <div className="relative flex items-start justify-between">
         <div
-          className="flex h-[48px] w-[48px] items-center justify-center rounded-[16px] text-[21px] text-white shadow-md"
-          style={{ backgroundColor: color }}
+          className="flex h-[52px] w-[52px] items-center justify-center rounded-[18px] text-[22px] text-white shadow-[0_6px_16px_rgba(0,0,0,0.1)] transition-transform duration-350 group-hover:scale-110"
+          style={{ background: `linear-gradient(135deg, ${color} 0%, #1C1410 100%)` }}
         >
           {icon}
         </div>
         {trend && (
           <div
-            className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium ${
-              trendUp ? "bg-[#EAF8EF] text-[#2E9B5F]" : "bg-[#FFEDED] text-[#E05252]"
+            className={`flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-semibold ${
+              trendUp ? "bg-[#EAF8EF] text-[#2E9B5F] shadow-sm" : "bg-[#FFEDED] text-[#E05252] shadow-sm"
             }`}
           >
-            {trendUp ? <FiArrowUpRight /> : <FiArrowDownRight />}
+            {trendUp ? <FiArrowUpRight className="stroke-[2.5]" /> : <FiArrowDownRight className="stroke-[2.5]" />}
             {trend}
           </div>
         )}
       </div>
-      <p className="mt-5 text-[11px] uppercase tracking-[0.15em] text-[#8B7E76]">{label}</p>
-      <h2 className="mt-1.5 text-[30px] font-bold leading-none text-[#2D2723]">{value}</h2>
-      {sub && <p className="mt-2 text-[11px] text-[#A99B8E]">{sub}</p>}
+      
+      <p className="mt-6 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8B7E76]">{label}</p>
+      <h2 className="mt-1.5 text-[32px] font-black leading-none text-[#2D2723] font-serif tracking-tight">{value}</h2>
+      {sub && <p className="mt-2.5 text-[11.5px] font-medium text-[#A99B8E]">{sub}</p>}
     </div>
   );
 }
@@ -385,28 +388,32 @@ function StatusBadge({ status }) {
 ============================================================ */
 const TIER_STYLE = {
   Regular: {
-    gradient: "linear-gradient(135deg, #6B6057 0%, #9A8C80 100%)",
+    gradient: "linear-gradient(135deg, #1C1410 0%, #463730 100%)",
     icon: "👤",
-    glow: "rgba(184,169,157,0.5)",
+    glow: "rgba(124,107,91,0.4)",
     badge: "Regular",
+    number: "8820 · VIP · REGULAR",
   },
   Silver: {
-    gradient: "linear-gradient(135deg, #4A6FA5 0%, #94A3B8 100%)",
+    gradient: "linear-gradient(135deg, #3A4F6E 0%, #768AA4 100%)",
     icon: "⭐",
-    glow: "rgba(148,163,184,0.5)",
+    glow: "rgba(118,138,164,0.4)",
     badge: "Silver",
+    number: "8820 · VIP · SILVER",
   },
   Gold: {
-    gradient: "linear-gradient(135deg, #B8700A 0%, #E8B96A 100%)",
+    gradient: "linear-gradient(135deg, #705324 0%, #C5A46D 50%, #8C6A30 100%)",
     icon: "🏅",
-    glow: "rgba(199,167,101,0.6)",
+    glow: "rgba(197,164,109,0.5)",
     badge: "Gold",
+    number: "8820 · VIP · GOLD",
   },
   Platinum: {
-    gradient: "linear-gradient(135deg, #5B21B6 0%, #A78BFA 100%)",
+    gradient: "linear-gradient(135deg, #180D29 0%, #53249D 50%, #7A42C9 100%)",
     icon: "💎",
-    glow: "rgba(109,93,246,0.6)",
+    glow: "rgba(109,93,246,0.5)",
     badge: "Platinum",
+    number: "8820 · VIP · PLATINUM",
   },
 };
 
@@ -450,33 +457,43 @@ export default function Dashboard() {
   ];
 
   return (
-    <section className={`min-h-[calc(100vh-54px)] px-8 py-6 transition-colors duration-300 ${bg}`}>
+    <section className={`min-h-[calc(100vh-72px)] px-8 py-8 transition-colors duration-300 ${bg}`}>
       <div className="mx-auto w-full max-w-[1320px]">
 
         {/* ─── HEADER ─── */}
-        <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Overview · Hejmana Boutique</p>
-            <h1 className="mt-1 text-[28px] font-bold leading-tight text-[#2D2723]">
-              Dashboard Boutique
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#C5A46D]/10 border border-[#C5A46D]/20 px-3.5 py-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#C5A46D] animate-pulse" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C5A46D]">Overview · Aurelia Boutique</p>
+            </div>
+            <h1 className="mt-2.5 font-serif text-[34px] font-light leading-none text-[#2D2723]">
+              Dashboard <span className="font-normal italic text-[#7A2E3A]">Boutique</span>
             </h1>
-            <p className="mt-1 text-[13px] text-[#8B7E76]">
-              Selamat datang! Berikut ringkasan performa toko Hejmana Boutique.
+            <p className="mt-2 text-[13px] font-light text-[#7C6B5B]">
+              Selamat datang kembali, Admin! Berikut ringkasan aktivitas dan performa butik Anda hari ini.
             </p>
           </div>
 
-          {/* Live Clock WIB */}
-          <div className="flex flex-col items-end gap-1">
-            <div className="flex items-center gap-2 rounded-[16px] border border-[#E7E0D8] bg-white px-5 py-3 shadow-[0_4px_14px_rgba(45,39,35,0.08)]">
-              <FiClock className="text-[#C7A765] text-[16px]" />
+          {/* Live Clock WIB (Swiss Chronometer style) */}
+          <div className="flex flex-col items-end gap-1.5">
+            <div 
+              className="flex items-center gap-3 rounded-[20px] border border-[#C5A46D]/25 bg-white px-6 py-3.5 shadow-[0_8px_30px_rgba(197,164,109,0.06)] relative overflow-hidden"
+            >
+              {/* Subtle gold shine effect inside clock card */}
+              <div className="pointer-events-none absolute -right-6 -top-6 h-12 w-12 rounded-full bg-[#C5A46D]/5 blur-md" />
+              
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#7A2E3A]/8 text-[#7A2E3A] shadow-inner text-base">
+                <FiClock />
+              </div>
               <div className="text-right">
-                <p className="text-[10px] uppercase tracking-[0.12em] text-[#A99B8E]">{dateStr} · WIB</p>
-                <p className="mt-0.5 text-[22px] font-bold tabular-nums leading-none text-[#2D2723]">
+                <p className="text-[9.5px] font-bold uppercase tracking-[0.15em] text-[#A99B8E]">{dateStr} · WIB</p>
+                <p className="mt-0.5 font-serif text-[24px] font-semibold tabular-nums leading-none text-[#7A2E3A] tracking-wide">
                   {timeStr}
                 </p>
               </div>
             </div>
-            <span className="text-[10px] text-[#B0A89C]">Waktu Indonesia Barat (UTC+7)</span>
+            <span className="text-[9.5px] font-medium text-[#B0A89C] tracking-wide">Waktu Indonesia Barat (UTC+7)</span>
           </div>
         </div>
 
@@ -523,18 +540,18 @@ export default function Dashboard() {
         {/* ─── SPARKLINE ROW ─── */}
         <div className="mb-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
           {[
-            { label: "Revenue Bulanan", data: [8.2, 11.5, 9.8, 14.2, 17.6, 13.4, 15.8, 12.1, 18.9, 16.4, 21.2, 24.6], unit: "jt", color: "#C7A765" },
+            { label: "Revenue Bulanan", data: [8.2, 11.5, 9.8, 14.2, 17.6, 13.4, 15.8, 12.1, 18.9, 16.4, 21.2, 24.6], unit: "jt", color: "#C5A46D" },
             { label: "Pesanan Bulanan", data: [14, 19, 17, 24, 30, 22, 27, 21, 32, 28, 36, 41], unit: "", color: "#2563EB" },
             { label: "Pelanggan Baru", data: [60, 72, 68, 85, 91, 78, 95, 88, 102, 97, 115, 128], unit: "", color: "#6D5DF6" },
             { label: "Stok Produk", data: [28, 30, 29, 31, 30, 32, 33, 31, 34, 35, 33, 30], unit: "", color: "#2E9B5F" },
           ].map((s) => (
             <div
               key={s.label}
-              className="flex items-center justify-between rounded-[18px] border border-[#E7E0D8] bg-white px-5 py-4 shadow-sm"
+              className="flex items-center justify-between rounded-[22px] border border-[#EAE3DA] bg-white px-5 py-4.5 shadow-[0_8px_24px_rgba(45,39,35,0.03)] hover:border-[#C5A46D]/45 hover:shadow-[0_12px_28px_rgba(197,164,109,0.08)] transition duration-300"
             >
               <div>
-                <p className="text-[10px] uppercase tracking-[0.1em] text-[#A99B8E]">{s.label}</p>
-                <p className="mt-1 text-[20px] font-bold text-[#2D2723]">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#A99B8E]">{s.label}</p>
+                <p className="mt-1.5 font-serif text-[22px] font-black leading-none text-[#2D2723] tracking-tight">
                   {s.data[s.data.length - 1]}
                   {s.unit}
                 </p>
@@ -548,13 +565,13 @@ export default function Dashboard() {
         <div className="mb-6 grid grid-cols-1 gap-5 xl:grid-cols-[1fr_350px]">
 
           {/* Area Chart */}
-          <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-            <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <div className="rounded-[24px] border border-[#EAE3DA] bg-white p-6 shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Revenue Trend</p>
-                <h2 className="mt-1 text-[18px] font-semibold text-[#2D2723]">Tren Pendapatan Boutique</h2>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#A98467]">Revenue Trend</p>
+                <h2 className="mt-1 font-serif text-[20px] font-medium text-[#2D2723]">Tren Pendapatan Boutique</h2>
               </div>
-              <div className="flex rounded-[12px] border border-[#E7E0D8] p-1">
+              <div className="flex rounded-[14px] border border-[#EAE3DA] bg-[#FAF8F5] p-1 shadow-inner">
                 {[
                   { key: "monthly", label: "Bulanan" },
                   { key: "weekly", label: "Mingguan" },
@@ -562,10 +579,10 @@ export default function Dashboard() {
                   <button
                     key={p.key}
                     onClick={() => setPeriod(p.key)}
-                    className={`rounded-[9px] px-4 py-1.5 text-[11px] font-medium transition ${
+                    className={`rounded-[10px] px-4 py-1.5 text-[11px] font-bold transition-all duration-300 ${
                       period === p.key
-                        ? "bg-[#2D2723] text-white shadow"
-                        : "text-[#7C7772] hover:text-[#2D2723]"
+                        ? "bg-[#7A2E3A] text-white shadow-[0_4px_12px_rgba(122,46,58,0.25)]"
+                        : "text-[#7C7772] hover:text-[#7A2E3A]"
                     }`}
                   >
                     {p.label}
@@ -574,32 +591,38 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="mb-4 flex items-center gap-4">
+            <div className="mb-6 flex items-center gap-4 border-b border-[#FAF6F0] pb-4">
               <div className="flex items-center gap-2">
-                <div className="h-2.5 w-2.5 rounded-full bg-[#C7A765]" />
-                <span className="text-[11px] text-[#8B7E76]">Revenue</span>
+                <div className="h-2.5 w-2.5 rounded-full bg-[#C5A46D]" />
+                <span className="text-[11.5px] font-semibold text-[#8B7E76] uppercase tracking-wide">Revenue</span>
               </div>
-              <span className="text-[22px] font-bold text-[#2D2723]">
+              <span className="font-serif text-[26px] font-black text-[#2D2723] tracking-tight">
                 {formatRpShort(chartData.reduce((s, d) => s + d.revenue, 0))}
               </span>
-              <span className="rounded-full bg-[#EAF8EF] px-3 py-1 text-[10px] font-semibold text-[#2E9B5F]">
+              <span className="rounded-full bg-[#EAF8EF] px-3 py-1 text-[10px] font-bold text-[#2E9B5F] shadow-sm">
                 ↗ +18.4%
               </span>
             </div>
 
-            <AreaChart data={chartData} color="#C7A765" />
+            <AreaChart data={chartData} color="#C5A46D" />
           </div>
 
           {/* Donut Chart */}
-          <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Order Status</p>
-            <h2 className="mb-5 mt-1 text-[18px] font-semibold text-[#2D2723]">Status Pesanan</h2>
-            <DonutChart sliceData={donutData} />
+          <div className="rounded-[24px] border border-[#EAE3DA] bg-white p-6 shadow-[0_12px_32px_rgba(45,39,35,0.05)] flex flex-col justify-between">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#A98467]">Order Status</p>
+              <h2 className="mb-5 mt-1 font-serif text-[20px] font-medium text-[#2D2723]">Status Pesanan</h2>
+            </div>
+            
+            <div className="flex justify-center py-2">
+              <DonutChart sliceData={donutData} />
+            </div>
+            
             <div className="mt-5 grid grid-cols-3 gap-3">
               {donutData.map((d) => (
-                <div key={d.label} className="rounded-[14px] bg-[#FAF9F7] p-3 text-center">
-                  <p className="text-[20px] font-bold text-[#2D2723]">{d.value}</p>
-                  <p className="mt-0.5 text-[10px] text-[#8B7E76]">{d.label}</p>
+                <div key={d.label} className="rounded-[16px] bg-[#FAF8F5] border border-[#F0EBE3] p-3.5 text-center transition duration-200 hover:-translate-y-0.5">
+                  <p className="font-serif text-[20px] font-bold text-[#2D2723]">{d.value}</p>
+                  <p className="mt-1 text-[9.5px] font-semibold uppercase tracking-wider text-[#8B7E76]">{d.label}</p>
                 </div>
               ))}
             </div>
@@ -610,18 +633,18 @@ export default function Dashboard() {
         <div className="mb-6 grid grid-cols-1 gap-5 xl:grid-cols-[1fr_310px]">
 
           {/* Bar Chart */}
-          <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Kategori</p>
-            <h2 className="mb-5 mt-1 text-[18px] font-semibold text-[#2D2723]">Revenue per Kategori</h2>
+          <div className="rounded-[24px] border border-[#EAE3DA] bg-white p-6 shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#A98467]">Kategori</p>
+            <h2 className="mb-5 mt-1 font-serif text-[20px] font-medium text-[#2D2723]">Revenue per Kategori</h2>
             <BarChart data={topCategories} />
           </div>
 
           {/* Metode Pembayaran */}
-          <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Pembayaran</p>
-            <h2 className="mb-5 mt-1 text-[18px] font-semibold text-[#2D2723]">Metode Bayar</h2>
+          <div className="rounded-[24px] border border-[#EAE3DA] bg-white p-6 shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#A98467]">Pembayaran</p>
+            <h2 className="mb-5 mt-1 font-serif text-[20px] font-medium text-[#2D2723]">Metode Bayar</h2>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               {Object.entries(paymentCount)
                 .sort((a, b) => b[1] - a[1])
                 .map(([name, val]) => {
@@ -629,12 +652,12 @@ export default function Dashboard() {
                   const c = payColors[name] || "#A99B8E";
                   return (
                     <div key={name}>
-                      <div className="mb-1.5 flex items-center justify-between">
+                      <div className="mb-2 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: c }} />
-                          <span className="text-[12px] text-[#4F4740]">{name}</span>
+                          <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: c }} />
+                          <span className="text-[12.5px] font-medium text-[#4F4740]">{name}</span>
                         </div>
-                        <span className="text-[12px] font-bold text-[#2D2723]">{pct}%</span>
+                        <span className="text-[12.5px] font-bold text-[#2D2723]">{pct}%</span>
                       </div>
                       <div className="h-2 overflow-hidden rounded-full bg-[#F1ECE6]">
                         <div
@@ -660,45 +683,45 @@ export default function Dashboard() {
         </div>
 
         {/* ─── ORDERS TABLE + SIDEBAR CARDS ─── */}
-        <div className="mb-6 grid grid-cols-1 items-start gap-5 xl:grid-cols-[1fr_340px]">
+        <div className="mb-8 grid grid-cols-1 items-start gap-6 xl:grid-cols-[1fr_340px]">
 
           {/* Tabel Pesanan Terbaru */}
-          <div className="overflow-hidden rounded-[22px] border border-[#E7E0D8] bg-white shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
+          <div className="overflow-hidden rounded-[24px] border border-[#EAE3DA] bg-white shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
             <div className="flex items-center justify-between border-b border-[#EEE7DF] bg-[#FFFDFC] px-6 py-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">Transaksi</p>
-                <h2 className="mt-1 text-[17px] font-semibold text-[#2D2723]">Pesanan Terbaru</h2>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#A98467]">Transaksi</p>
+                <h2 className="mt-1 font-serif text-[18px] font-medium text-[#2D2723]">Pesanan Terbaru</h2>
               </div>
               <button
                 onClick={() => navigate("/orders")}
-                className="flex items-center gap-1 text-[11px] font-medium text-[#C7A765] hover:underline"
+                className="flex items-center gap-1 text-[11px] font-bold text-[#C5A46D] hover:text-[#7A2E3A] transition duration-200"
               >
-                Lihat Semua <FiArrowUpRight />
+                Lihat Semua <FiArrowUpRight className="text-[13px]" />
               </button>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[560px] text-[12px]">
-                <thead className="bg-[#F4EFEA] text-[#5E5148]">
+              <table className="w-full min-w-[560px] text-[12.5px]">
+                <thead className="bg-[#FAF8F5] text-[#7C6B5B] border-b border-[#EAE3DA] font-semibold text-[11px] uppercase tracking-wider">
                   <tr>
-                    <th className="px-5 py-3.5 text-left font-medium">Kode</th>
-                    <th className="px-5 py-3.5 text-left font-medium">Customer</th>
-                    <th className="px-5 py-3.5 text-left font-medium">Produk</th>
-                    <th className="px-5 py-3.5 text-right font-medium">Harga</th>
-                    <th className="px-5 py-3.5 text-center font-medium">Status</th>
+                    <th className="px-6 py-4 text-left font-bold">Kode</th>
+                    <th className="px-6 py-4 text-left font-bold">Customer</th>
+                    <th className="px-6 py-4 text-left font-bold">Produk</th>
+                    <th className="px-6 py-4 text-right font-bold">Harga</th>
+                    <th className="px-6 py-4 text-center font-bold">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-[#EAE3DA]">
                   {orders.map((o) => (
-                    <tr key={o.id} className="border-t border-[#EEE7DF] transition-colors hover:bg-[#FBFAF8]">
-                      <td className="px-5 py-3.5 font-mono font-semibold text-[#C7A765]">{o.code}</td>
-                      <td className="px-5 py-3.5">
-                        <p className="font-medium text-[#2D2723]">{o.customer}</p>
-                        <p className="text-[10px] text-[#A99B8E]">{o.date}</p>
+                    <tr key={o.id} className="transition-colors hover:bg-[#FAF9F7]/60">
+                      <td className="px-6 py-4 font-mono font-bold text-[#C5A46D]">{o.code}</td>
+                      <td className="px-6 py-4">
+                        <p className="font-semibold text-[#2D2723]">{o.customer}</p>
+                        <p className="text-[10px] font-medium text-[#A99B8E] mt-0.5">{o.date}</p>
                       </td>
-                      <td className="px-5 py-3.5 text-[#4F4740]">{o.product}</td>
-                      <td className="px-5 py-3.5 text-right font-semibold text-[#2D2723]">{o.price}</td>
-                      <td className="px-5 py-3.5 text-center">
+                      <td className="px-6 py-4 text-[#4F4740] font-medium">{o.product}</td>
+                      <td className="px-6 py-4 text-right font-bold text-[#2D2723]">{o.price}</td>
+                      <td className="px-6 py-4 text-center">
                         <StatusBadge status={o.status} />
                       </td>
                     </tr>
@@ -710,30 +733,31 @@ export default function Dashboard() {
           </div>
 
           {/* Kolom kanan */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-6">
 
             {/* Low Stock Alert */}
-            <div className="rounded-[22px] border border-[#FFE0D0] bg-white p-5 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-              <div className="mb-4 flex items-center gap-2.5">
-                <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[13px] bg-[#FFF3DE] text-[17px] text-[#C47A24]">
+            <div className="rounded-[24px] border border-[#FFE0D0] bg-[#FFFDFC] p-5 shadow-[0_12px_32px_rgba(45,39,35,0.04)]">
+              <div className="mb-4.5 flex items-center gap-3">
+                <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[14px] bg-[#FFF3DE] text-[19px] text-[#C47A24] shadow-inner">
                   <FiAlertCircle />
                 </div>
                 <div>
-                  <p className="text-[12px] font-semibold text-[#2D2723]">Stok Menipis</p>
-                  <p className="text-[10px] text-[#A99B8E]">{lowStockProducts.length} produk perlu restock</p>
+                  <p className="text-[12px] font-extrabold uppercase tracking-wider text-[#2D2723]">Stok Menipis</p>
+                  <p className="text-[10.5px] font-medium text-[#A99B8E]">{lowStockProducts.length} produk perlu restock</p>
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
+              
+              <div className="flex flex-col gap-2.5">
                 {lowStockProducts.map((p) => (
-                  <div key={p.id} className="flex items-center justify-between rounded-[12px] bg-[#FFF9F3] px-3 py-2.5">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-[18px]">{p.icon}</span>
+                  <div key={p.id} className="flex items-center justify-between rounded-[16px] bg-[#FFF9F3] border border-[#FDEEE3] px-3.5 py-2.5 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(197,164,109,0.08)]">
+                    <div className="flex items-center gap-3">
+                      <span className="text-[20px]">{p.icon}</span>
                       <div>
-                        <p className="text-[11px] font-medium leading-snug text-[#2D2723]">{p.title}</p>
-                        <p className="text-[10px] text-[#A99B8E]">{p.category}</p>
+                        <p className="text-[11.5px] font-bold leading-tight text-[#2D2723]">{p.title}</p>
+                        <p className="text-[10px] font-semibold text-[#A99B8E] mt-0.5">{p.category}</p>
                       </div>
                     </div>
-                    <span className="rounded-full bg-[#FFE0D0] px-2 py-0.5 text-[10px] font-bold text-[#C47A24]">
+                    <span className="rounded-full bg-[#FFE0D0] px-2.5 py-0.5 text-[10px] font-extrabold text-[#C47A24]">
                       {p.stock} pcs
                     </span>
                   </div>
@@ -742,68 +766,68 @@ export default function Dashboard() {
             </div>
 
             {/* Top Produk */}
-            <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-5 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-              <div className="mb-4 flex items-center gap-2.5">
-                <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[13px] bg-[#EEE8FF] text-[17px] text-[#6D5DF6]">
+            <div className="rounded-[24px] border border-[#EAE3DA] bg-white p-5 shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
+              <div className="mb-4.5 flex items-center gap-3">
+                <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[14px] bg-[#EEE8FF] text-[18px] text-[#6D5DF6] shadow-inner">
                   <FiStar />
                 </div>
                 <div>
-                  <p className="text-[12px] font-semibold text-[#2D2723]">Produk Terlaris</p>
-                  <p className="text-[10px] text-[#A99B8E]">Berdasarkan transaksi bulan ini</p>
+                  <p className="text-[12px] font-extrabold uppercase tracking-wider text-[#2D2723]">Produk Terlaris</p>
+                  <p className="text-[10.5px] font-medium text-[#A99B8E]">Berdasarkan transaksi bulan ini</p>
                 </div>
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3.5">
                 {[
                   { name: "Silk Evening Gown", cat: "Dress", rev: "Rp 1.25jt", icon: "👘" },
                   { name: "Premium Velvet Dress", cat: "Dress", rev: "Rp 1.1jt", icon: "👗" },
                   { name: "Mini Pearl Handbag", cat: "Bag", rev: "Rp 810rb", icon: "👜" },
                   { name: "Modern Linen Blazer", cat: "Blazer", rev: "Rp 780rb", icon: "🧥" },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <span className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[12px] bg-[#F4EFEA] text-[17px]">
+                  <div key={i} className="flex items-center gap-3 border-b border-[#FAF6F0] pb-3 last:border-0 last:pb-0 transition hover:translate-x-1 duration-200">
+                    <span className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px] bg-[#FAF8F5] border border-[#F0EBE3] text-[18px]">
                       {item.icon}
                     </span>
-                    <div className="flex-1">
-                      <p className="text-[11px] font-medium text-[#2D2723]">{item.name}</p>
-                      <p className="text-[10px] text-[#A99B8E]">{item.cat}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11.5px] font-semibold text-[#2D2723] truncate">{item.name}</p>
+                      <p className="text-[10px] text-[#A99B8E] mt-0.5">{item.cat}</p>
                     </div>
-                    <span className="text-[11px] font-semibold text-[#C7A765]">{item.rev}</span>
+                    <span className="text-[12px] font-bold text-[#C5A46D]">{item.rev}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Akses Cepat */}
-            <div className="rounded-[22px] border border-[#E7E0D8] bg-white p-5 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-              <div className="mb-4 flex items-center gap-2.5">
-                <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[13px] bg-[#EAF8EF] text-[17px] text-[#2E9B5F]">
+            <div className="rounded-[24px] border border-[#EAE3DA] bg-white p-5 shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
+              <div className="mb-4.5 flex items-center gap-3">
+                <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[14px] bg-[#EAF8EF] text-[18px] text-[#2E9B5F] shadow-inner">
                   <FiZap />
                 </div>
                 <div>
-                  <p className="text-[12px] font-semibold text-[#2D2723]">Akses Cepat</p>
-                  <p className="text-[10px] text-[#A99B8E]">Menu yang sering digunakan</p>
+                  <p className="text-[12px] font-extrabold uppercase tracking-wider text-[#2D2723]">Akses Cepat</p>
+                  <p className="text-[10.5px] font-medium text-[#A99B8E]">Menu yang sering digunakan</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: "Tambah Produk", href: "/products", icon: "📦", color: "#C7A765", bg: "#FFF9EE" },
-                  { label: "Pesanan Baru", href: "/orders", icon: "🛍️", color: "#2563EB", bg: "#EEF4FF" },
-                  { label: "Data Member", href: "/member", icon: "👥", color: "#6D5DF6", bg: "#EEE8FF" },
-                  { label: "Laporan", href: "/reports", icon: "📊", color: "#2E9B5F", bg: "#EAF8EF" },
-                  { label: "Promo", href: "/promo", icon: "🎁", color: "#E05252", bg: "#FFEDED" },
-                  { label: "Pelanggan", href: "/customers", icon: "👤", color: "#C47A24", bg: "#FFF3DE" },
+                  { label: "Tambah Produk", href: "/products", icon: "📦", color: "#C5A46D", bg: "#FFFDF9", border: "rgba(197,164,109,0.2)" },
+                  { label: "Pesanan Baru", href: "/orders", icon: "🛍️", color: "#2563EB", bg: "#F8FAFC", border: "rgba(37,99,235,0.15)" },
+                  { label: "Data Member", href: "/members", icon: "👥", color: "#6D5DF6", bg: "#FAF9FF", border: "rgba(109,93,246,0.15)" },
+                  { label: "Laporan", href: "/reports", icon: "📊", color: "#2E9B5F", bg: "#F8FDF9", border: "rgba(46,155,95,0.15)" },
+                  { label: "Promo", href: "/promo", icon: "🎁", color: "#E05252", bg: "#FFFDFD", border: "rgba(224,82,82,0.15)" },
+                  { label: "Pelanggan", href: "/customers", icon: "👤", color: "#C47A24", bg: "#FFFDF6", border: "rgba(196,122,36,0.15)" },
                 ].map((q) => (
-                  <a
+                  <Link
                     key={q.label}
-                    href={q.href}
-                    className="flex flex-col items-center gap-1.5 rounded-[14px] p-3 text-center transition hover:-translate-y-0.5 hover:shadow-sm"
-                    style={{ backgroundColor: q.bg }}
+                    to={q.href}
+                    className="flex flex-col items-center gap-2 rounded-[18px] p-3 text-center border border-transparent hover:border-[#C5A46D]/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    style={{ backgroundColor: q.bg, border: `1px solid ${q.border}` }}
                   >
                     <span className="text-[22px]">{q.icon}</span>
-                    <span className="text-[10px] font-medium leading-tight" style={{ color: q.color }}>
+                    <span className="text-[10.5px] font-bold leading-tight" style={{ color: q.color }}>
                       {q.label}
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -811,22 +835,22 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* ─── MEMBER TIER SUMMARY (VIVID CARDS) ─── */}
-        <div className="mb-6 rounded-[22px] border border-[#E7E0D8] bg-white p-6 shadow-[0_8px_24px_rgba(45,39,35,0.06)]">
-          <div className="mb-6 flex items-center justify-between">
+        {/* ─── MEMBER TIER SUMMARY (VIVID VIP CARDS) ─── */}
+        <div className="mb-8 rounded-[24px] border border-[#EAE3DA] bg-white p-6 shadow-[0_12px_32px_rgba(45,39,35,0.05)]">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#A98467]">CRM · Membership</p>
-              <h2 className="mt-1 text-[18px] font-semibold text-[#2D2723]">Distribusi Tier Member Boutique</h2>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#A98467]">CRM · Membership</p>
+              <h2 className="mt-1 font-serif text-[20px] font-medium text-[#2D2723]">Distribusi Tier Member Boutique</h2>
             </div>
             <button
-              onClick={() => navigate("/member")}
-              className="flex items-center gap-1 text-[11px] font-medium text-[#C7A765] hover:underline"
+              onClick={() => navigate("/members")}
+              className="flex items-center gap-1 text-[11px] font-bold text-[#C5A46D] hover:text-[#7A2E3A] transition duration-200"
             >
-              Detail Member <FiArrowUpRight />
+              Detail Member <FiArrowUpRight className="text-[13px]" />
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {tierSummary.map(({ tier, full, color, bg, icon }) => {
               const count = customers.filter((c) => c.tier === full).length;
               const pct = Math.round((count / customers.length) * 100);
@@ -834,30 +858,36 @@ export default function Dashboard() {
               return (
                 <div
                   key={tier}
-                  className="group relative overflow-hidden rounded-[20px] p-5 text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.28)]"
+                  className="group relative overflow-hidden rounded-[22px] p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.18)] transition-all duration-350 hover:-translate-y-2 hover:shadow-[0_22px_45px_rgba(0,0,0,0.28)]"
                   style={{ background: style.gradient }}
                 >
-                  {/* glow bg */}
+                  {/* radial metal shine overlay */}
                   <div
-                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    className="pointer-events-none absolute inset-0 opacity-10 transition-opacity duration-350 group-hover:opacity-25"
                     style={{ background: `radial-gradient(circle at top right, ${style.glow} 0%, transparent 60%)` }}
                   />
-                  {/* shimmer dots */}
-                  <div className="absolute right-3 top-3 text-[28px] opacity-20">{icon}</div>
+                  
+                  {/* Card signature line / chip graphic mock */}
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="h-6 w-8 rounded bg-white/20 backdrop-blur-sm border border-white/10 flex items-center justify-center text-[10px] font-mono opacity-60">
+                      VIP
+                    </div>
+                    <div className="text-[26px] opacity-25 group-hover:opacity-50 transition-opacity duration-350">{icon}</div>
+                  </div>
 
                   <div className="relative">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/70">{tier}</p>
-                    <p className="mt-3 text-[40px] font-black leading-none">{count.toLocaleString("id-ID")}</p>
-                    <p className="mt-1 text-[11px] text-white/80">member terdaftar</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-white/70 font-mono">{style.number}</p>
+                    <p className="mt-3 font-serif text-[38px] font-black leading-none tracking-tight">{count.toLocaleString("id-ID")}</p>
+                    <p className="mt-1 text-[11px] font-medium text-white/70 italic">active members</p>
 
-                    <div className="mt-4">
-                      <div className="mb-1 flex items-center justify-between">
-                        <span className="text-[10px] text-white/70">Share</span>
-                        <span className="text-[13px] font-bold">{pct}%</span>
+                    <div className="mt-5 border-t border-white/10 pt-4">
+                      <div className="mb-1.5 flex items-center justify-between text-[11px]">
+                        <span className="font-semibold text-white/60">Distribution Share</span>
+                        <span className="font-bold text-white">{pct}%</span>
                       </div>
-                      <div className="h-1.5 overflow-hidden rounded-full bg-white/20">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-white/15">
                         <div
-                          className="h-full rounded-full bg-white/80 transition-all duration-700"
+                          className="h-full rounded-full bg-white/70 transition-all duration-700 shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                           style={{ width: `${pct}%` }}
                         />
                       </div>
@@ -869,20 +899,20 @@ export default function Dashboard() {
           </div>
 
           {/* Loyalty journey strip */}
-          <div className="mt-6 flex items-center justify-between rounded-[16px] bg-[#FAF9F7] px-6 py-4">
+          <div className="mt-7 flex flex-wrap items-center justify-between rounded-[20px] bg-[#FAF8F5] border border-[#F0EBE3] px-6 py-5 gap-y-4">
             {tierSummary.map((t, i) => (
-              <div key={t.tier} className="flex flex-1 items-center">
+              <div key={t.tier} className="flex flex-1 items-center min-w-[120px]">
                 <div className="flex flex-col items-center text-center">
                   <div
-                    className="flex h-[40px] w-[40px] items-center justify-center rounded-full text-[18px] text-white shadow-md"
-                    style={{ backgroundColor: t.color }}
+                    className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-[19px] text-white shadow-md transition duration-300 hover:scale-110"
+                    style={{ background: TIER_STYLE[t.tier].gradient }}
                   >
                     {t.icon}
                   </div>
-                  <p className="mt-2 text-[11px] font-semibold text-[#2D2723]">{t.tier}</p>
+                  <p className="mt-2 text-[11px] font-bold text-[#2D2723] uppercase tracking-wider">{t.tier}</p>
                 </div>
                 {i < tierSummary.length - 1 && (
-                  <div className="mx-2 h-[2px] flex-1 rounded-full bg-gradient-to-r" style={{ background: `linear-gradient(to right, ${t.color}, ${tierSummary[i+1].color})`, opacity: 0.4 }} />
+                  <div className="mx-3 h-[2px] flex-1 rounded-full bg-gradient-to-r" style={{ background: `linear-gradient(to right, ${t.color}, ${tierSummary[i+1].color})`, opacity: 0.35 }} />
                 )}
               </div>
             ))}

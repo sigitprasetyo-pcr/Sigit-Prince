@@ -102,7 +102,7 @@ export default function Reports() {
         {/* ─── HEADER ─── */}
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A98467]">Laporan CRM · Hejmana Boutique</p>
+            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A98467]">Laporan CRM · Aurelia Boutique</p>
             <h1 className="mt-1 text-[28px] font-bold leading-tight text-[#2D2723]">
               Laporan & Analitik Boutique
             </h1>

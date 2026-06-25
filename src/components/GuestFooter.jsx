@@ -35,7 +35,7 @@ export default function GuestFooter() {
 
               <div>
                 <h2 className="font-serif text-[24px]">
-                  Hejmana Boutique
+                  Aurelia Boutique
                 </h2>
 
                 <p className="text-[12px] tracking-[0.18em] text-[#D8C8A5] uppercase">
@@ -45,7 +45,7 @@ export default function GuestFooter() {
             </div>
 
             <p className="mt-5 text-[13px] leading-7 text-[#D5D0CB]">
-              Hejmana Boutique menghadirkan koleksi fashion premium
+              Aurelia Boutique menghadirkan koleksi fashion premium
               dengan sentuhan elegan dan modern untuk melengkapi
               gaya terbaik Anda.
             </p>
@@ -114,7 +114,7 @@ export default function GuestFooter() {
               <div className="flex items-center gap-3">
                 <FiMail className="text-[#D8C8A5]" />
 
-                <p>hello@hejmana.com</p>
+                <p>hello@aureliaboutique.id</p>
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function GuestFooter() {
         <div className="flex flex-col items-center justify-between gap-5 md:flex-row">
 
           <p className="text-[12px] text-[#C9C2BC]">
-            © 2026 Hejmana Boutique.
+            © 2026 Aurelia Boutique.
             All rights reserved.
           </p>
 

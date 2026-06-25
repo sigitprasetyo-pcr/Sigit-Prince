@@ -3,8 +3,13 @@ import { Navigate, useLocation } from "react-router-dom";
 export default function ProtectedRoute({ children, allowedRoles }) {
   const location = useLocation();
 
-  const userStr = localStorage.getItem("user");
-  const user = userStr ? JSON.parse(userStr) : null;
+  let user = null;
+  try {
+    const userStr = localStorage.getItem("user");
+    user = userStr ? JSON.parse(userStr) : null;
+  } catch (e) {
+    console.error("Error parsing user from localStorage:", e);
+  }
 
   /*
     Jika belum login:

@@ -57,7 +57,7 @@ export default function GuestNavbar() {
           </div>
           <div>
             <h1 className="text-[16px] font-bold leading-none tracking-wide text-white">
-              Hejmana
+              Aurelia
             </h1>
             <p className="mt-0.5 text-[9px] uppercase tracking-[0.2em] text-[#C7A765]">
               Boutique

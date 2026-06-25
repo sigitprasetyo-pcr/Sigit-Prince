@@ -55,7 +55,7 @@ export default function CustomerDetail() {
     <section className="min-h-[calc(100vh-54px)] bg-[#F7F5F2] px-8 py-6">
       <div className="mb-6">
         <p className="mb-2 text-[9px] uppercase tracking-[0.2em] text-[#8B735D]">
-          Hejmana / Customers / Detail
+          Aurelia / Customers / Detail
         </p>
 
         <h1 className="text-[24px] font-medium text-[#2D2723]">

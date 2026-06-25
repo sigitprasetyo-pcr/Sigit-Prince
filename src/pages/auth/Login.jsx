@@ -74,27 +74,27 @@ export default function Login() {
         <div
           className="mb-4 inline-flex items-center gap-2.5 rounded-full px-4 py-2"
           style={{
-            background: "linear-gradient(135deg, rgba(199,167,101,0.15), rgba(199,167,101,0.05))",
-            border: "1px solid rgba(199,167,101,0.3)",
+            background: "linear-gradient(135deg, rgba(122,46,58,0.1), rgba(122,46,58,0.03))",
+            border: "1px solid rgba(122,46,58,0.2)",
           }}
         >
-          <FiShoppingBag className="text-[#C7A765] text-[13px]" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C7A765]">
-            Hejmana Boutique CRM
+          <FiShoppingBag className="text-[#7A2E3A] text-[13px]" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#7A2E3A]">
+            Aurelia Boutique CRM
           </span>
         </div>
 
-        <h1 className="mt-2 text-[36px] font-black leading-[1.1] text-[#1C1410]">
+        <h1 className="mt-2 text-[36px] font-light font-serif leading-[1.1] text-[#1C1410]">
           Selamat Datang
           <br />
           <span
-            className="bg-clip-text text-transparent"
-            style={{ backgroundImage: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+            className="bg-clip-text text-transparent font-normal"
+            style={{ backgroundImage: "linear-gradient(135deg, #7A2E3A 0%, #C5A46D 100%)" }}
           >
             Kembali ✨
           </span>
         </h1>
-        <p className="mt-3 text-[14px] leading-relaxed text-[#7C6B5B]">
+        <p className="mt-3 text-[14px] leading-relaxed text-[#7C6B5B] font-light">
           Masuk untuk mengelola koleksi & pelanggan Boutique Anda.
         </p>
       </div>
@@ -122,7 +122,7 @@ export default function Login() {
           <div className="relative">
             <div
               className="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200"
-              style={{ color: focused === "email" ? "#C7A765" : "#B0956B" }}
+              style={{ color: focused === "email" ? "#7A2E3A" : "#B0956B" }}
             >
               <FiMail className="text-[15px]" />
             </div>
@@ -134,15 +134,15 @@ export default function Login() {
               onChange={handleChange}
               onFocus={() => setFocused("email")}
               onBlur={() => setFocused("")}
-              placeholder="admin@hejmana.com"
+              placeholder="admin@aureliaboutique.id"
               className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
               style={{
-                background: focused === "email" ? "#FFFDF8" : "#FAF8F5",
+                background: focused === "email" ? "#FFFDF9" : "#FAF8F5",
                 border: focused === "email"
-                  ? "1.5px solid #C7A765"
+                  ? "1.5px solid #7A2E3A"
                   : "1.5px solid #E7DDD2",
                 boxShadow: focused === "email"
-                  ? "0 0 0 4px rgba(199,167,101,0.12)"
+                  ? "0 0 0 4px rgba(122,46,58,0.1)"
                   : "none",
               }}
             />
@@ -157,7 +157,7 @@ export default function Login() {
             </label>
             <Link
               to="/forgot"
-              className="text-[12px] font-semibold text-[#C7A765] transition hover:text-[#9C7A3F]"
+              className="text-[12px] font-medium text-[#7A2E3A] transition hover:text-[#C5A46D]"
             >
               Lupa password?
             </Link>
@@ -165,7 +165,7 @@ export default function Login() {
           <div className="relative">
             <div
               className="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200"
-              style={{ color: focused === "password" ? "#C7A765" : "#B0956B" }}
+              style={{ color: focused === "password" ? "#7A2E3A" : "#B0956B" }}
             >
               <FiLock className="text-[15px]" />
             </div>
@@ -180,19 +180,19 @@ export default function Login() {
               placeholder="••••••••"
               className="h-[52px] w-full rounded-[16px] pl-12 pr-12 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
               style={{
-                background: focused === "password" ? "#FFFDF8" : "#FAF8F5",
+                background: focused === "password" ? "#FFFDF9" : "#FAF8F5",
                 border: focused === "password"
-                  ? "1.5px solid #C7A765"
+                  ? "1.5px solid #7A2E3A"
                   : "1.5px solid #E7DDD2",
                 boxShadow: focused === "password"
-                  ? "0 0 0 4px rgba(199,167,101,0.12)"
+                  ? "0 0 0 4px rgba(122,46,58,0.1)"
                   : "none",
               }}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] transition hover:text-[#C7A765]"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A99B8E] transition hover:text-[#7A2E3A]"
             >
               {showPassword ? <FiEyeOff className="text-[16px]" /> : <FiEye className="text-[16px]" />}
             </button>
@@ -201,22 +201,19 @@ export default function Login() {
 
         {/* Remember me */}
         <label className="flex cursor-pointer items-center gap-3">
-          <div className="relative">
-            <input type="checkbox" className="sr-only" />
-            <div
-              className="h-[18px] w-[18px] rounded-[5px] border-2 transition"
-              style={{ borderColor: "#E7DDD2", background: "#FAF8F5" }}
-            />
-          </div>
-          <span className="text-[12px] text-[#7C6B5B]">Ingat saya di perangkat ini</span>
+          <input
+            type="checkbox"
+            className="h-[16px] w-[16px] rounded border-[#E7DDD2] accent-[#7A2E3A] cursor-pointer"
+          />
+          <span className="text-[12px] text-[#7C6B5B] font-light">Ingat saya di perangkat ini</span>
         </label>
 
         {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-bold text-white shadow-[0_16px_40px_rgba(199,167,101,0.4)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(199,167,101,0.5)] hover:-translate-y-0.5 disabled:opacity-70 disabled:translate-y-0"
-          style={{ background: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+          className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-semibold text-white shadow-[0_16px_40px_rgba(122,46,58,0.2)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(122,46,58,0.3)] hover:-translate-y-0.5 disabled:opacity-70 disabled:translate-y-0"
+          style={{ background: "linear-gradient(135deg, #7A2E3A 0%, #521E26 100%)" }}
         >
           {/* Shimmer effect */}
           <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
@@ -248,11 +245,11 @@ export default function Login() {
       </div>
 
       {/* Register link */}
-      <p className="text-center text-[13px] text-[#7C6B5B]">
+      <p className="text-center text-[13px] text-[#7C6B5B] font-light">
         Belum punya akun?{" "}
         <Link
           to="/register"
-          className="font-bold text-[#C7A765] transition hover:text-[#9C7A3F]"
+          className="font-semibold text-[#7A2E3A] transition hover:text-[#C5A46D]"
         >
           Daftar sekarang →
         </Link>
@@ -265,8 +262,8 @@ export default function Login() {
           { icon: <FiShoppingBag className="text-[11px]" />, text: "500+ Produk" },
           { icon: <FiHeart className="text-[11px]" />, text: "2.5k Pelanggan" },
         ].map((b) => (
-          <div key={b.text} className="flex items-center gap-1.5 text-[11px] text-[#B0A898]">
-            <span className="text-[#C7A765]">{b.icon}</span>
+          <div key={b.text} className="flex items-center gap-1.5 text-[11px] text-[#B0A898] font-light">
+            <span className="text-[#C5A46D]">{b.icon}</span>
             <span>{b.text}</span>
           </div>
         ))}

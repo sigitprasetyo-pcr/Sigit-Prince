@@ -94,7 +94,7 @@ export default function Orders() {
         {/* ─── HEADER ─── */}
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A98467]">Data Transaksi · Hejmana Boutique</p>
+            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A98467]">Data Transaksi · Aurelia Boutique</p>
             <h1 className="mt-1 text-[28px] font-bold leading-tight text-[#2D2723]">Pesanan & Transaksi</h1>
             <p className="mt-1 text-[13px] text-[#8B7E76]">
               Mengelola riwayat pembelian, metode pembayaran, produk yang dibeli, dan tanggal transaksi.

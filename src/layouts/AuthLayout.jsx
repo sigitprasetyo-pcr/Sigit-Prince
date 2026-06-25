@@ -24,7 +24,7 @@ function StatCard({ value, label, icon, delay = "0ms" }) {
     >
       <div
         className="flex h-[44px] w-[44px] items-center justify-center rounded-[14px] text-white shadow-lg"
-        style={{ background: "linear-gradient(135deg, #C7A765, #8A6530)" }}
+        style={{ background: "linear-gradient(135deg, #7A2E3A, #C5A46D)" }}
       >
         {icon}
       </div>
@@ -56,7 +56,7 @@ export default function AuthLayout() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(160deg, #1C1410 0%, #2D1F12 35%, #3A2619 65%, #1C1410 100%)",
+              "linear-gradient(160deg, #1C0A0D 0%, #3D1217 35%, #591A23 65%, #1C0A0D 100%)",
           }}
         />
 
@@ -67,7 +67,7 @@ export default function AuthLayout() {
             right: "-80px",
             width: "350px",
             height: "350px",
-            background: "radial-gradient(circle, rgba(199,167,101,0.25) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(197,164,109,0.2) 0%, transparent 70%)",
           }}
         />
         <Orb
@@ -76,7 +76,7 @@ export default function AuthLayout() {
             left: "-60px",
             width: "300px",
             height: "300px",
-            background: "radial-gradient(circle, rgba(199,167,101,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(122,46,58,0.25) 0%, transparent 70%)",
           }}
         />
         <Orb
@@ -91,10 +91,10 @@ export default function AuthLayout() {
 
         {/* Dot grid pattern */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.15]"
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
           style={{
             backgroundImage:
-              "radial-gradient(circle, rgba(199,167,101,0.8) 1px, transparent 1px)",
+              "radial-gradient(circle, rgba(197,164,109,0.5) 1px, transparent 1px)",
             backgroundSize: "36px 36px",
           }}
         />
@@ -104,14 +104,14 @@ export default function AuthLayout() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-4 group">
             <div
-              className="flex h-[50px] w-[50px] items-center justify-center rounded-[16px] font-black text-[22px] text-white shadow-[0_8px_24px_rgba(199,167,101,0.45)] transition group-hover:shadow-[0_12px_32px_rgba(199,167,101,0.6)]"
-              style={{ background: "linear-gradient(135deg, #C7A765 0%, #7A5A28 100%)" }}
+              className="flex h-[50px] w-[50px] items-center justify-center rounded-[16px] font-serif text-[22px] font-bold text-white shadow-[0_8px_24px_rgba(122,46,58,0.3)] transition group-hover:shadow-[0_12px_32px_rgba(122,46,58,0.5)]"
+              style={{ background: "linear-gradient(135deg, #C5A46D 0%, #7A2E3A 100%)" }}
             >
-              H
+              A
             </div>
             <div>
-              <p className="text-[18px] font-black text-white leading-none">Hejmana Boutique</p>
-              <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.18em] text-[#C7A765]/70">
+              <p className="text-[18px] font-bold tracking-wide text-white leading-none">Aurelia Boutique</p>
+              <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.18em] text-[#C5A46D]/70">
                 Premium Fashion CRM
               </p>
             </div>
@@ -125,25 +125,25 @@ export default function AuthLayout() {
                 <div
                   className="mb-8 inline-flex h-[90px] w-[90px] items-center justify-center rounded-[28px] text-[40px]"
                   style={{
-                    background: "rgba(199,167,101,0.15)",
-                    border: "1px solid rgba(199,167,101,0.3)",
+                    background: "rgba(197,164,109,0.12)",
+                    border: "1px solid rgba(197,164,109,0.25)",
                   }}
                 >
                   🔑
                 </div>
-                <h2 className="text-[42px] font-black leading-[1.1] text-white">
+                <h2 className="text-[42px] font-light tracking-wide leading-[1.1] text-white font-serif">
                   Reset
                   <br />
                   <span
-                    className="bg-clip-text text-transparent"
+                    className="bg-clip-text text-transparent font-normal"
                     style={{
-                      backgroundImage: "linear-gradient(135deg, #C7A765, #D4B775)",
+                      backgroundImage: "linear-gradient(135deg, #C5A46D, #E2C799)",
                     }}
                   >
                     Password
                   </span>
                 </h2>
-                <p className="mt-5 max-w-[380px] text-[15px] leading-[1.7] text-white/60">
+                <p className="mt-5 max-w-[380px] text-[15px] leading-[1.7] text-white/60 font-light">
                   Jangan khawatir! Kami akan membantu Anda mendapatkan akses kembali ke akun Boutique Anda.
                 </p>
 
@@ -157,13 +157,13 @@ export default function AuthLayout() {
                       <div
                         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[13px] text-[18px]"
                         style={{
-                          background: "rgba(199,167,101,0.15)",
-                          border: "1px solid rgba(199,167,101,0.25)",
+                          background: "rgba(197,164,109,0.12)",
+                          border: "1px solid rgba(197,164,109,0.2)",
                         }}
                       >
                         {item.icon}
                       </div>
-                      <p className="text-[13px] text-white/70">{item.text}</p>
+                      <p className="text-[13px] text-white/70 font-light">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -171,22 +171,22 @@ export default function AuthLayout() {
             ) : isRegister ? (
               /* Register State */
               <div className="max-w-[500px]">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C7A765]/70">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#C5A46D]/80">
                   Bergabung Bersama 2.5k+ Member
                 </p>
-                <h2 className="mt-4 text-[44px] font-black leading-[1.05] text-white">
+                <h2 className="mt-4 text-[44px] font-light tracking-wide leading-[1.05] text-white font-serif">
                   Mulai Perjalanan
                   <br />
                   <span
-                    className="bg-clip-text text-transparent"
+                    className="bg-clip-text text-transparent font-normal"
                     style={{
-                      backgroundImage: "linear-gradient(135deg, #C7A765, #D4B775)",
+                      backgroundImage: "linear-gradient(135deg, #C5A46D, #E2C799)",
                     }}
                   >
                     Fashion Premium
                   </span>
                 </h2>
-                <p className="mt-5 max-w-[380px] text-[14px] leading-[1.7] text-white/60">
+                <p className="mt-5 max-w-[380px] text-[14px] leading-[1.7] text-white/60 font-light">
                   Daftar sekarang dan dapatkan akses ke sistem CRM boutique terlengkap untuk mengelola bisnis fashion Anda.
                 </p>
 
@@ -201,15 +201,15 @@ export default function AuthLayout() {
                       <div
                         className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[13px] text-[18px]"
                         style={{
-                          background: "rgba(199,167,101,0.12)",
-                          border: "1px solid rgba(199,167,101,0.2)",
+                          background: "rgba(197,164,109,0.1)",
+                          border: "1px solid rgba(197,164,109,0.18)",
                         }}
                       >
                         {emoji}
                       </div>
                       <div>
-                        <p className="text-[13px] font-bold text-white">{title}</p>
-                        <p className="text-[11px] text-white/45">{desc}</p>
+                        <p className="text-[13px] font-semibold text-white">{title}</p>
+                        <p className="text-[11px] text-white/45 font-light">{desc}</p>
                       </div>
                     </div>
                   ))}
@@ -218,22 +218,22 @@ export default function AuthLayout() {
             ) : (
               /* Login State */
               <div className="max-w-[500px]">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C7A765]/70">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#C5A46D]/80">
                   Sistem Admin
                 </p>
-                <h2 className="mt-4 text-[46px] font-black leading-[1.05] text-white">
+                <h2 className="mt-4 text-[46px] font-light tracking-wide leading-[1.05] text-white font-serif">
                   Kelola Boutique
                   <br />
                   <span
-                    className="bg-clip-text text-transparent"
+                    className="bg-clip-text text-transparent font-normal"
                     style={{
-                      backgroundImage: "linear-gradient(135deg, #C7A765, #D4B775)",
+                      backgroundImage: "linear-gradient(135deg, #C5A46D, #E2C799)",
                     }}
                   >
                     Lebih Mudah
                   </span>
                 </h2>
-                <p className="mt-5 max-w-[380px] text-[14px] leading-[1.7] text-white/60">
+                <p className="mt-5 max-w-[380px] text-[14px] leading-[1.7] text-white/60 font-light">
                   Platform CRM all-in-one untuk mengelola produk, pelanggan, pesanan, dan laporan bisnis fashion Anda.
                 </p>
 
@@ -251,7 +251,7 @@ export default function AuthLayout() {
           {/* Footer */}
           <div className="flex items-center justify-between">
             <p className="text-[11px] text-white/30">
-              © 2026 Hejmana Boutique. All rights reserved.
+              © 2026 Aurelia Boutique. All rights reserved.
             </p>
             <div className="flex gap-4">
               {["Privasi", "Syarat", "Bantuan"].map((item) => (
@@ -277,14 +277,14 @@ export default function AuthLayout() {
         {/* Mobile logo */}
         <div className="mb-8 flex items-center gap-3 lg:hidden">
           <div
-            className="flex h-[42px] w-[42px] items-center justify-center rounded-[14px] font-black text-[18px] text-white shadow-lg"
-            style={{ background: "linear-gradient(135deg, #C7A765 0%, #7A5A28 100%)" }}
+            className="flex h-[42px] w-[42px] items-center justify-center rounded-[14px] font-serif text-[18px] font-bold text-white shadow-lg"
+            style={{ background: "linear-gradient(135deg, #C5A46D 0%, #7A2E3A 100%)" }}
           >
-            H
+            A
           </div>
           <div>
-            <p className="text-[16px] font-black text-[#1C1410]">Hejmana Boutique</p>
-            <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#C7A765]/80">
+            <p className="text-[16px] font-bold text-[#1C1410] tracking-wide">Aurelia Boutique</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#C5A46D]/80">
               Fashion CRM
             </p>
           </div>
@@ -295,7 +295,7 @@ export default function AuthLayout() {
           {/* Decorative top bar */}
           <div
             className="mb-6 h-1 w-16 rounded-full"
-            style={{ background: "linear-gradient(135deg, #C7A765, #8A6530)" }}
+            style={{ background: "linear-gradient(135deg, #7A2E3A, #C5A46D)" }}
           />
 
           <Outlet />
@@ -303,7 +303,7 @@ export default function AuthLayout() {
 
         {/* Bottom decoration */}
         <div className="mt-8 flex items-center gap-2">
-          {["#C7A765", "#D4B775", "#8A6530"].map((c, i) => (
+          {["#7A2E3A", "#C5A46D", "#E2C799"].map((c, i) => (
             <div
               key={i}
               className="rounded-full"

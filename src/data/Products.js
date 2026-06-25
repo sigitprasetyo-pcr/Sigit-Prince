@@ -87,8 +87,34 @@ const products = [
     reviews: 14,
     badge: null,
     image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop&q=80",
-    description: "Kalung mutiara air tawar alami yang indah, memberikan sentuhan keanggunan klasik pada setiap penampilan Anda."
   }
 ];
 
-export default products;
+const augmentedProducts = products.map((product) => {
+  const stock = ((product.id * 11) % 30) + 2; // e.g. 2 to 31
+  const status = stock > 10 ? "In Stock" : stock > 0 ? "Low Stock" : "Out of Stock";
+  const code = `PRD-00${product.id}`;
+  
+  let icon = "📦";
+  if (product.category === "Dress") icon = "👗";
+  else if (product.category === "Tops") icon = "👚";
+  else if (product.category === "Outerwear") icon = "🧥";
+  else if (product.category === "Accessories") {
+    if (product.name.toLowerCase().includes("bag")) icon = "👜";
+    else icon = "📿";
+  }
+
+  return {
+    ...product,
+    title: product.name,
+    code,
+    brand: "Aurelia",
+    stock,
+    status,
+    icon,
+    priceNum: product.price,
+    price: `Rp ${product.price.toLocaleString("id-ID")}`,
+  };
+});
+
+export default augmentedProducts;

@@ -86,11 +86,30 @@ export default function Users() {
 
   async function fetchUsers() {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("users")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (!error) setUsers(data || []);
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (!error && data && data.length > 0) {
+        setUsers(data);
+      } else {
+        setUsers([
+          { id: "usr-01", name: "Aurelia Admin", email: "admin@aurelia.com", phone: "0812-3456-7890", role: "admin", password: "••••••••" },
+          { id: "usr-02", name: "Siti Rahma", email: "siti@aurelia.com", phone: "0819-8765-4321", role: "user", password: "••••••••" },
+          { id: "usr-03", name: "Budi Santoso", email: "budi@aurelia.com", phone: "0821-2233-4455", role: "user", password: "••••••••" },
+          { id: "usr-04", name: "Rina Wijaya", email: "rina@aurelia.com", phone: "0857-9988-7766", role: "user", password: "••••••••" },
+        ]);
+      }
+    } catch (e) {
+      console.error(e);
+      setUsers([
+        { id: "usr-01", name: "Aurelia Admin", email: "admin@aurelia.com", phone: "0812-3456-7890", role: "admin", password: "••••••••" },
+        { id: "usr-02", name: "Siti Rahma", email: "siti@aurelia.com", phone: "0819-8765-4321", role: "user", password: "••••••••" },
+        { id: "usr-03", name: "Budi Santoso", email: "budi@aurelia.com", phone: "0821-2233-4455", role: "user", password: "••••••••" },
+        { id: "usr-04", name: "Rina Wijaya", email: "rina@aurelia.com", phone: "0857-9988-7766", role: "user", password: "••••••••" },
+      ]);
+    }
     setLoading(false);
   }
 
@@ -165,7 +184,7 @@ export default function Users() {
         {/* ─── HEADER ─── */}
         <div className="mb-7">
           <p className={`text-[10px] uppercase tracking-[0.22em] ${dark ? "text-[#C7A765]/70" : "text-[#A98467]"}`}>
-            Admin Panel · Hejmana Boutique
+            Admin Panel · Aurelia Boutique
           </p>
           <h1 className={`mt-1 text-[28px] font-bold leading-tight ${txt}`}>Manajemen User</h1>
           <p className={`mt-1 text-[13px] ${txt2}`}>

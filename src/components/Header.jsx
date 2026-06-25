@@ -464,7 +464,7 @@ function ProfileModal({ admin, onClose, onLogout, onEditProfile, onSettings }) {
 
         {/* Info */}
         <div className="mx-5 my-4 space-y-2.5">
-          <InfoRow icon={<FiMail />} label="Email" value={admin?.email || "admin@hejmana.com"} />
+          <InfoRow icon={<FiMail />} label="Email" value={admin?.email || "admin@aureliaboutique.id"} />
           <InfoRow icon={<FiPhone />} label="Telepon" value={admin?.phone || "+62 812-xxxx-xxxx"} />
           <InfoRow icon={<FiShield />} label="Akses" value={admin?.role === "admin" ? "Full Admin" : "User"} />
         </div>
@@ -555,92 +555,101 @@ export default function Header() {
   };
 
   const headerBg = dark
-    ? "bg-[#18120E] border-[rgba(199,167,101,0.12)]"
-    : "bg-white border-[#E7E0D8]";
+    ? "bg-[#18120E]/90 border-[rgba(199,167,101,0.15)] backdrop-blur-md"
+    : "bg-[#FDFBF8]/90 border-[#EEE7DF] backdrop-blur-md";
 
   return (
     <>
       <header
-        className={`sticky top-0 z-40 flex h-[54px] items-center justify-between border-b px-6 transition-colors duration-300 ${headerBg}`}
+        className={`sticky top-0 z-40 flex h-[72px] items-center justify-between border-b px-8 transition-all duration-300 ${headerBg}`}
       >
         {/* SEARCH */}
-        <div className="relative w-[280px]">
+        <div className="relative w-[320px]">
           <FiSearch
-            className={`absolute left-3 top-1/2 -translate-y-1/2 text-[13px] ${dark ? "text-[#6B5E50]" : "text-[#A58E7B]"}`}
+            className={`absolute left-3.5 top-1/2 -translate-y-1/2 text-[14px] ${dark ? "text-[#C5A46D]/80" : "text-[#A8834D]"}`}
           />
           <input
             type="text"
             placeholder="Cari pesanan, stok, atau pelanggan..."
-            className={`h-[28px] w-full rounded-[9px] border border-transparent pl-9 pr-4 text-[11px] outline-none placeholder:text-[#A58E7B] transition focus:border-[#C7A765] ${
+            className={`h-[38px] w-full rounded-[14px] border pl-10 pr-4 text-[12px] outline-none transition-all duration-300 ${
               dark
-                ? "bg-[#25191280] text-[#E0D5CC]"
-                : "bg-[#F9F5F1] text-[#4F4740]"
+                ? "bg-[#25191250] text-[#E0D5CC] border-[rgba(199,167,101,0.15)] placeholder:text-[#8B7E76] focus:border-[#C5A46D] focus:ring-4 focus:ring-[#C5A46D]/10"
+                : "bg-[#FAF7F2] text-[#2D2723] border-[#E7DDD2] placeholder:text-[#A99B8E] focus:border-[#C5A46D] focus:ring-4 focus:ring-[#C5A46D]/10"
             }`}
           />
         </div>
 
         {/* RIGHT */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           {/* DARK MODE TOGGLE */}
           <button
             type="button"
             onClick={toggle}
-            title={dark ? "Terang" : "Gelap"}
-            className={`relative flex h-[30px] w-[54px] items-center rounded-full border transition-all duration-300 ${
+            title={dark ? "Aktifkan Mode Terang" : "Aktifkan Mode Gelap"}
+            className={`relative flex h-[32px] w-[58px] items-center rounded-full border p-1 transition-all duration-300 shadow-inner ${
               dark
-                ? "border-[rgba(199,167,101,0.25)] bg-[#2A1F15]"
-                : "border-[#E7E0D8] bg-[#F3EDE5]"
+                ? "border-[rgba(199,167,101,0.3)] bg-[#20150F]"
+                : "border-[#E7E0D8] bg-[#F1EAE0]"
             }`}
           >
             <span
-              className={`absolute flex h-[22px] w-[22px] items-center justify-center rounded-full shadow-md transition-all duration-300 ${
+              className={`flex h-[24px] w-[24px] items-center justify-center rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.25)] transition-all duration-300 ${
                 dark
-                  ? "left-[27px] bg-[#C7A765] text-white"
-                  : "left-[3px] bg-white text-[#C7A765]"
+                  ? "translate-x-[26px] bg-[#C5A46D] text-white"
+                  : "translate-x-0 bg-white text-[#C5A46D]"
               }`}
             >
-              {dark ? <FiMoon className="text-[11px]" /> : <FiSun className="text-[11px]" />}
+              {dark ? <FiMoon className="text-[12px]" /> : <FiSun className="text-[12px]" />}
             </span>
           </button>
 
           {/* NOTIFICATION */}
           <button
             type="button"
-            className={`relative flex h-[28px] w-[28px] items-center justify-center rounded-full text-[14px] transition ${
-              dark ? "text-white/60 hover:text-[#C7A765]" : "text-[#3A2619] hover:text-[#C7A765]"
+            className={`relative flex h-[34px] w-[34px] items-center justify-center rounded-full text-[16px] transition duration-200 border ${
+              dark
+                ? "text-white/70 hover:text-[#C5A46D] border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.08]"
+                : "text-[#3A2619] hover:text-[#7A2E3A] border-[#E7E0D8] bg-[#FAF8F5] hover:bg-[#F3EDE5]"
             }`}
           >
             <FiBell />
-            <span className="absolute right-[4px] top-[4px] h-[6px] w-[6px] rounded-full bg-red-500" />
+            <span className="absolute right-[6px] top-[6px] flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+            </span>
           </button>
 
-          <div className={`h-5 w-px ${dark ? "bg-white/10" : "bg-[#EEE7DF]"}`} />
+          <div className={`h-6 w-px ${dark ? "bg-white/10" : "bg-[#EEE7DF]"}`} />
 
           {/* PROFILE TRIGGER */}
           <button
             type="button"
             onClick={() => setShowProfile(true)}
-            className={`flex items-center gap-3 rounded-[10px] px-2 py-1 text-left transition hover:bg-[#C7A765]/10 ${
-              dark ? "text-white/80" : ""
+            className={`flex items-center gap-3 rounded-[16px] px-3 py-1.5 text-left transition duration-200 border border-transparent ${
+              dark
+                ? "text-white/80 hover:bg-[#C5A46D]/8 hover:border-[#C5A46D]/15"
+                : "text-[#2D2723] hover:bg-[#7A2E3A]/5 hover:border-[#7A2E3A]/10"
             }`}
           >
             <div className="text-right leading-tight">
-              <p className={`text-[11px] font-semibold ${dark ? "text-white/90" : "text-[#2D2723]"}`}>
+              <p className={`text-[12px] font-semibold ${dark ? "text-white/90" : "text-[#2D2723]"}`}>
                 {adminName}
               </p>
-              <p className={`text-[9px] ${dark ? "text-[#C7A765]" : "text-[#8B735D]"}`}>
+              <p className={`text-[10px] font-medium tracking-wide uppercase ${dark ? "text-[#C5A46D]" : "text-[#8B735D]"}`}>
                 {adminRole}
               </p>
             </div>
 
-            <div
-              className="flex h-[30px] w-[30px] items-center justify-center rounded-full text-[11px] font-bold text-white shadow-md"
-              style={{ background: "linear-gradient(135deg, #C7A765 0%, #7A5A28 100%)" }}
-            >
-              {avatar}
+            <div className="relative p-[2px] rounded-full border border-[#C5A46D] shadow-[0_2px_8px_rgba(197,164,109,0.25)]">
+              <div
+                className="flex h-[32px] w-[32px] items-center justify-center rounded-full text-[12px] font-bold text-white shadow-inner"
+                style={{ background: "linear-gradient(135deg, #C5A46D 0%, #7A2E3A 100%)" }}
+              >
+                {avatar}
+              </div>
             </div>
 
-            <FiChevronDown className={`text-[12px] ${dark ? "text-white/30" : "text-[#8B735D]"}`} />
+            <FiChevronDown className={`text-[13px] ${dark ? "text-white/40" : "text-[#8B735D]"}`} />
           </button>
         </div>
       </header>

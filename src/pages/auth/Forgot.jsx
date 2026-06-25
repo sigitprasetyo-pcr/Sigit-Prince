@@ -36,7 +36,7 @@ export default function Forgot() {
       {/* Back */}
       <Link
         to="/login"
-        className="mb-8 inline-flex items-center gap-2 rounded-[12px] px-3 py-2 text-[13px] font-medium text-[#7C6B5B] transition hover:bg-[#F5F0EA] hover:text-[#C7A765]"
+        className="mb-8 inline-flex items-center gap-2 rounded-[12px] px-3 py-2 text-[13px] font-medium text-[#7C6B5B] transition hover:bg-[#F5F0EA] hover:text-[#7A2E3A]"
         style={{ border: "1px solid #E7DDD2" }}
       >
         <FiArrowLeft className="text-[14px]" />
@@ -52,24 +52,24 @@ export default function Forgot() {
             <div
               className="mb-6 inline-flex h-[72px] w-[72px] items-center justify-center rounded-[24px]"
               style={{
-                background: "linear-gradient(135deg, rgba(199,167,101,0.15), rgba(199,167,101,0.05))",
-                border: "1.5px solid rgba(199,167,101,0.3)",
+                background: "linear-gradient(135deg, rgba(122,46,58,0.1), rgba(122,46,58,0.03))",
+                border: "1.5px solid rgba(122,46,58,0.2)",
               }}
             >
-              <FiMail className="text-[30px] text-[#C7A765]" />
+              <FiMail className="text-[30px] text-[#7A2E3A]" />
             </div>
 
-            <h1 className="text-[34px] font-black leading-[1.1] text-[#1C1410]">
+            <h1 className="text-[34px] font-light font-serif leading-[1.1] text-[#1C1410]">
               Lupa
               <br />
               <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+                className="bg-clip-text text-transparent font-normal"
+                style={{ backgroundImage: "linear-gradient(135deg, #7A2E3A 0%, #C5A46D 100%)" }}
               >
                 Password? 🔑
               </span>
             </h1>
-            <p className="mt-3 text-[14px] leading-relaxed text-[#7C6B5B]">
+            <p className="mt-3 text-[14px] leading-relaxed text-[#7C6B5B] font-light">
               Masukkan email Anda dan kami akan mengirimkan link reset password dalam hitungan menit.
             </p>
           </div>
@@ -83,7 +83,7 @@ export default function Forgot() {
               <div className="relative">
                 <div
                   className="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200"
-                  style={{ color: focused ? "#C7A765" : "#B0956B" }}
+                  style={{ color: focused ? "#7A2E3A" : "#B0956B" }}
                 >
                   <FiMail className="text-[15px]" />
                 </div>
@@ -94,12 +94,12 @@ export default function Forgot() {
                   onFocus={() => setFocused(true)}
                   onBlur={() => setFocused(false)}
                   required
-                  placeholder="email@hejmana.com"
+                  placeholder="email@aureliaboutique.id"
                   className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
                   style={{
-                    background: focused ? "#FFFDF8" : "#FAF8F5",
-                    border: focused ? "1.5px solid #C7A765" : "1.5px solid #E7DDD2",
-                    boxShadow: focused ? "0 0 0 4px rgba(199,167,101,0.12)" : "none",
+                    background: focused ? "#FFFDF9" : "#FAF8F5",
+                    border: focused ? "1.5px solid #7A2E3A" : "1.5px solid #E7DDD2",
+                    boxShadow: focused ? "0 0 0 4px rgba(122,46,58,0.1)" : "none",
                   }}
                 />
               </div>
@@ -109,19 +109,19 @@ export default function Forgot() {
             <div
               className="flex gap-3 rounded-[16px] p-4"
               style={{
-                background: "linear-gradient(135deg, rgba(199,167,101,0.08), rgba(199,167,101,0.03))",
-                border: "1px solid rgba(199,167,101,0.2)",
+                background: "linear-gradient(135deg, rgba(122,46,58,0.06), rgba(122,46,58,0.02))",
+                border: "1px solid rgba(122,46,58,0.15)",
               }}
             >
               <div
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] text-white"
-                style={{ background: "linear-gradient(135deg, #C7A765, #8A6530)" }}
+                style={{ background: "linear-gradient(135deg, #7A2E3A, #C5A46D)" }}
               >
                 <FiShield className="text-[14px]" />
               </div>
               <div>
-                <p className="text-[12px] font-semibold text-[#6B4E20]">Proses Aman & Terenkripsi</p>
-                <p className="mt-0.5 text-[11px] leading-relaxed text-[#9C7A3F]">
+                <p className="text-[12px] font-semibold text-[#7A2E3A]">Proses Aman & Terenkripsi</p>
+                <p className="mt-0.5 text-[11px] leading-relaxed text-[#7C6B5B] font-light">
                   Link reset berlaku selama <strong>1 jam</strong> dan hanya bisa digunakan sekali.
                 </p>
               </div>
@@ -130,8 +130,8 @@ export default function Forgot() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-bold text-white shadow-[0_16px_40px_rgba(199,167,101,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(199,167,101,0.5)] disabled:opacity-70 disabled:translate-y-0"
-              style={{ background: "linear-gradient(135deg, #C7A765 0%, #8A6530 100%)" }}
+              className="group relative flex h-[54px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-[16px] font-semibold text-white shadow-[0_16px_40px_rgba(122,46,58,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(122,46,58,0.3)] disabled:opacity-70 disabled:translate-y-0"
+              style={{ background: "linear-gradient(135deg, #7A2E3A 0%, #521E26 100%)" }}
             >
               {/* Shimmer */}
               <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
@@ -170,9 +170,9 @@ export default function Forgot() {
                   <div
                     className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] text-[11px] font-black"
                     style={{
-                      background: "linear-gradient(135deg, rgba(199,167,101,0.15), rgba(199,167,101,0.05))",
-                      color: "#C7A765",
-                      border: "1px solid rgba(199,167,101,0.25)",
+                      background: "linear-gradient(135deg, rgba(122,46,58,0.1), rgba(122,46,58,0.03))",
+                      color: "#7A2E3A",
+                      border: "1px solid rgba(122,46,58,0.18)",
                     }}
                   >
                     {item.step}
@@ -195,7 +195,7 @@ export default function Forgot() {
               <FiCheck className="text-[42px] text-white" />
             </div>
 
-            <h2 className="text-[28px] font-black text-[#1C1410]">
+            <h2 className="text-[28px] font-light font-serif text-[#1C1410]">
               Email Terkirim! 🎉
             </h2>
             <p className="mt-3 text-[13px] leading-relaxed text-[#7C6B5B]">
@@ -204,11 +204,11 @@ export default function Forgot() {
             <div
               className="mt-3 rounded-[12px] px-5 py-2.5"
               style={{
-                background: "linear-gradient(135deg, rgba(199,167,101,0.12), rgba(199,167,101,0.05))",
-                border: "1px solid rgba(199,167,101,0.25)",
+                background: "linear-gradient(135deg, rgba(122,46,58,0.1), rgba(122,46,58,0.03))",
+                border: "1px solid rgba(122,46,58,0.18)",
               }}
             >
-              <p className="text-[14px] font-bold text-[#C7A765]">{email}</p>
+              <p className="text-[14px] font-semibold text-[#7A2E3A]">{email}</p>
             </div>
           </div>
 
@@ -236,13 +236,13 @@ export default function Forgot() {
             <div
               className="flex items-center gap-4 rounded-[16px] p-4"
               style={{
-                background: "linear-gradient(135deg, rgba(199,167,101,0.08), rgba(199,167,101,0.03))",
-                border: "1px solid rgba(199,167,101,0.2)",
+                background: "linear-gradient(135deg, rgba(197,164,109,0.08), rgba(197,164,109,0.03))",
+                border: "1px solid rgba(197,164,109,0.18)",
               }}
             >
               <div
                 className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[13px] text-white"
-                style={{ background: "linear-gradient(135deg, #C7A765, #8A6530)" }}
+                style={{ background: "linear-gradient(135deg, #C5A46D, #7A2E3A)" }}
               >
                 <FiMail className="text-[18px]" />
               </div>
@@ -258,8 +258,8 @@ export default function Forgot() {
             type="button"
             onClick={handleResend}
             disabled={loading}
-            className="flex w-full items-center justify-center gap-2 rounded-[16px] py-4 text-[13px] font-semibold text-[#C7A765] transition hover:bg-[#F5F0EA] disabled:opacity-50"
-            style={{ border: "1.5px solid rgba(199,167,101,0.35)" }}
+            className="flex w-full items-center justify-center gap-2 rounded-[16px] py-4 text-[13px] font-semibold text-[#7A2E3A] transition hover:bg-[#F5F0EA] hover:text-[#C5A46D] disabled:opacity-50"
+            style={{ border: "1.5px solid rgba(122,46,58,0.25)" }}
           >
             {loading ? (
               <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -277,10 +277,10 @@ export default function Forgot() {
             className="mt-5 rounded-[18px] p-5 text-center"
             style={{ background: "#FAF8F5", border: "1px solid #F0EBE3" }}
           >
-            <p className="text-[12px] text-[#7C6B5B]">Masih mengalami masalah?</p>
+            <p className="text-[12px] text-[#7C6B5B] font-light">Masih mengalami masalah?</p>
             <a
-              href="mailto:support@hejmana.com"
-              className="mt-1.5 inline-block text-[13px] font-semibold text-[#C7A765] transition hover:text-[#9C7A3F]"
+              href="mailto:support@aureliaboutique.id"
+              className="mt-1.5 inline-block text-[13px] font-semibold text-[#7A2E3A] transition hover:text-[#C5A46D]"
             >
               Hubungi Customer Support →
             </a>

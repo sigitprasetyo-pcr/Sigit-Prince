@@ -246,7 +246,7 @@ export default function App() {
               <ErrorPage
                 code="400"
                 title="Bad Request"
-                description="Permintaan tidak dapat diproses oleh sistem Hejmana Boutique."
+                description="Permintaan tidak dapat diproses oleh sistem Aurelia Boutique."
               />
             }
           />

@@ -37,7 +37,7 @@ export default function Settings() {
 
         {/* ─── PAGE HEADER ─── */}
         <div className="mb-7">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-[#A98467]">Sistem Admin · Hejmana Boutique</p>
+          <p className="text-[10px] uppercase tracking-[0.22em] text-[#A98467]">Sistem Admin · Aurelia Boutique</p>
           <h1 className="mt-1 text-[28px] font-bold leading-tight text-[#2D2723]">Pengaturan Boutique</h1>
           <p className="mt-1 text-[13px] text-[#8B7E76]">
             Mengatur identitas boutique, data CRM, notifikasi, keamanan, dan tampilan sistem admin.
@@ -62,7 +62,7 @@ export default function Settings() {
                     ✨
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">Hejmana Boutique CRM</p>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">Aurelia Boutique CRM</p>
                     <h2 className="mt-0.5 text-[26px] font-black">Sistem Admin Boutique</h2>
                   </div>
                 </div>
@@ -136,11 +136,11 @@ export default function Settings() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <InputBox label="Nama Boutique" value="Hejmana Boutique" icon="🏪" />
+              <InputBox label="Nama Boutique" value="Aurelia Boutique" icon="🏪" />
               <InputBox label="Jenis Sistem" value="Customer Relationship Management" icon="⚙️" />
               <InputBox label="Kategori Bisnis" value="Fashion & Boutique" icon="👗" />
               <InputBox label="Lokasi Utama" value="Pekanbaru, Riau" icon="📍" />
-              <InputBox label="Email Admin" value="admin@hejmana-boutique.com" icon="📧" />
+              <InputBox label="Email Admin" value="admin@aureliaboutique.id" icon="📧" />
               <InputBox label="Nomor WhatsApp" value="0812-3456-7890" icon="📱" />
             </div>
 
@@ -170,7 +170,7 @@ export default function Settings() {
               {/* Mini header */}
               <div className="bg-gradient-to-r from-[#1C1410] to-[#3A2619] px-4 py-3 flex items-center gap-2">
                 <div className="flex h-[26px] w-[26px] items-center justify-center rounded-[8px] bg-[#C7A765] text-[11px] font-black text-white">H</div>
-                <span className="text-[11px] font-bold text-white">Hejmana Boutique</span>
+                <span className="text-[11px] font-bold text-white">Aurelia Boutique</span>
                 <span className="ml-1 rounded-full bg-[#C7A765]/20 px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#C7A765]">Boutique</span>
               </div>
 

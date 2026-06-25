@@ -30,7 +30,7 @@ const sampleProducts = [
     title: "Satin Luxury Dress",
     code: "PRD-001",
     category: "Dress",
-    brand: "Hejmana",
+    brand: "Aurelia",
     price: "Rp 850.000",
     stock: 24,
     status: "In Stock",
@@ -43,7 +43,7 @@ const sampleProducts = [
     title: "Classic Brown Outer",
     code: "PRD-002",
     category: "Outerwear",
-    brand: "Hejmana",
+    brand: "Aurelia",
     price: "Rp 690.000",
     stock: 12,
     status: "Low Stock",
@@ -56,7 +56,7 @@ const sampleProducts = [
     title: "Gold Mini Handbag",
     code: "PRD-003",
     category: "Bag",
-    brand: "Hejmana",
+    brand: "Aurelia",
     price: "Rp 750.000",
     stock: 20,
     status: "In Stock",
@@ -115,7 +115,7 @@ export default function CrmBreakdown() {
         <PageHeader
           breadcrumb="CRM COMPONENT"
           title="CRM Component Breakdown"
-          description="Halaman ini menampilkan penerapan komponen CRM Boutique yang digunakan pada project Hejmana Boutique."
+          description="Halaman ini menampilkan penerapan komponen CRM Boutique yang digunakan pada project Aurelia Boutique."
         />
 
         <div className="mb-6 overflow-hidden rounded-[24px] border border-[#E7E0D8] bg-white shadow-[0_14px_34px_rgba(45,39,35,0.08)]">
@@ -126,7 +126,7 @@ export default function CrmBreakdown() {
             <div className="relative flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] text-white/70">
-                  Hejmana Boutique CRM
+                  Aurelia Boutique CRM
                 </p>
 
                 <h2 className="mt-2 text-[28px] font-medium">
@@ -338,7 +338,7 @@ export default function CrmBreakdown() {
             category="Layout Component"
           >
             <PageHeader
-              breadcrumb="Hejmana / Example"
+              breadcrumb="Aurelia / Example"
               title="Contoh PageHeader"
               description="Ini adalah contoh penggunaan komponen PageHeader pada halaman CRM Boutique."
             >
