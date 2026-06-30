@@ -41,7 +41,7 @@ const products = [
     rating: 4.6,
     reviews: 12,
     badge: "New",
-    image: "https://images.unsplash.com/photo-1583496661160-fb488b2c1a82?w=800&auto=format&fit=crop&q=80",
+    image: "/images/vienna-midi-skirt.png",
     description: "Rok midi berpotongan A-line dengan bahan jatuh yang anggun, memberikan kenyamanan sepanjang hari."
   },
   {

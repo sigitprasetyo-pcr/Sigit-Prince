@@ -25,7 +25,11 @@ export default function ProductSection({
     : products.filter(p => p.category === activeCategory);
 
   const formatPrice = (price) => {
-    return "Rp " + price.toLocaleString("id-ID");
+    if (typeof price === "string") {
+      if (price.startsWith("Rp")) return price;
+      return "Rp " + price;
+    }
+    return "Rp " + (price || 0).toLocaleString("id-ID");
   };
 
   return (

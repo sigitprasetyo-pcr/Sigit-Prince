@@ -75,6 +75,10 @@ const Settings = React.lazy(() =>
   import("./pages/Settings")
 );
 
+const Reviews = React.lazy(() =>
+  import("./pages/Reviews")
+);
+
 const CrmBreakdown = React.lazy(() =>
   import("./pages/CrmBreakdown")
 );
@@ -218,6 +222,11 @@ export default function App() {
           <Route
             path="/promo"
             element={<Promo />}
+          />
+
+          <Route
+            path="/reviews"
+            element={<Reviews />}
           />
 
           <Route

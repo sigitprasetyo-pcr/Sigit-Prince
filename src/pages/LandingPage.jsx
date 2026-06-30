@@ -17,6 +17,7 @@ import FAQSection from "../components/FAQSection";
 import FinalCTA from "../components/FinalCTA";
 import NewsletterSection from "../components/NewsletterSection";
 import Footer from "../components/Footer";
+import CustomerServiceWidget from "../components/CustomerServiceWidget";
 
 // Import product data for search modal
 import products from "../data/Products";
@@ -240,7 +241,7 @@ export default function LandingPage() {
                             {product.name}
                           </h4>
                           <span className="font-body text-xs text-burgundy font-medium">
-                            Rp {product.price.toLocaleString("id-ID")}
+                            {product.price}
                           </span>
                         </div>
                         <div className="text-muted group-hover:text-burgundy">
@@ -322,7 +323,7 @@ export default function LandingPage() {
                 {/* Price block */}
                 <div className="flex items-baseline gap-3 pt-2">
                   <span className="font-display text-xl sm:text-2xl font-bold text-burgundy">
-                    Rp {selectedProduct.price.toLocaleString("id-ID")}
+                    {selectedProduct.price}
                   </span>
                   {selectedProduct.originalPrice && (
                     <span className="text-sm text-muted line-through font-body text-charcoal/40">
@@ -373,6 +374,8 @@ export default function LandingPage() {
         </div>
       )}
 
+      {/* 16. Floating Customer Service Widget */}
+      <CustomerServiceWidget />
     </div>
   );
 }

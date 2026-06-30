@@ -135,14 +135,14 @@ export default function Login() {
               onFocus={() => setFocused("email")}
               onBlur={() => setFocused("")}
               placeholder="admin@aureliaboutique.id"
-              className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+              className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-300 placeholder:text-[#C0B4A6] hover:border-[#C5A46D]/60"
               style={{
-                background: focused === "email" ? "#FFFDF9" : "#FAF8F5",
+                background: focused === "email" ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.55)",
                 border: focused === "email"
-                  ? "1.5px solid #7A2E3A"
-                  : "1.5px solid #E7DDD2",
+                  ? "1px solid #7A2E3A"
+                  : "1px solid rgba(197, 164, 109, 0.3)",
                 boxShadow: focused === "email"
-                  ? "0 0 0 4px rgba(122,46,58,0.1)"
+                  ? "0 0 0 4px rgba(122,46,58,0.08)"
                   : "none",
               }}
             />
@@ -178,14 +178,14 @@ export default function Login() {
               onFocus={() => setFocused("password")}
               onBlur={() => setFocused("")}
               placeholder="••••••••"
-              className="h-[52px] w-full rounded-[16px] pl-12 pr-12 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
+              className="h-[52px] w-full rounded-[16px] pl-12 pr-12 text-[13px] text-[#2D2723] outline-none transition-all duration-300 placeholder:text-[#C0B4A6] hover:border-[#C5A46D]/60"
               style={{
-                background: focused === "password" ? "#FFFDF9" : "#FAF8F5",
+                background: focused === "password" ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.55)",
                 border: focused === "password"
-                  ? "1.5px solid #7A2E3A"
-                  : "1.5px solid #E7DDD2",
+                  ? "1px solid #7A2E3A"
+                  : "1px solid rgba(197, 164, 109, 0.3)",
                 boxShadow: focused === "password"
-                  ? "0 0 0 4px rgba(122,46,58,0.1)"
+                  ? "0 0 0 4px rgba(122,46,58,0.08)"
                   : "none",
               }}
             />

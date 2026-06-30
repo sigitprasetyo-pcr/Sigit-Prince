@@ -39,6 +39,7 @@ const menuGroups = [
     items: [
       { label: "Promo", path: "/promo", icon: <FiTag />, badge: null },
       { label: "Laporan", path: "/reports", icon: <FiBarChart2 />, badge: null },
+      { label: "Ulasan", path: "/reviews", icon: <FiFileText />, badge: null },
     ],
   },
   {

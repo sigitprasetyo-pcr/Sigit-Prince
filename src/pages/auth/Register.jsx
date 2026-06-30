@@ -145,9 +145,10 @@ export default function Register() {
   };
 
   const inputStyle = (name) => ({
-    background: focused === name ? "#FFFDF9" : "#FAF8F5",
-    border: focused === name ? "1.5px solid #7A2E3A" : "1.5px solid #E7DDD2",
-    boxShadow: focused === name ? "0 0 0 4px rgba(122,46,58,0.1)" : "none",
+    background: focused === name ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.55)",
+    border: focused === name ? "1px solid #7A2E3A" : "1px solid rgba(197, 164, 109, 0.3)",
+    boxShadow: focused === name ? "0 0 0 4px rgba(122,46,58,0.08)" : "none",
+    transition: "all 0.3s ease",
   });
 
   return (

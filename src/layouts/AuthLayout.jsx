@@ -271,11 +271,31 @@ export default function AuthLayout() {
           RIGHT FORM SECTION
       ══════════════════════════════════════ */}
       <section
-        className="flex min-h-screen flex-col items-center justify-center px-8 py-10"
-        style={{ background: "#FDFAF6" }}
+        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 py-10"
+        style={{
+          background: "linear-gradient(135deg, #FFFDFB 0%, #FAF6EE 50%, #F5EEE0 100%)",
+        }}
       >
+        {/* Soft background luxury glows */}
+        <div
+          className="pointer-events-none absolute h-[320px] w-[320px] rounded-full opacity-[0.18] blur-3xl"
+          style={{
+            background: "radial-gradient(circle, #C5A46D 0%, transparent 70%)",
+            top: "10%",
+            right: "-80px",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute h-[250px] w-[250px] rounded-full opacity-[0.15] blur-3xl"
+          style={{
+            background: "radial-gradient(circle, #7A2E3A 0%, transparent 70%)",
+            bottom: "10%",
+            left: "-80px",
+          }}
+        />
+
         {/* Mobile logo */}
-        <div className="mb-8 flex items-center gap-3 lg:hidden">
+        <div className="relative z-10 mb-8 flex items-center gap-3 lg:hidden">
           <div
             className="flex h-[42px] w-[42px] items-center justify-center rounded-[14px] font-serif text-[18px] font-bold text-white shadow-lg"
             style={{ background: "linear-gradient(135deg, #C5A46D 0%, #7A2E3A 100%)" }}
@@ -291,30 +311,42 @@ export default function AuthLayout() {
         </div>
 
         {/* Card wrapper */}
-        <div className="w-full max-w-[440px]">
-          {/* Decorative top bar */}
+        <div
+          className="relative z-10 w-full max-w-[460px] rounded-[28px] p-8 sm:p-10 shadow-[0_24px_60px_rgba(122,46,58,0.05),0_4px_16px_rgba(0,0,0,0.01)] border border-white/70 overflow-hidden transition-all duration-300"
+          style={{
+            background: "rgba(255, 255, 255, 0.75)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+          }}
+        >
+          {/* Decorative top shimmer bar */}
           <div
-            className="mb-6 h-1 w-16 rounded-full"
-            style={{ background: "linear-gradient(135deg, #7A2E3A, #C5A46D)" }}
+            className="absolute top-0 left-0 right-0 h-[4px]"
+            style={{ background: "linear-gradient(90deg, #7A2E3A, #C5A46D, #7A2E3A)" }}
           />
 
           <Outlet />
         </div>
 
         {/* Bottom decoration */}
-        <div className="mt-8 flex items-center gap-2">
-          {["#7A2E3A", "#C5A46D", "#E2C799"].map((c, i) => (
-            <div
-              key={i}
-              className="rounded-full"
-              style={{
-                width: i === 1 ? "20px" : "8px",
-                height: "8px",
-                backgroundColor: c,
-                opacity: i === 1 ? 1 : 0.4,
-              }}
-            />
-          ))}
+        <div className="relative z-10 mt-8 flex items-center gap-2.5">
+          {["#7A2E3A", "#C5A46D", "#E2C799"].map((c, i) => {
+            const activeIdx = isRegister ? 1 : isForgot ? 2 : 0;
+            const isActive = i === activeIdx;
+            return (
+              <div
+                key={i}
+                className="rounded-full transition-all duration-500 ease-out"
+                style={{
+                  width: isActive ? "22px" : "8px",
+                  height: "8px",
+                  backgroundColor: c,
+                  opacity: isActive ? 1 : 0.35,
+                  boxShadow: isActive ? `0 0 10px ${c}` : "none",
+                }}
+              />
+            );
+          })}
         </div>
       </section>
     </main>

@@ -97,9 +97,9 @@ export default function Forgot() {
                   placeholder="email@aureliaboutique.id"
                   className="h-[52px] w-full rounded-[16px] pl-12 pr-4 text-[13px] text-[#2D2723] outline-none transition-all duration-200 placeholder:text-[#C0B4A6]"
                   style={{
-                    background: focused ? "#FFFDF9" : "#FAF8F5",
-                    border: focused ? "1.5px solid #7A2E3A" : "1.5px solid #E7DDD2",
-                    boxShadow: focused ? "0 0 0 4px rgba(122,46,58,0.1)" : "none",
+                    background: focused ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.55)",
+                    border: focused ? "1px solid #7A2E3A" : "1px solid rgba(197, 164, 109, 0.3)",
+                    boxShadow: focused ? "0 0 0 4px rgba(122,46,58,0.08)" : "none",
                   }}
                 />
               </div>
